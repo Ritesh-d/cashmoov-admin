@@ -1,0 +1,70 @@
+
+<div *ngIf="!walletOperation" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="walletOperation">
+    <div class="form-group row">
+        <!-- <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.control.account' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data" [value]="walletOperation.srcWalletTypeName" disabled>
+        </div> -->
+       
+    </div>
+  
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.account' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data" id="walletOwnerCode" [value]="walletOperation.srcWalletOwnerName" disabled>
+        </div>
+       <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.currency' | translate }}</label>
+            <input *ngIf="this.unchanged.currencyCode" type="text" class="form-control unchanged-data" id="currencyCode"
+                [value]="walletOperation.srcCurrencyName" disabled>
+            <span *ngIf="!this.unchanged.currencyCode" [ngbTooltip]="'earlier it was: '+ walletOperation.srcCurrencyName">
+                <input type="text" class="form-control " id="currencyCode" [value]="walletOperation.srcCurrencyName" disabled>
+            </span>
+        </div>
+      
+        
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.amount' | translate }}</label>
+            <input *ngIf="this.unchanged.amount" type="text" class="form-control unchanged-data" id="amount"
+                [value]="walletOperation.amount" disabled>
+            <span *ngIf="!this.unchanged.amount" [ngbTooltip]="'earlier it was: '+ walletOperation.amount">
+                <input type="text" class="form-control " id="amount" [value]="updatedInfo.amount" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.bankReferenceNumber' | translate }}</label>
+            <input *ngIf="this.unchanged.bankReferenceNo" type="text" class="form-control unchanged-data" id="bankReferenceNo"
+                [value]="walletOperation.bankReferenceNo==undefined?'':walletOperation.bankReferenceNo" disabled>
+            <span *ngIf="!this.unchanged.bankReferenceNo" [ngbTooltip]="'earlier it was: '+ walletOperation.bankReferenceNo">
+                <input type="text" class="form-control " id="bankReferenceNo" [value]="updatedInfo.bankReferenceNo==undefined?'':updatedInfo.bankReferenceNo" disabled>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.comments' | translate }}</label>
+            <input *ngIf="this.unchanged.comments" type="text" class="form-control unchanged-data" id="comments"
+                [value]="walletOperation.comments==undefined?'':walletOperation.comments" disabled>
+            <span *ngIf="!this.unchanged.comments" [ngbTooltip]="'earlier it was: '+ walletOperation.comments">
+                <input type="text" class="form-control " id="comments" [value]="updatedInfo.comments==undefined?'':updatedInfo.comments" disabled>
+            </span>
+        </div>
+       <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="walletOperation.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ walletOperation.status">
+                <input type="text" class="form-control " id="status" [value]="statusName" disabled>
+            </span>
+        </div>
+    </div>
+ </div>

@@ -1,0 +1,87 @@
+<div *ngIf="!product" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="product">
+   
+    <div class="form-group row">  
+      
+
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.name_label'   }}</label>
+            <input *ngIf="this.unchanged.name" type="text" class="form-control unchanged-data" id="name"
+                [value]="product.name" disabled>
+            <span *ngIf="!this.unchanged.name" [ngbTooltip]="'earlier it was: '+ product.name">
+                <input type="text" class="form-control" id="name" [value]="updatedInfo.name" disabled>
+            </span>
+        </div>
+        
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.serviceCategory'   }}</label>
+            <input *ngIf="this.unchanged.serviceCategoryName" type="text" class="form-control unchanged-data" id="serviceCategoryName"
+                [value]="product.serviceCategoryName" disabled>
+            <span *ngIf="!this.unchanged.serviceCategoryName" [ngbTooltip]="'earlier it was: '+ product.serviceCategoryName">
+                <input type="text" class="form-control" id="serviceCategoryName" [value]="updatedInfo.serviceCategoryName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.productType'   }}</label>
+            <input *ngIf="this.unchanged.productTypeName" type="text" class="form-control unchanged-data" id="productTypeName"
+                [value]="product.productTypeName" disabled>
+            <span *ngIf="!this.unchanged.productTypeName" [ngbTooltip]="'earlier it was: '+ product.productTypeName">
+                <input type="text" class="form-control" id="productTypeName" [value]="updatedInfo.productTypeName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.operator'   }}</label>
+            <input *ngIf="this.unchanged.operatorName" type="text" class="form-control unchanged-data" id="operatorName"
+                [value]="product.operatorName" disabled>
+            <span *ngIf="!this.unchanged.operatorName" [ngbTooltip]="'earlier it was: '+ product.operatorName">
+                <input type="text" class="form-control" id="operatorName" [value]="updatedInfo.operatorName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.value'   }}</label>
+            <input *ngIf="this.unchanged.value" type="text" class="form-control unchanged-data" id="value"
+                [value]="product.value" disabled>
+            <span *ngIf="!this.unchanged.value" [ngbTooltip]="'earlier it was: '+ product.value">
+                <input type="text" class="form-control" id="value" [value]="updatedInfo.value" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.min_value'   }}</label>
+            <input *ngIf="this.unchanged.minValue" type="text" class="form-control unchanged-data" id="minValue"
+                [value]="product.minValue" disabled>
+            <span *ngIf="!this.unchanged.minValue" [ngbTooltip]="'earlier it was: '+ product.minValue">
+                <input type="text" class="form-control" id="minValue" [value]="updatedInfo.minValue" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.max_value'   }}</label>
+            <input *ngIf="this.unchanged.maxValue" type="text" class="form-control unchanged-data" id="maxValue"
+                [value]="product.maxValue" disabled>
+            <span *ngIf="!this.unchanged.maxValue" [ngbTooltip]="'earlier it was: '+ product.maxValue">
+                <input type="text" class="form-control" id="maxValue" [value]="updatedInfo.maxValue" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.description'   }}</label>
+            <input *ngIf="this.unchanged.description" type="text" class="form-control unchanged-data" id="description"
+                [value]="product.description==undefined?'':product.description" disabled>
+            <span *ngIf="!this.unchanged.description" [ngbTooltip]="'earlier it was: '+ product.description">
+                <input type="text" class="form-control" id="description" [value]="updatedInfo.description==undefined?'':updatedInfo.description" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'PRODUCT.status'   }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="product.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ product.status">
+                <input type="text" class="form-control" id="status" [value]="statusName" disabled>
+            </span>
+        </div>
+ </div> 
+ 
+</div>

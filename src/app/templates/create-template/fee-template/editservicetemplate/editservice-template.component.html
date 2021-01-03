@@ -1,0 +1,200 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.edit.slab' | translate}}</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body padding-custom">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div *ngIf="errorMessges" class="alert alert-danger">{{ errorMessges }}</div>
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                                      
+                  
+                    <form [formGroup]="serviceTemplateForm" >
+                        <!-- <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="serviceCode" class="custom-label" translate>Service
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceCode" class="custom-select form-control" 
+                                    (change)="onChangeService($event)">
+                                    <option value='' selected>Select </option>
+                                    <option *ngFor="let eWalletService of eWalletServiceList "
+                                        value="{{eWalletService.code}}">
+                                        {{eWalletService.name}}</option>
+                                </select>
+                                <span *ngIf="submitted && f.serviceCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceCode.errors.required" translate>please select service
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="serviceCategoryCode" class="custom-label" translate>Service Category
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceCategoryCode" class="custom-select form-control"  
+                                    (change)="onChangeServiceCategory($event)">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let serviceCategory of serviceCategoryList "
+                                        value="{{serviceCategory.code}}">
+                                        {{serviceCategory.name}}</option>
+                                </select>
+                                <span *ngIf="submitted && f.serviceCategoryCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceCategoryCode.errors.required" translate>please select service
+                                        category
+                                    </div>
+                                </span>
+                            </div>
+                        </div> -->
+                        <div class="form-group row">
+                         
+                            <div class="col-sm-6">
+                                <label for="serviceProviderCode" class="custom-label" translate>{{'TEMPLATE.template.service.provider' | translate}} 
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceProviderCode" class="custom-select form-control"   (change)="onChangeGetServiceProviderName($event)">
+                                  
+                                    <option *ngFor="let serviceProvider of serviceProviderList "
+                                        value="{{serviceProvider.code}}">
+                                        {{serviceProvider.name}}</option>
+                                 </select>
+                                <span *ngIf="submitted && f.serviceProviderCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceProviderCode.errors.required" translate>{{'TEMPLATE.template.select.service.provider' | translate}}
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="channelTypeCode" class="custom-label" translate>{{'TEMPLATE.template.channel.type' | translate}}
+                                   </label>
+                                <select formControlName="channelTypeCode" class="custom-select form-control"  (change)="onChangeGetChannelTypeName($event)"> 
+                                    <option *ngFor="let channelType of channelTypeList " value="{{channelType.code}}"
+                                        selected>
+                                        {{channelType.type}}</option>
+                       
+                                </select>
+
+                           
+                            </div>
+                        </div>
+                        <div  class="form-group row">
+                            
+                                <div class="col-sm-6">
+                                    <label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.fee.debit.from' | translate}} 
+                                        </label>
+                                    <select formControlName="bearer"  class="custom-select form-control">
+                                        <option value='' selected>
+                                            {{'TEMPLATE.template.select' | translate}} </option>
+                                        <option *ngFor="let bearer of bearerList " value="{{bearer.code}}">
+                                            {{bearer.name}}</option>
+                                 
+                                    </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="minValue" class="custom-label" translate>{{'TEMPLATE.template.fee.range' | translate}}
+                                            </label>
+                                        <input placeholder = "{{'TEMPLATE.minValue' | translate}}" formControlName="minValue" type="number" class="form-control">
+                                        
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="maxValue" class="custom-label" translate>&nbsp;
+                                          </label>
+                                        <input placeholder = "{{'TEMPLATE.maxValue' | translate}}" formControlName="maxValue" type="number" class="form-control">
+                                     
+                                    </div>
+                        </div>
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="channel_type" class="custom-label" translate>{{'TEMPLATE.template.calculation.type' | translate}} 
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="calculationTypeCode" class="custom-select form-control" (change)="onChangeGetCalculationTypeName($event)">
+                                   
+                                    <option *ngFor="let type of calculationTypeList " value="{{type.code}}">
+                                        {{type.type}}</option>
+                             
+                                </select>
+                                <span *ngIf="submitted && f.calculationTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f.calculationTypeCode.errors.required" translate>{{'TEMPLATE.template.select.calculation.type' | translate}} 
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="fixedFeeValue" class="custom-label" translate> {{'TEMPLATE.template.fixed.value' | translate}} 
+                                    </label>
+                                 <input   formControlName="fixedFeeValue" type="number" class="form-control">
+                            
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="percentFeeValue" class="custom-label" translate> {{'TEMPLATE.template.value.percent' | translate}}
+Valeur (%)
+                                  </label>
+                                 <input formControlName="percentFeeValue" type="number" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.tax.settlement.account' | translate}}
+                                    </label>
+                                <select formControlName="taxAccount"  class="custom-select form-control" (change)="onChangeGetTaxAccountName($event)">
+                                   
+                                    <option *ngFor="let taxAccount of walletOwnerList " value="{{taxAccount.code}}">
+                                        {{taxAccount.ownerName}}</option>
+                             
+                                </select>
+                                </div>
+                            <div class="col-sm-6">
+                                <label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.tax.type' | translate}} 
+                                    <span class="required-field">*</span></label>
+                                <!-- <select formControlName="taxTypeCode" class="custom-select form-control" (change)="onChangeGetTaxTypeName($event)">
+                                   
+                                    <option *ngFor="let type of taxTypeList " value="{{type.code}}">
+                                        {{type.typeEn}}</option>
+                             
+                                </select> -->
+                                <ng-multiselect-dropdown #multiSelect *ngIf="istaxtype"
+                                [placeholder]="'Select tax Type'" 
+                                [data]="taxTypeList" 
+                                [formControl]="f1.taxTypeCode" 
+                                [settings]="settings"
+                                [disabled]="false"
+                             
+                                >
+                                  </ng-multiselect-dropdown>
+                                <span *ngIf="submitted && f1.taxTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f1.taxTypeCode.errors.required" translate>{{'TEMPLATE.template.please.select.tax.type' | translate}}
+                                    </div>
+                                </span>
+                            </div>
+                            
+                        </div>
+                     
+                       
+               
+                    </form>
+
+                    <!-- add Button -->
+                    <div class="col-sm-12 text-right">
+                        <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                                class="fas fa-arrow-circle-left"></i>
+                             {{'TEMPLATE.template.back' | translate}}</button>&nbsp;
+                     
+
+                            <button (click)="updateTemplate()" class="btn btn-primary px-3">
+                                <i class="fas fa-refresh"></i> {{'TEMPLATE.template.template.update' | translate}}</button>&nbsp;
+                          
+
+                    </div>
+ 
+                   
+
+                    
+            </div>
+            </div>
+         
+   
+        </div>
+    </div>
+</div>

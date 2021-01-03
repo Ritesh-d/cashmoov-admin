@@ -1,0 +1,39 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'WALLET.wallet.owner.configuration' | translate}}</h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-sm-12">
+        <div class="card shadow mb-4">
+            <div class="form-group row">
+                <div class="card-body col-xl-4 col-lg-4 col-sm-4 parallel-col-margin text-center">
+                    <div class="region-currency-icon">
+                        <!-- <a   [routerLink]="['currency']">
+                            <i class="fas fa-money text-primary"></i>
+                            <p>Currency</p>
+                        </a> -->
+                        <a (click)="currency()" >
+                            <i class="fas fa-money text-primary"></i>
+                            <p>{{'WALLET.currency' | translate}}</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body col-xl-4 col-lg-4 col-sm-4 parallel-col-margin text-center">
+                    <div class="region-currency-icon">
+                        <a [routerLink]="['remittance']">
+                            <i class="fas fa-exchange-alt text-primary"></i>
+                            <p>{{'WALLET.remittance' | translate}}</p>
+                        </a>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-11 text-right">
+                    <button type="button" class="btn btn-danger px-3" (click)="onCancel()">
+                        <i class="fas fa-arrow-circle-left"></i> {{'WALLET.back' | translate}}</button> 
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

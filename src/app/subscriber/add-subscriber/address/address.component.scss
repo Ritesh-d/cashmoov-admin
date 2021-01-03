@@ -1,0 +1,8 @@
+@import '../add-subscriber.component.scss';
+
+div.hover-form :hover .form-action-container{
+    visibility: visible;
+}
+.form-action-container {
+    visibility: hidden;
+}

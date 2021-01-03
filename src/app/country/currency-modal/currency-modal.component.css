@@ -1,0 +1,24 @@
+@import '../country.component.css';
+
+::ng-deep .page-titles {
+    margin-bottom: 5px;
+    padding: 0p
+  }
+  .modal-body{
+    max-height: 450px !important;
+    overflow: auto !important;
+  }
+
+  .custom-label{
+    margin-bottom: auto;
+    font-style: italic;
+  }
+
+  ::ng-deep .modal-dialog {
+  max-width: 625px;
+
+  }
+
+  .header {
+    font-weight: bold;
+  }

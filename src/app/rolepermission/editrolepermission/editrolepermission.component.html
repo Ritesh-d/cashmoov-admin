@@ -1,0 +1,136 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+    <h1 class="h3 mb-0 text-gray-800">{{'ROLE.rolePermission' | translate}}</h1>
+</div> 
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item "><span (click)="navigateToSytemUserCreation()">{{'ROLE.rolePermission' | translate}}</span></li>
+    
+        <li *ngIf="editMode"class="breadcrumb-item active" aria-current="page">{{'MASTER.edit' | translate}}</li>
+    </ol>
+</nav>
+
+
+<div   class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">Edit Role Permission</h6> -->
+            </div>
+     
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                     
+                        <ul class="nav  mb-3" id="pills-tab" role="tablist">
+                          
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                             <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <form [formGroup]="dynamicForm" >
+                                <div class="form-group row mt-2">
+                                    <label for="role" class="col-sm-3 col-form-label text-right">{{'ROLE.roleTxt' | translate}}:</label>
+                                    <span class="required-field">*</span>
+
+                                    <div class="col-sm-5">
+                                     <select  formControlName="role"  class="custom-select form-control" id="role">
+                              
+                                        <option *ngFor = "let role of roleList " value="{{role.code}}">{{role.name}}</option>
+                                 
+                                    </select>
+                                
+                                    <span *ngIf="submitted && f.role.errors" class="validation-message">
+                                    <div *ngIf="f.role.errors.required" translate>{{'ROLE.pleaseselectRole' | translate}}</div>
+                                    </span>
+                                 
+                                    </div>
+                                    </div>
+                                    <div class="form-group row mt-2">
+                                        <label for="permission" class="col-sm-3 col-form-label text-right">{{'ROLE.permissionTxt' | translate}}:</label>
+                                        <span class="required-field">*</span>
+
+                                        <div class="col-sm-5">
+                                         <input  formControlName="permission"  type="text" class="form-control" id="permission">
+                                        <span *ngIf="submitted && f.permission.errors" class="validation-message">
+                                            <div *ngIf="f.permission.errors.required" translate>{{'ROLE.pleaseselectPermission' | translate}}</div>
+                                        </span>
+                                        </div>
+                                        </div>
+
+                                <div  *ngFor="let permission of t.controls; let i = index" >
+                                <form [formGroup]="permissions" > 
+
+                                        <div class="form-group row mt-2">
+                                            <label for="featureCode" class="col-sm-3 col-form-label text-right">{{'ROLE.feature' | translate}}:</label>
+                                            <span class="required-field">*</span>
+
+                                            <div class="col-sm-5">
+                                             <select  formControlName="featureCode"  class="custom-select form-control" id="featureCode">
+                                                <option value="" selected>Select</option>
+                                                <option *ngFor="let feature of featureList" value="{{feature.code}}">{{feature.name}}</option>
+                                            </select>
+                                         
+                                                <span *ngIf="submitted && permission.controles.featureCode.errors" class="validation-message">
+                                                    <div *ngIf="permission.controles.featureCode.errors.required" translate>{{'ROLE.pleaseselectFeature' | translate}}</div>
+                                                </span>
+                                            </div>
+                                            </div>
+                                                <div class="form-group row">
+                                                    <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                                    
+                                                    <div class="custom-control">
+                                                     
+                                                    <input  formControlName="create"  type="checkbox"   id="create"> &nbsp;
+                                                    <label       for="create">{{'ROLE.create' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "view" type="checkbox"    id="view">  &nbsp;
+                                                    <label       for="view">{{'MASTER.view' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    
+                                                    <div class="custom-control">
+                                                    <input formControlName= "edit" type="checkbox"  id="edit"> &nbsp;  
+                                                    <label     for="edit">{{'MASTER.edit' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "approve" type="checkbox"  id="approve"> &nbsp;  
+                                                    <label     for="approve">{{'ROLE.approve' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "delete" type="checkbox"  id="delete"> &nbsp;
+                                                    <label     for="delete">{{'MASTER.delete' | translate}}</label>
+                                                    </div>
+                                                    
+                                          
+                                                    </div>
+                                </form>
+                                </div>
+
+                            </form>
+                        </div>
+ 
+         
+
+                            
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                            <div class="col-sm-9 text-right">
+                                <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i  class="fas fa-arrow-circle-left"></i> {{'MASTER.back' | translate}}</button>&nbsp;
+                                <button type="button"  (click)="onSubmit()" class="btn btn-primary px-3"><i class="fas"></i> {{'ROLE.submit' | translate}}</button> 
+                    
+                            </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

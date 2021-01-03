@@ -1,0 +1,25 @@
+
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{ selectedTemplateCategory }}</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div [ngSwitch]="templateCategoryCode">
+                        <!-- <app-service-profile-template *ngSwitchCase="serviceProfileTemplateCategoryCode"></app-service-profile-template> -->
+                        <app-subscription-profile-template *ngSwitchCase="subscriptionProfileTemplateCategoryCode"></app-subscription-profile-template>
+                        <!-- <app-fee-commission-template *ngSwitchCase="feeCommssionTemplateCategoryCode"></app-fee-commission-template> -->
+                        <app-limit-restriction-template *ngSwitchCase="limitsRestrictionProfileTemplateCategoryCode"></app-limit-restriction-template>
+                        <app-credit-limit-template *ngSwitchCase="creditLimitTemplateCategoryCode"></app-credit-limit-template>
+                        <app-overdraft-profile-template *ngSwitchCase="overdraftProfileTemplateCategoryCode"></app-overdraft-profile-template>
+                        <app-promotion-profile-template *ngSwitchCase="promotionProfileTemplateCategoryCode"></app-promotion-profile-template>
+                        <app-loyalty-profile-template *ngSwitchCase="loyaltyProfileTemplateCategoryCode"></app-loyalty-profile-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

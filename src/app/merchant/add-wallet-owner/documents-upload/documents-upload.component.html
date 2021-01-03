@@ -1,0 +1,50 @@
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+<div *ngIf="!documentsTypes" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'WALLET.loading' | translate}}</span>
+    </div>
+</div>
+<form *ngIf="documentsTypes" [formGroup]="documentsForm" class="full-width">
+    <div formArrayName="documents" class="form-group row">
+        <div class="document-note">{{ docInfo }}</div>
+        <div class="col-lg-12 col-xl-12 d-sm-flex upload-margin"
+            *ngFor="let document of getDocumentsControl; let i = index" [formGroupName]="i">
+
+            <div class="float-left col-sm-3">
+                <select class="custom-select" formControlName="documentType" (change)="docHandler($event, i)">
+                    <option *ngFor="let docType of documentsTypes" [value]="docType.code">
+                        {{ docType.type }}</option>
+                </select>
+            </div>
+            <div class="custom-file float-left">
+                <input type="file" class="custom-file-input" formControlName="file"
+                    (change)="onFileSelected($event, i)">
+                <label class="custom-file-label" for="file">{{ filesNInfo[i].fileName }}</label>
+            </div>
+            <div class="float-left col-sm-2">
+                <button *ngIf="showUpload(i)" type="button"
+                    class="btn btn-primary" (click)="onUpload(i)">
+                    <i class="fas fa-cloud-upload-alt"></i>&nbsp;{{'WALLET.upload' | translate}}</button>
+            </div>
+            <div class="float-left file-upload-progress">
+                <div *ngIf="filesNInfo[i].uploadstart" class="progress">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="70" aria-valuemin="0"
+                        aria-valuemax="100" [ngStyle]="{width: filesNInfo[i].uploaded + '%'}">
+                    </div>
+                </div>
+                <span *ngIf="!filesNInfo[i].uploadstart" class="float-right custom-hyperlink">
+                    <a class="custom-hyperlink" title="{{'MASTER.delete' | translate}}" (click)="onRemoveDocument(i)">
+                        <i class="fas fa-trash-alt text-danger"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="form-group row text-right">
+        <div class="text-right full-width margin-r-1">
+            <a (click)="onAddDocument()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-plus-circle"></i> {{'WALLET.add.document' | translate}}</a>
+        </div>
+    </div>
+</form>

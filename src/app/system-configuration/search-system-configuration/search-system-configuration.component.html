@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+        <div>
+          
+          <form [formGroup]="systemConfigFormGroup" *ngIf="formLoadFlag">
+            
+
+            <div class="form-group m-t-20">
+              <!-- <div *ngIf="!systemConfigFormGroup.valid">At least one order must be selected</div>
+              <div *ngIf="selectcheckboxflag == 0" translate class="msgdecorator">err_systemconfig_selectcheckbox</div> -->
+              <div class="table-responsive text-nowrap">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <!-- <th scope="col" translate>LABEL_ACTION</th> -->
+                      <th scope="col" translate>lbl_configuration_code</th>
+                      <th scope="col" translate>lbl_description_sysconfg</th>
+                      <th scope="col" translate>lbl_value_type</th>
+                      <th scope="col" translate>lbl_default_value</th>
+                      <th scope="col" translate>lbl_min_value</th>
+                      <th scope="col" translate>lbl_max_value</th>
+                      <th scope="col" translate>lbl_max_size</th>
+                      <th scope="col" translate>lbl_allowed_values</th>
+                      <th scope="col" translate>lbl_create_date</th>
+                      <th scope="col" translate>lbl_create_by</th>
+                      <th scope="col" translate>lbl_last_modify_date</th>
+                      <th scope="col" translate>lbl_last_modify_by</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+                    <tr *ngFor="let sysconf of systemConfigurationList;let i = index">
+                      <!-- <td><input type="checkbox" [disabled]="!sysconf.checkboxshow" (click)="onCheck()" #checkboxes
+                          (change)="onChange($event, sysconf)"></td> -->
+                          <!-- (focusout)="updateValueInList($event,i)" -->
+                      <td>{{sysconf.configurationCode}}</td>
+                      <td>{{sysconf.description}}</td>
+                      <td>{{sysconf.valueType}}</td>
+                      <td *ngIf="sysconf.modifiedAllowed"><input type="text" class="form-control" 
+                        (change)="onChange($event,sysconf)" (focusout)="updateValueInList($event,i)"
+                          formControlName="defaultValue" value="{{sysconf.defaultValue}}"></td>
+                      <td *ngIf="!sysconf.modifiedAllowed">{{sysconf.defaultValue}}</td>
+                      <td>{{sysconf.minValue}}</td>
+                      <td>{{sysconf.maxValue}}</td>
+                      <td>{{sysconf.maxSize}}</td>
+                      <td>{{sysconf.allowedValue}}</td>
+                      <td>{{sysconf.createdOn}}</td>
+                      <td>{{sysconf.createdBy}}</td>
+                      <td>{{sysconf.lastModifiedOn}}</td>
+                      <td>{{sysconf.lastModifiedBy}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="form-group  m-t-40">
+              <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-5 text-center">
+                  <button id="submitForm" type="submit" class="btn btn-primary" (click)="submitForm($event)">	{{'MASTER.submit' | translate}}</button>
+                </div>
+                <div class="col-md-4"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

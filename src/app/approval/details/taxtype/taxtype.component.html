@@ -1,0 +1,84 @@
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    
+    <!-- <a [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> Add Tax Type </a> -->
+</div>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                
+              
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <form [formGroup]="addTaxForm"> 
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-3 col-form-label text-right">Tax Type<span
+                            class="required-field">*</span></label>
+                        <div class="col-sm-5">
+                            <input formControlName="typeEn" type="text" class="form-control" minlength="3" readonly>
+                              <div  *ngIf="f.typeEn.errors?.minlength" class="validation-message" translate>Tax Type must be atleast 3 characters long </div>
+                              <div  *ngIf="f.typeEn.errors?.pattern" class="validation-message" translate>Tax Type accept only [e.g. numbers , alphabets) </div>
+                             <span *ngIf="submitted && f.typeEn.errors" class="validation-message">
+                                <div *ngIf="f.typeEn.errors.required" translate>please enter tax type
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </form>
+                <div *ngIf="!displaytable" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                        cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tax Type </th>
+                                <th>Calculation Type </th>
+                                <th>{{'TEMPLATE.template.range.mintomax' | translate}}</th>
+                                <th>{{'TEMPLATE.template.value.percent' | translate}}</th>
+                                <th> Value(Fixed) </th>
+                                <th>Status</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        
+                            <tr *ngFor="let data of taxConfigurationList">
+                        
+                                <td> {{data.taxTypeName}}</td>
+                                <td> {{data.calculationTypeName}}  </td>
+                                <td>[{{data.minValue}} - {{data.maxValue}}]</td>
+                                <td> {{data.percentValue}}</td>
+                                <td> {{data.value}}</td>
+                                <td> {{data.status}}</td>
+                                <td> {{data.state}}</td>
+                                <td> 
+                                    <a (click)="view(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="View"><i
+                                            class="fas fa-eye text-primary"></i></a>&nbsp;
+                
+                                    <a   *ngIf="display != 'none' && data.state ===Approved" (click)="edit(data)"  style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Edit"><i
+                                            class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>

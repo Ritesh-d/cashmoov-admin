@@ -1,0 +1,76 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'SERVICE.viewOperator' |  translate}}</h6>
+</div>
+
+<div class="modal-body">
+
+    <div *ngIf="fetchingData" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">{{'SERVICE.loading' |  translate}}</span>
+        </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="!fetchingData && !errorMessage">
+        <!-- country / code -->
+        <div class="form-group row">
+            <!-- country -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'SERVICE.service' |  translate}}</label>
+                <input type="text" class="form-control" [value]="selectedService.name" disabled>
+            </div>
+            <!-- code -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'SERVICE.category' |  translate}}</label>
+                <input type="text" class="form-control" [value]="categoryName" disabled>
+            </div>
+        </div>
+       
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h1 class="h3 mb-0 text-gray-800"></h1>
+            <a id= "create001"  *ngIf="setPermission.create"  (click)="addOperater(selectedService.code)" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus-circle"></i> {{'SERVICE.addOperator' |  translate}}</a>
+        </div>
+        <hr>
+        <!-- region listing -->
+        <div class="table-responsive">
+            <table *ngIf="!fetchingData"  datatable class="table table-bordered table-striped" [dtOptions]="dtOption"
+                width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>{{'SERVICE.name_label' |  translate}}</th>
+                        <th>{{'SERVICE.serviceProvider' |  translate}}</th>
+                        <th>{{'SERVICE.status' |  translate}}</th>
+                        <th>{{'SERVICE.state' |  translate}}</th>
+                        <th>{{'SERVICE.creationDate' |  translate}}</th>
+                        <th>{{'COMMON.action_label' |  translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let operator of operatorList; let i = index;">
+                        <td> {{ operator.name }}  </td>
+                        <td> {{ operator.serviceProviderName }}  </td>
+                        <td>{{ operator.status }}</td>
+                        <td>{{ operator.state }}</td>
+                        <td><span type="hidden" style="display: none;">{{ operator.creationDate | date: 'YYYYMMDD'}} </span>{{ operator.creationDate | date: 'dd/MM/yyyy hh:mm:SS a' }}</td>
+
+                        <td> 
+                            <!--  -->
+                            <div class="feature-name">
+                                <a id= "edit001" *ngIf="operator.state=='Approved' && setPermission.edit" (click)="editOperator(selectedService.code,operator.code, operator.name , operator.status,operator.serviceProviderCode,operator.serviceProviderName )" style="cursor:pointer"
+                                    placement="left" ngbTooltip="{{'SERVICE.editOperator'  |  translate }}">
+                                    <i class="fas fa-edit text-secondary"></i></a>&nbsp;
+                           
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'COMMON.button.close' |  translate}}</button>
+</div>

@@ -1,0 +1,53 @@
+.required-field {
+    color: #e74a3b;
+  }
+  
+  .validation-message {
+    color: #e74a3b;
+    font-size: smaller;
+    /* border: solid 1px #e74a3b; */
+    border-radius: 3px;
+    padding: 2px;
+    /* background-color: bisque; */
+    display: block;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: lowercase;
+    font-style: italic;
+    overflow-wrap: break-word;
+  }
+
+  .disable-option {
+    background-color: lightsteelblue;
+   
+    cursor: not-allowed;
+  }
+
+  ::ng-deep .custom-control-input{
+    vertical-align: top;
+  }
+  ::ng-deep .custom-control{
+    vertical-align: top;
+  }
+  ::ng-deep .custom-control-label{
+    vertical-align: top;
+  }
+  ::ng-deep .custom-control, custom-switch{
+    vertical-align: top;
+  }
+  .country-img {
+    height: 15px;
+    width: 22px;
+    margin-top: -3px;
+  }
+
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+   
+  text-align:right;
+}

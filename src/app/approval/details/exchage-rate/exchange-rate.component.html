@@ -1,0 +1,143 @@
+<div *ngIf="!data" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+ 
+<div *ngIf="data">
+ 
+    <div class="form-group row">
+        
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.name' | translate }}</label>
+            <input *ngIf="this.unchanged.name" type="text" class="form-control unchanged-data" id="name"
+                [value]="data.name==undefined?'':data.name" disabled>
+            <span *ngIf="!this.unchanged.name" [ngbTooltip]="'earlier it was: '+ data.name">
+                <input type="text" class="form-control" id="name" [value]="updatedInfo.name" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.conversion.rate' | translate }}</label>
+            <input *ngIf="this.unchanged.value" type="text" class="form-control unchanged-data" id="value"
+                [value]="data.value==undefined?'':data.value" disabled>
+            <span *ngIf="!this.unchanged.value" [ngbTooltip]="'earlier it was: '+ data.value">
+                <input type="text" class="form-control" id="value" [value]="updatedInfo.value" disabled>
+            </span>
+        </div>
+    </div>
+  
+    <div class="form-group row">
+      
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.sending.currency' | translate }}</label>
+            <input *ngIf="this.unchanged.sendCurrencyCode" type="text" class="form-control unchanged-data" id="sendCurrencyCode"
+                [value]="data.sendCurrencyName==undefined?'':data.sendCurrencyName" disabled>
+            <span *ngIf="!this.unchanged.sendCurrencyCode" [ngbTooltip]="'earlier it was: '+ data.sendCurrencyName">
+                <input type="text" class="form-control" id="sendCurrencyCode" [value]="sendingCurrencyName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.receiving.currency' | translate }}  </label>
+            <input *ngIf="this.unchanged.receiveCurrencyCode" type="text" class="form-control unchanged-data" id="receiveCurrencyCode"
+                [value]="data.receiveCurrencyName==undefined?'':data.receiveCurrencyName" disabled>
+            <span *ngIf="!this.unchanged.receiveCurrencyCode" [ngbTooltip]="'earlier it was: '+ data.receiveCurrencyName">
+                <input type="text" class="form-control " id="receiveCurrencyCode" [value]="receivingCurrencyName" disabled>
+            </span>
+        </div>
+    </div>
+   
+    <div class="form-group row">
+      
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.sending.country' | translate }}</label>
+            <input *ngIf="this.unchanged.sendCountryCode" type="text" class="form-control unchanged-data" id="sendCountryCode"
+                [value]="data.sendCountryName==undefined?'':data.sendCountryName" disabled>
+            <span *ngIf="!this.unchanged.sendCountryCode" [ngbTooltip]="'earlier it was: '+ data.sendCountryName">
+                <input type="text" class="form-control  " id="sendCountryCode" [value]="sendingCountryName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.receiving.country' | translate }}</label>
+            <input *ngIf="this.unchanged.receiveCountryCode" type="text" class="form-control unchanged-data" id="receiveCountryCode"
+                [value]="data.receiveCountryName==undefined?'':data.receiveCountryName" disabled>
+            <span *ngIf="!this.unchanged.receiveCountryCode" [ngbTooltip]="'earlier it was: '+ data.receiveCountryName">
+                <input type="text" class="form-control  " id="receiveCountryCode" [value]="receivingContryName" disabled>
+            </span>
+        </div>
+    </div>
+    <div *ngIf= "data.payInstituteName" class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.sending.institute' | translate }}</label>
+            <input *ngIf="this.unchanged.remitInstituteCode" type="text" class="form-control unchanged-data" id="remitInstituteCode"
+                [value]="data.remitInstituteName==undefined?'':data.remitInstituteName" disabled>
+            <span *ngIf="!this.unchanged.remitInstituteCode" [ngbTooltip]="'earlier it was: '+ data.remitInstituteName">
+                <input type="text" class="form-control  " id="remitInstituteCode" [value]="sendingInstituteName" disabled>
+            </span>
+        </div>
+ 
+        <div  class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.receiving.institute' | translate }}</label>
+            <input *ngIf="this.unchanged.payInstituteCode" type="text" class="form-control unchanged-data" id="payInstituteCode"
+                [value]="data.payInstituteName==undefined?'':data.payInstituteName" disabled>
+            <span *ngIf="!this.unchanged.payInstituteCode" [ngbTooltip]="'earlier it was: '+ data.payInstituteName">
+                <input type="text" class="form-control  " id="payInstituteCode" [value]="receivingInstitureName" disabled>
+            </span>
+        </div>
+    </div>
+     <div *ngIf= "data.payAgentName" class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.sending.agent' | translate }}</label>
+            <input *ngIf="this.unchanged.remitAgentCode" type="text" class="form-control unchanged-data" id="remitAgentCode"
+                [value]="data.remitAgentName==undefined?'':data.remitAgentName" disabled>
+            <span *ngIf="!this.unchanged.remitAgentCode" [ngbTooltip]="'earlier it was: '+ data.remitAgentName">
+                <input type="text" class="form-control  " id="remitAgentCode" [value]="sendingAgentName" disabled>
+            </span>
+        </div>
+ 
+        <div  class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.receiving.agent' | translate }}</label>
+            <input *ngIf="this.unchanged.payAgentCode" type="text" class="form-control unchanged-data" id="payAgentCode"
+                [value]="data.payAgentName==undefined?'':data.payAgentName" disabled>
+            <span *ngIf="!this.unchanged.payAgentCode" [ngbTooltip]="'earlier it was: '+ data.payAgentName">
+                <input type="text" class="form-control  " id="payAgentCode" [value]="receivingAgentName" disabled>
+            </span>
+        </div>
+    </div>
+   
+    <div *ngIf="data.payBranchName" class="form-group row">
+ 
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.sending.branch' | translate }}</label>
+            <input *ngIf="this.unchanged.remitBranchCode" type="text" class="form-control unchanged-data" id="remitBranchCode"
+                [value]="data.remitBranchName==undefined?'':data.remitBranchName" disabled>
+            <span *ngIf="!this.unchanged.remitBranchCode" [ngbTooltip]="'earlier it was: '+ data.remitBranchName">
+                <input type="text" class="form-control  " id="remitBranchCode" [value]="sendingBranchName" disabled>
+            </span>
+        </div>
+ 
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.receiving.branch' | translate }}</label>
+            <input *ngIf="this.unchanged.payBranchCode" type="text" class="form-control unchanged-data" id="payBranchCode"
+                [value]="data.payBranchName==undefined?'':data.payBranchName" disabled>
+            <span *ngIf="!this.unchanged.payBranchCode" [ngbTooltip]="'earlier it was: '+ data.payBranchName">
+                <input type="text" class="form-control  " id="payBranchCode" [value]="receivingBranchName" disabled>
+            </span>
+        </div>
+    </div>
+ 
+    <div class="form-group row">
+      
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="data.status==undefined?'':data.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ data.status">
+                <input type="text" class="form-control  " id="status" [value]="updatedInfo.status" disabled>
+            </span>
+        </div>
+      
+       
+    </div>
+   
+    
+</div>

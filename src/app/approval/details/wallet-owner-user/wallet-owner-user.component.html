@@ -1,0 +1,241 @@
+<div *ngIf="!user" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="user">
+    
+    <div  class="form-group row">
+         <div class="col-sm-6" > <label class="custom-label"><b>User Type</b> <span>&nbsp;</span>  : <span>&nbsp;</span>    {{user.walletOwnerUserTypeName}} </label></div>
+    </div>
+    <hr>
+    <div class="form-group row">
+        
+        
+        <div class="col-sm-6  ">
+            <label   class="custom-label" translate>{{user.walletOwnerUserTypeName}} Code</label>
+ 
+            <input *ngIf="this.unchanged.userName" type="text" class="form-control unchanged-data" id="code"
+                [value]="user.code" disabled>
+            <span *ngIf="!this.unchanged.code" [ngbTooltip]="'earlier it was: '+ user.code">
+                <input type="text" class="form-control" id="code" [value]="code" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6  ">
+            <label class="custom-label" translate>User Name</label>
+            <input *ngIf="this.unchanged.userName" type="text" class="form-control unchanged-data" id="userName"
+                [value]="user.userName" disabled>
+            <span *ngIf="!this.unchanged.userName" [ngbTooltip]="'earlier it was: '+ user.userName">
+                <input type="text" class="form-control" id="userName" [value]="updatedInfo.userName" disabled>
+            </span>
+        </div>
+      
+    </div>
+  
+    <div class="form-group row">
+        <!-- firstName -->
+       
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{user.walletOwnerUserTypeName}} Name</label>
+            <input *ngIf="this.unchanged.firstName" type="text" class="form-control unchanged-data" id="firstName"
+                [value]="user.firstName" disabled>
+            <span *ngIf="!this.unchanged.firstName" [ngbTooltip]="'earlier it was: '+ user.firstName">
+                <input type="text" class="form-control " id="firstName" [value]="updatedInfo.firstName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Surname</label>
+            <input *ngIf="this.unchanged.lastName" type="text" class="form-control unchanged-data" id="lastName"
+                [value]="user.lastName==undefined?'':user.lastName" disabled>
+                
+            <span *ngIf="!this.unchanged.lastName" [ngbTooltip]="'earlier it was: '+ user.lastName">
+                <input type="text" class="form-control  " id="lastName" [value]="updatedInfo.lastName" disabled>
+            </span>
+        </div>
+        <!-- lastName -->
+      
+    </div>
+    <!-- userName / aliasName -->
+    <div class="form-group row">
+        <!-- userName -->
+       
+       
+        <!-- aliasName -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Email Id</label>
+            <input *ngIf="this.unchanged.email" type="text" class="form-control unchanged-data" id="email"
+                [value]="user.email" disabled>
+            <span *ngIf="!this.unchanged.email" [ngbTooltip]="'earlier it was: '+ user.email">
+                <input type="text" class="form-control " id="email" [value]="updatedInfo.email" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Mobile Number</label>
+            <input *ngIf="this.unchanged.mobileNumber" type="text" class="form-control unchanged-data" id="mobileNumber"
+                [value]="user.mobileNumber" disabled>
+            <span *ngIf="!this.unchanged.mobileNumber" [ngbTooltip]="'earlier it was: '+ user.mobileNumber">
+                <input type="text" class="form-control  " id="mobileNumber" [value]="updatedInfo.mobileNumber" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+     
+      
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Id Proof Number</label>
+            <input *ngIf="this.unchanged.idProofNumber" type="text" class="form-control unchanged-data" id="idProofNumber"
+                [value]="user.idProofNumber" disabled>
+            <span *ngIf="!this.unchanged.idProofNumber" [ngbTooltip]="'earlier it was: '+ user.idProofNumber">
+                <input type="text" class="form-control  " id="idProofNumber" [value]="updatedInfo.idProofNumber" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Id Prof Type</label>
+            <input *ngIf="this.unchanged.idProofTypeName" type="text" class="form-control unchanged-data" id="idProofTypeName"
+                [value]="user.idProofTypeName" disabled>
+            <span *ngIf="!this.unchanged.idProofTypeName" [ngbTooltip]="'earlier it was: '+ user.idProofTypeName">
+                <input type="text" class="form-control  " id="idProofTypeName" [value]="updatedInfo.idProofTypeName" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Id Expity Date</label>
+            <input *ngIf="this.unchanged.idExpiryDate" type="text" class="form-control unchanged-data" id="idExpiryDate"
+                [value]="user.idExpiryDate | date:'yyyy-MM-dd'" disabled>
+            <span *ngIf="!this.unchanged.idExpiryDate" [ngbTooltip]="'earlier it was: '+ user.idExpiryDate">
+                <input type="text" class="form-control  " id="idExpiryDate" [value]="updatedInfo.idExpiryDate" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Id Issuing Country</label>
+            <input *ngIf="this.unchanged.issuingCountryName " type="text" class="form-control unchanged-data" id="issuingCountryName"
+                [value]="user.issuingCountryName==undefined?'':user.issuingCountryName" disabled>
+                
+            <span *ngIf="!this.unchanged.issuingCountryName " [ngbTooltip]="'earlier it was: '+ user.issuingCountryName">
+                <input type="text" class="form-control  " id="issuingCountryName" [value]="updatedInfo.issuingCountryName" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+     
+       
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Date Of Birth</label>
+            <input *ngIf="this.unchanged.dateOfBirth" type="text" class="form-control unchanged-data" id="dateOfBirth"
+                [value]="user.dateOfBirth | date:'yyyy-MM-dd'" disabled>
+            <span *ngIf="!this.unchanged.dateOfBirth" [ngbTooltip]="'earlier it was: '+ user.dateOfBirth">
+                <input type="text" class="form-control  " id="dateOfBirth" [value]="updatedInfo.dateOfBirth" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Gender</label>
+            <input   type="text" class="form-control unchanged-data" id="gender"  [value]="user.gender" disabled>
+                
+        </div>
+    </div>
+     
+    <hr>
+   <div *ngFor= "let addresslist of addressList; "> 
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Address Type</label>
+            <input *ngIf="this.address.addTypeName" type="text" class="form-control unchanged-data" id="addTypeName"
+                [value]="addresslist.addTypeName" disabled>
+            <span *ngIf="!this.address.addTypeName" [ngbTooltip]="'earlier it was: '+ addresslist.addTypeName">
+                <input type="text" class="form-control  " id="addTypeName" [value]="updatedInfo.addTypeName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Location</label>
+            <input *ngIf="this.address.location" type="text" class="form-control unchanged-data" id="location"
+                [value]="addresslist.location==undefined?'':addresslist.location" disabled>
+            <span *ngIf="!this.address.location" [ngbTooltip]="'earlier it was: '+ addresslist.location">
+                <input type="text" class="form-control  " id="location" [value]="updatedInfo.location" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Address Line 1</label>
+            <input *ngIf="this.address.addressLine1" type="text" class="form-control unchanged-data" id="addressLine1"
+                [value]="addresslist.addressLine1" disabled>
+            <span *ngIf="!this.address.addressLine1" [ngbTooltip]="'earlier it was: '+ addresslist.addressLine1">
+                <input type="text" class="form-control  " id="addressLine1" [value]="updatedInfo.addressLine1" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Address Line 2</label>
+            <input *ngIf="this.address.addressLine2" type="text" class="form-control unchanged-data" id="addressLine2"
+                [value]="addresslist.addressLine2==undefined?'':addresslist.addressLine2" disabled>
+            <span *ngIf="!this.address.addressLine2" [ngbTooltip]="'earlier it was: '+ addresslist.addressLine2">
+                <input type="text" class="form-control  " id="addressLine2" [value]="updatedInfo.addressLine2" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>Country</label>
+            <input *ngIf="this.address.countryName" type="text" class="form-control unchanged-data" id="countryName"
+                [value]="addresslist.countryName" disabled>
+            <span *ngIf="!this.address.countryName" [ngbTooltip]="'earlier it was: '+ addresslist.countryName">
+                <input type="text" class="form-control  " id="countryName" [value]="updatedInfo.countryName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3 parallel-col-margin">
+            <label class="custom-label" translate>Region Name</label>
+            <input *ngIf="this.address.regionName" type="text" class="form-control unchanged-data" id="regionName"
+                [value]="addresslist.regionName" disabled>
+            <span *ngIf="!this.address.regionName" [ngbTooltip]="'earlier it was: '+ addresslist.regionName">
+                <input type="text" class="form-control  " id="regionName" [value]="updatedInfo.regionName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3 parallel-col-margin">
+            <label class="custom-label" translate>City</label>
+            <input *ngIf="this.address.city" type="text" class="form-control unchanged-data" id="city"
+                [value]="addresslist.city==undefined?'':addresslist.city" disabled>
+            <span *ngIf="!this.address.city" [ngbTooltip]="'earlier it was: '+ addresslist.city">
+                <input type="text" class="form-control  " id="city" [value]="updatedInfo.city" disabled>
+            </span>
+        </div>
+       
+    </div>
+     
+   </div>
+    <div class="form-group row">
+    <div class="col-sm-6 parallel-col-margin">
+        <label class="custom-label" translate>Status</label>
+        <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+            [value]="user.status" disabled>
+        <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ user.status">
+            <input type="text" class="form-control " id="status" [value]="updatedInfo.status" disabled>
+        </span>
+    </div>
+    <div class="col-sm-3 parallel-col-margin" *ngIf="showdate">
+        <label class="custom-label" translate>From Date</label>
+        <!-- <input type="text" class="form-control" id="fromdate"
+            [value]="updatedInfo.fromDate" disabled> -->
+            <input *ngIf="this.unchanged.fromDate" type="text" class="form-control unchanged-data" id="fromDate"
+            [value]="user.fromDate" disabled>
+        <span *ngIf="!this.unchanged.fromDate" [ngbTooltip]="'earlier it was: '+ user.fromDate==undefined?'':user.fromDate">
+            <input type="text" class="form-control " id="fromDate" [value]="updatedInfo.fromDate" disabled>
+        </span>
+        
+    </div>
+    <div class="col-sm-3 parallel-col-margin"  *ngIf="showdate">
+        <label class="custom-label" translate>To Date</label>
+        <!-- <input type="text" class="form-control  " id="todate"
+            [value]="updatedInfo.toDate" disabled> -->
+            <input *ngIf="this.unchanged.toDate" type="text" class="form-control unchanged-data" id="toDate"
+            [value]="user.toDate" disabled>
+        <span *ngIf="!this.unchanged.toDate" [ngbTooltip]="'earlier it was: '+ user.toDate==undefined?'':user.toDate">
+            <input type="text" class="form-control " id="toDate" [value]="updatedInfo.toDate" disabled>
+        </span>
+    </div>
+    </div>
+ 
+  
+    
+</div>

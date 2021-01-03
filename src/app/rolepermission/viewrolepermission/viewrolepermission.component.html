@@ -1,0 +1,142 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'ROLE.rolePermission' | translate}}</h1>
+</div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">{{'ROLE.dashboard' | translate}}</a></li>
+        <li class="breadcrumb-item"><span (click)="navigateToSytemUserCreation()">{{'ROLE.rolePermission' | translate}}</span></li>
+        <li class="breadcrumb-item active" aria-current="page">{{'MASTER.view' | translate}}</li>
+    </ol>
+</nav>
+
+<div *ngIf= "true" class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">View Role Permission</h6> -->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                     
+                        <ul class="nav  mb-3" id="pills-tab" role="tablist">
+                          
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                          
+                            <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <form  >
+                                   
+                                        <div class="form-group row mt-2">
+                                            <label for="role" class="col-sm-3 col-form-label text-right">{{'ROLE.roleTxt' | translate}}:</label>
+                                            <div class="col-sm-5">
+                                            <input type="text" value="{{role}}" class="form-control" id="role" disabled>
+                                            </div>
+                                            </div>
+                                            <div class="form-group row mt-2">
+                                                <label for="permission" class="col-sm-3 col-form-label text-right">{{'ROLE.permissionTxt' | translate}}:</label>
+                                                <div class="col-sm-5">
+                                                <input type="text" value="{{permission}}" class="form-control" id="permission" disabled>
+                                                </div>
+                                                </div>
+                                        <div class="form-group row mt-2">
+                                            <label for="featureCode" class="col-sm-3 col-form-label text-right">{{'ROLE.featureTxt' | translate}}:</label>
+                                            <div class="col-sm-5">
+                                             <select class="custom-select form-control" id="featureCode" disabled>
+                                                <option value="{{featureCode}}" selected>{{featureCode}}</option>
+                                                
+                                            </select>
+                                            </div>
+                                            </div>
+                                            <div class="form-group row mt-2">
+                                                <label for="status" class="col-sm-3 col-form-label text-right">{{'ROLE.statusTxt' | translate}}:</label>
+                                                <div class="col-sm-5">
+                                                 <select class="custom-select form-control" id="status" disabled>
+                                                    <option value="{{status}}" selected>{{status}}</option>
+                                                    
+                                                </select>
+                                                </div>
+                                                </div>
+                            
+                                                <div class="form-group row">
+                                                    <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                                    <!-- <div class="col-sm-5"> -->
+                                                    
+                                                    <!-- <div class="custom-control custom-switch">
+                                                    <input *ngIf= "create" type="checkbox"   id="create" checked disabled> 
+                                                    <input *ngIf= "!create"type="checkbox"   id="create" disabled> 
+                                                    <label   for="create">Create</label>
+                                                    </div>&nbsp; &nbsp;
+                                                    <div class="custom-control custom-switch">
+                                                    <input *ngIf= "view" type="checkbox"   id="view" checked disabled>
+                                                    <input *ngIf= "!view" type="checkbox"   id="view" disabled >  
+                                                    <label   for="view">View</label>
+                                                    </div>&nbsp; &nbsp;
+                                                    
+                                                    <div class="custom-control custom-switch">
+                                                    <input *ngIf= "edit" type="checkbox"   id="edit" checked disabled>
+                                                    <input *ngIf= "!edit" type="checkbox"   id="edit" disabled>
+                                                    <label   for="edit">Edit</label>
+                                                    </div>&nbsp; &nbsp;
+                                                    <div class="custom-control custom-switch">
+                                                    <input *ngIf= "approve" type="checkbox"   id="approve" checked disabled>
+                                                    <input *ngIf= "!approve" type="checkbox"   id="approve" disabled  >
+                                                    <label   for="approve">Approve</label>
+                                                    </div>&nbsp; &nbsp;
+                                                    <div class="custom-control custom-switch">
+                                                        <input *ngIf= "delete" type="checkbox"   id="delete" checked disabled>
+                                                        <input *ngIf= "!delete" type="checkbox"   id="delete" disabled  >
+                                                        <label   for="delete">Delete</label>
+                                                        </div> -->
+                                                        <div class="custom-control  ">
+                                                            <input *ngIf= "create" type="checkbox"   id="create" checked disabled> 
+                                                            <input *ngIf= "!create"type="checkbox"   id="create" disabled> 
+                                                            &nbsp;<label   for="create">{{'ROLE.create' | translate}}</label>
+                                                            </div>&nbsp; &nbsp;
+                                                            <div class="custom-control custom-switch">
+                                                            <input *ngIf= "view" type="checkbox"   id="view" checked disabled>
+                                                            <input *ngIf= "!view" type="checkbox"   id="view" disabled >  
+                                                            &nbsp;<label   for="view">{{'MASTER.view' | translate}}</label>
+                                                            </div>&nbsp; &nbsp;
+                                                            
+                                                            <div class="custom-control  ">
+                                                            <input *ngIf= "edit" type="checkbox"   id="edit" checked disabled>
+                                                            <input *ngIf= "!edit" type="checkbox"   id="edit" disabled>
+                                                            &nbsp;<label   for="edit">{{'MASTER.edit' | translate}}</label>
+                                                            </div>&nbsp; &nbsp;
+                                                            <div class="custom-control ">
+                                                            <input *ngIf= "approve" type="checkbox"   id="approve" checked disabled>
+                                                            <input *ngIf= "!approve" type="checkbox"   id="approve" disabled  >
+                                                            &nbsp;<label   for="approve">{{'ROLE.approve' | translate}}</label>
+                                                            </div>&nbsp; &nbsp;
+                                                            <div class="custom-control  ">
+                                                                <input *ngIf= "delete" type="checkbox"   id="delete" checked disabled>
+                                                                <input *ngIf= "!delete" type="checkbox"   id="delete" disabled  >
+                                                                &nbsp;<label   for="delete">{{'MASTER.delete' | translate}}</label>
+                                                                </div>
+                                                    
+                                                    <!-- </div> -->
+                                                    </div>
+                                            
+                                    <div class="form-group row">
+                                        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                        <div class="col-sm-9 text-right">
+                                            <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i class="fas"></i> {{'MASTER.back' | translate}}</button>
+                                         </div>
+                                        </div>
+                                   
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

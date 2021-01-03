@@ -1,0 +1,62 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'FEATURE.Title' |  translate}}</h1>
+</div>
+
+<!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Role Search</li>
+    </ol>
+</nav> -->
+
+<!-- Content Row -->
+<div class="row">
+    <!-- main area -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{'FEATURE.TitleList' |  translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div *ngIf="fetchingData" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' |  translate}}</span>
+                        </div>
+                    </div>
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped"
+                        [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'FEATURE.code_label' |  translate}}</th>
+                                <th>{{'FEATURE.name_label' |  translate}}</th>
+                                <th>{{'COMMON.status_label' |  translate}}</th>
+                                <th class="text-center">{{'FEATURE.approval_label' |  translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let feature of features; let i = index;">
+                                <td>{{ feature.code }}</td>
+                                <td>{{ feature.name }}</td>
+                                <td>{{ feature.status }}</td>
+                                <td>
+                                    <div class="text-center" ngbTooltip="{{'MASTER.approve' |  translate}}">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" (click)="takeAction(i)"
+                                                id="{{i}}_ap" [(ngModel)]="feature.approvalRequired">
+                                            <label class="custom-control-label" for="{{i}}_ap"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

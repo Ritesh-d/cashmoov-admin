@@ -1,0 +1,90 @@
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    <h1 class="h3 mb-0 text-gray-800">{{ 'TAXCONFIGURATION.taxType' | translate }}</h1>
+    <!-- <a [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> Add Tax Type </a> -->
+</div>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <h6 class="m-0 font-weight-bold text-primary">{{ 'TAXCONFIGURATION.searchTaxType' | translate }} </h6>
+              
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <form [formGroup]="addTaxForm"> 
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-3 col-form-label text-right">{{ 'TAXCONFIGURATION.taxType' | translate }}<span
+                                class="required-field">*</span></label>
+                        <div class="col-sm-5">
+                            <input formControlName="typeEn" type="text" class="form-control" minlength="3">
+                              <div  *ngIf="f.typeEn.errors?.minlength" class="validation-message" translate>{{ 'TAXCONFIGURATION.taxTypemustbeatleast3characterslong' | translate }} </div>
+                              <div  *ngIf="f.typeEn.errors?.pattern" class="validation-message" translate>{{ 'TAXCONFIGURATION.taxTypeacceptonly' | translate }} </div>
+                             <span *ngIf="submitted && f.typeEn.errors" class="validation-message">
+                                <div *ngIf="f.typeEn.errors.required" translate>{{ 'TAXCONFIGURATION.pleaseentertaxtype' | translate }}
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                        <div class="col-sm-8 text-right">
+ 
+                                <button   (click)="onSubmit()" class="btn btn-primary px-3">
+                                    <i class="fas fa-save"></i> {{ 'TAXCONFIGURATION.save' | translate }}</button>
+                                	
+                          
+                        </div>
+                         
+                    </div>
+                </form>
+                <div *ngIf="!displaytable" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">{{ 'TAXCONFIGURATION.loading' | translate }}</span>
+                    </div>
+                </div>
+               <div class="table-responsive">
+                <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'TAXCONFIGURATION.taxType' | translate }}</th>
+                           
+                            <th>{{ 'TAXCONFIGURATION.status' | translate }}</th>
+                            <th>{{ 'TAXCONFIGURATION.state' | translate }}</th>
+                           <th>{{ 'TAXCONFIGURATION.createdOn' | translate }}</th>
+                            <th>{{ 'TAXCONFIGURATION.action' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let data of taxTypeList">
+                    
+                            <td> {{data.typeEn}}</td>
+                           
+                            <td> {{data.status}}  </td>
+                            <td> {{data.state}}  </td>
+                           <td>{{data.creationDate | date: 'dd/MM/yyyy HH:mm:SS a'}}</td>
+                            <td> 
+                                <a   (click)="view(data)"  style="cursor:pointer" placement="bottom"
+                                ngbTooltip="{{'TAXCONFIGURATION.viewTaxConfiguration' | translate}}"><i
+                                    class="fas fa-eye text-primary"></i></a>&nbsp;&nbsp;
+                                <a (click)="configureTax(data)" style="cursor:pointer" placement="bottom"
+                                    ngbTooltip="{{'TAXCONFIGURATION.configureTax' | translate}}"><i
+                                        class="fas fa-cog text-primary"></i></a> 
+            
+                              
+                             
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+
+            </div>
+        </div>
+    </div>
+</div>

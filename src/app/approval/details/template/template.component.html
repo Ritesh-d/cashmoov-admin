@@ -1,0 +1,13 @@
+<div *ngIf="!data" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div [ngSwitch]="categoryType">
+ 
+    <app-servicetemplatecategory *ngSwitchCase="'100000'" [approvalData]="approvalData" ></app-servicetemplatecategory>
+    <app-feetemplatecategory *ngSwitchCase="'100002'" [approvalData]="approvalData" ></app-feetemplatecategory>
+    <app-feecommisiontemplatecategory *ngSwitchCase="'100009'" [approvalData]="approvalData" ></app-feecommisiontemplatecategory>
+    <app-transactionlimittemplatecategory *ngSwitchCase="'100008'" [approvalData]="approvalData" ></app-transactionlimittemplatecategory>
+    <app-incentivetemplatecategory *ngSwitchCase="'100010'" [approvalData]="approvalData" ></app-incentivetemplatecategory>
+</div>

@@ -1,0 +1,94 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800"> {{'WALLET.walletOwnerRemittance' | translate }} </h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header ">
+                <h6 class="m-0 font-weight-bold text-primary"> {{'WALLET.remittingCountries' | translate }} </h6>
+            </div>
+            <div class="card-body">
+                <div  id="errmsg">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+               </div>
+                <div *ngIf="!fethingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only"> {{'WALLET.loading' | translate }} </span>
+                    </div>
+                </div>
+                <!-- <div *ngIf="collatedData && !errorMessage" class="form-group row"> -->
+                    <div *ngIf="collatedData " class="form-group row">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" (click)="onSubmit()" class="btn btn-primary px-3">
+                            <i class="fas fa-save"></i>  {{'WALLET.save' | translate }} </button>
+                    &nbsp;&nbsp;
+                        <button type="button" class="btn btn-danger px-3" (click)="onCancel()">
+                            <i class="fas fa-arrow-circle-left"></i>  {{'WALLET.back' | translate }} </button> 
+                       
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="collatedData" class="table table-bordered table-striped" datatable
+                        [dtOptions]="dtOption" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{'WALLET.name' | translate }} </th>
+                                <th>{{'WALLET.iSOCode' | translate }} </th>
+                                <th>Currency</th>
+                                <th class="text-center">{{'WALLET.sendingNetwork' | translate }} </th>
+                                <th class="text-center">{{'WALLET.receivingNetwork' | translate }} </th>
+                                <th class="text-center">{{'WALLET.ownerSending' | translate }} </th>
+                                <th class="text-center">{{'WALLET.ownerReceiving' | translate }} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let country of collatedData; let i = index;">
+                                <td><input type="checkbox" [(ngModel)]="country.checked" (click)="countrySelected(i)"> </td>
+                                <td><span class="flag-icon flag-icon-{{country.icon}}"></span> {{ country.countryName }}
+                                </td>
+                                <td>{{ country.countryIsoCode }}</td>
+                                <td>{{ country.currencyCode }} - {{ country.currencySymbol }}</td>
+                                <td>
+                                    <div class="custom-control custom-switch text-center">
+                                        <input type="checkbox" class="custom-control-input" [disabled]="true"
+                                            id="{{i}}_snd" [(ngModel)]="country.remitSending">
+                                        <label class="custom-control-label" for="{{i}}_snd"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch text-center">
+                                        <input type="checkbox" class="custom-control-input" [disabled]="true"
+                                            id="{{i}}_rcv" [(ngModel)]="country.remitReceiving">
+                                        <label class="custom-control-label" for="{{i}}_rcv"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- <div class="text-center">
+                                        <input type="checkbox" [disabled]="country.disable"
+                                            [(ngModel)]="country.remitSending_o">
+                                    </div> -->
+                                    <div class="text-center">
+                                        <input type="checkbox" [disabled]="country.disableSendingNetwork"
+                                            [(ngModel)]="country.remitSending_o">
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- <div class="text-center">
+                                        <input type="checkbox" [disabled]="country.disable"
+                                            [(ngModel)]="country.remitReceiving_o">
+                                    </div> -->
+                                    <div class="text-center">
+                                        <input type="checkbox" [disabled]="country.disableReceivingNetwork"
+                                            [(ngModel)]="country.remitReceiving_o">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="hover-form">
+    <div *ngIf="!addressForm" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">{{'MERCHANT.loading' | translate }}</span>
+        </div>
+    </div>
+   
+    <form *ngIf="addressForm" [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+
+        <!-- save/edit delete -->   
+        <div class="form-group row">
+            <!-- form error message -->
+          
+            <div class="full-width">
+                <span class="validation-message" *ngIf="addressForm.enabled && !addressForm.valid && formSaved">
+                    {{'MERCHANT.pleaseprovidealltherequiredfields' | translate }}</span>
+            </div>
+           
+            <!-- Edit/ Remove / Save -->
+            <div class="full-width steps-bottom-button-alligned text-right color-white form-action-container">
+                <a *ngIf="!showSave" class="custom-hyperlink" ngbTooltip="Edit" (click)="onEditAddressForm()"><i
+                        class="fas fa-edit text-primary"></i></a>
+                <a *ngIf="showSave" class="custom-hyperlink" ngbTooltip="Save" (click)="submitAddress()"><i
+                        class="fas fa-save text-primary"></i></a>&nbsp;
+                <a class="custom-hyperlink" ngbTooltip="Delete" (click)="onRemoveAddressForm()"><i
+                        class="fas fa-trash-alt text-danger"></i></a>
+            </div>
+        </div>
+
+        <!-- parallel data -->
+        <div class="form-group row">
+            <div *ngFor="let formElem of addressFormFields; let i = index;" class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                </label>
+               
+              
+                <div [ngSwitch]="formElem.fieldType">
+                    <!-- text box -->
+
+                    <div *ngSwitchCase="input_text">
+                        <div *ngIf="formElem.kycMetaDataField=='addressLine1'">
+                            <input type="text" class="form-control" required [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                       
+                        </div>
+                        <div *ngIf="formElem.kycMetaDataField=='location'">
+                            <input type="text" class="form-control" required [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                       
+                        </div>
+                        <div *ngIf="formElem.kycMetaDataField!='location' && formElem.kycMetaDataField!='addressLine1'" >
+                        <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                           </div>    
+                    
+                    </div>
+                   
+                    <!-- select -->
+                    <div *ngSwitchCase="input_select">
+
+                        <div *ngIf="formElem.kycMetaDataField === address_type">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                (change)="selectChangeHandler($event, 'addressType')" class="custom-select"
+                                formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let addressType of addressTypes" [value]="addressType.code">
+                                    {{ addressType.type }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="formElem.kycMetaDataField === country_name">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                (change)="selectChangeHandler($event, 'country')" class="custom-select"
+                                formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let country of countries" [value]="country.code">
+                                    {{ country.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="formElem.kycMetaDataField === region_name">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                class="custom-select" formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let region of regions" [value]="region.code">
+                                    {{ region.name }}
+                                </option>
+                            </select>
+                        </div>
+                        
+                        <div *ngIf="formElem.kycMetaDataField === city">
+                            <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="display: none;" id="addressform_{{formIndex}}"><button type="submit"></button></div>
+    </form>
+</div>
+<hr>

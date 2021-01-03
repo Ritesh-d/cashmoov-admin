@@ -1,0 +1,143 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{ 'ROLE.rolePermissionTxt' | translate}}</h1>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ 'ROLE.addPermissionToRoleTxt' | translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content" id="pills-tabContent">
+                            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                            <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <div *ngIf="roleName && roleCode" class="form-group row">
+                                    <!-- role -->
+                                    <div class="col-sm-6">
+                                        <label for="role" class="custom-label">{{ 'ROLE.roleTxt' | translate}}
+                                            <span class="required-field">*</span>
+                                        </label>
+                                        <input [value]="roleName" type="text" class="form-control" disabled>
+
+                                    </div>
+                                    <!-- code -->
+                                    <div class="col-sm-6">
+                                        <label for="aliasName" class="custom-label">{{ 'ROLE.codeTxt' | translate}}
+                                            <span class="required-field">*</span>
+                                        </label>
+                                        <input [value]="roleCode" type="text" class="form-control" disabled>
+
+                                    </div>
+                                </div>
+                                <!-- loader -->
+                                <div *ngIf="fetchingData" class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                                    </div>
+                                </div>
+                                <!-- features -->
+                                <table *ngIf="!fetchingData && features"
+                                    class="table table-bordered table-striped premission-table margin-bottom"
+                                    cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="selectAll" (click)="selectAllFeatures()">
+                                                    <label class="form-check-label" for="selectAll">{{ 'ROLE.featureTxt' | translate}}</label>
+                                                </div>
+                                            </th>
+                                            <th class="text-center">{{ 'ROLE.approveTxt' | translate}}</th>
+                                            <th class="text-center">{{ 'ROLE.viewTxt' | translate}}</th>
+                                            <th class="text-center">{{ 'ROLE.addTxt' | translate}}</th>
+                                            <th class="text-center">{{ 'ROLE.editTxt' | translate}}</th>
+                                            <th class="text-center">{{ 'ROLE.deleteTxt' | translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let feature of features; let i = index;">
+                                            <td>
+                                                <!-- featurename checkbox -->
+                                                <div class="feature-name">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        [(ngModel)]="feature.checked" [value]="feature.code"
+                                                        [id]="feature.code" (click)="featureSelected(i)">
+                                                    <label class="form-check-label" for="{{ feature.code }}">
+                                                        {{ feature.name }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- approve checkbox/switch -->
+                                                <!-- <div class="text-center" ngbTooltip="{{ feature.approvalRequired ? 'Approval is not required on this feature' : 'Approve' }}">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input" [disabled]="feature.approvalRequired"
+                                                            id="{{i}}_ap" [(ngModel)]="feature.approveChecked"
+                                                            (click)="approveFeature(i);makeFeatureChecked(i)">
+                                                        <label class="custom-control-label" for="{{i}}_ap"></label>
+                                                     </div>
+                                                </div> -->
+                                                <div class="text-center" >
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"  
+                                                            id="{{i}}_ap" [(ngModel)]="feature.approveChecked"
+                                                            (click)="approveFeature(i);makeFeatureChecked(i)">
+                                                        <label class="custom-control-label" for="{{i}}_ap"></label>
+                                                     </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- view checkbox -->
+                                                <div class="text-center" ngbTooltip="{{ 'ROLE.viewTxt' | translate}}">
+                                                    <input type="checkbox" [(ngModel)]="feature.viewChecked"
+                                                        (click)="makeFeatureChecked(i)"></div>
+                                            </td>
+                                            <td>
+                                                <!-- add checkbox -->
+                                                <div class="text-center" ngbTooltip="{{ 'ROLE.addTxt' | translate}}">
+                                                    <input type="checkbox" [(ngModel)]="feature.addChecked"
+                                                        [disabled]="feature.addDisabled"
+                                                        (click)="makeFeatureChecked(i)"></div>
+                                            </td>
+                                            <td>
+                                                <!-- edit checkbox -->
+                                                <div class="text-center" ngbTooltip="{{ 'ROLE.editTxt' | translate}}">
+                                                    <input type="checkbox" [(ngModel)]="feature.editChecked"
+                                                        [disabled]="feature.editDisable"
+                                                        (click)="makeFeatureChecked(i)"></div>
+                                            </td>
+                                            <td>
+                                                <!-- delete checkbox -->
+                                                <div class="text-center" ngbTooltip="{{ 'ROLE.deleteTxt' | translate}}">
+                                                    <input type="checkbox" [(ngModel)]="feature.deleteChecked"
+                                                        [disabled]="feature.deleteDisable"
+                                                        (click)="makeFeatureChecked(i)">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- form button -->
+                                <div class="form-group row">
+                                    <div class="col-sm-12 text-right">
+                                        <button type="button" (click)="onCancel()" class="btn btn-danger px-3">
+                                            <i class="fas fa-arrow-circle-left"></i> {{ 'ROLE.backTxt' | translate}}</button>&nbsp;
+                                        <button type="button" (click)="onSubmit()" class="btn btn-primary px-3">
+                                            <i class="fas fa-save"></i> {{ 'ROLE.saveTxt' | translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

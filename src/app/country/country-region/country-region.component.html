@@ -1,0 +1,54 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'COUNTRY.countryTitle' |  translate}} & {{'COUNTRY.regionTitle' |  translate}}</h1>
+    <a *ngIf="setPermission.create" (click)="navigateToAddRegion()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'COUNTRY.addRegionButtonName' |  translate}}</a>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header ">
+                <h6 class="m-0 font-weight-bold text-primary">{{'COUNTRY.countryTitle' |  translate}}</h6>
+            </div>
+            <div class="card-body">
+                <div id="errmsg">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+               </div>
+                <!-- <div>All regions : <a [routerLink]="['region']">click</a></div> -->
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped"
+                        [dtOptions]="dtOption" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'COUNTRY.name_label' |  translate}}</th>
+                                <th>{{'COUNTRY.isocode_label' |  translate}}</th>
+                                <!-- <th>Currency Symbol</th>
+                                <th>Currency</th> -->
+                                <th>{{'COMMON.action_label' |  translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let country of countries">
+                                <td><span class="flag-icon flag-icon-{{country.icon}}"></span> {{ country.name }} </td>
+                                <td>{{ country.isoCode }}</td>
+                                <!-- <td>{{ country.currencySymbol }}</td>
+                                <td>{{ country.currencyCode }}</td> -->
+                                <td>
+                                    <a *ngIf="setPermission.view" (click)="viewRegion(country.code)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="View Region"><i class="fas fa-globe text-primary"></i></a>&nbsp;
+                                    <a *ngIf="setPermission.create"  (click)="addRegion(country.code)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Add Region"><i class="fas fa-plus-circle text-primary"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

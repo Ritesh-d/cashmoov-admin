@@ -1,0 +1,71 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'COUNTRY.remittanceTitle' | translate}}</h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header ">
+                <h6 class="m-0 font-weight-bold text-primary">{{'COUNTRY.countryTitle' | translate}}</h6>
+            </div>
+            <div class="card-body">
+                <div  id="errmsg">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                </div>
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div *ngIf="!fetchingData && !errorMessage" class="form-group row">
+                    <div class="col-sm-12 text-right" *ngIf="setPermission.edit">
+                        <button type="button" (click)="onSubmit()" class="btn btn-primary px-3">
+                            <i class="fas fa-save"></i> {{'COMMON.button.save' | translate}}</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" class="table table-bordered table-striped" datatable 
+                    [dtOptions]="dtOption" width="100%"
+                        cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th tabindex='0'></th>
+                                <th>{{'COUNTRY.name_label' | translate}}</th>
+                                <th>{{'COUNTRY.isocode_label' | translate}}</th>
+                                <th>{{'COUNTRY.currency_symbol_label' | translate}}</th>
+                                <th>{{'COUNTRY.currency_label' | translate}}</th>
+                                <th>{{'COUNTRY.sending_network_label' | translate}}</th>
+                                <th>{{'COUNTRY.receiving_network_label' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let country of countries; let i = index;">
+                                <td><input type="checkbox" [(ngModel)]="country.checked" (click)="countrySelected(i)">
+                                </td>
+                                <td><span class="flag-icon flag-icon-{{country.icon}}"></span> {{ country.name }} </td>
+                                <td>{{ country.isoCode }}</td>
+                                <td>{{ country.currencySymbol }}</td>
+                                <td>{{ country.currencyCode }}</td>
+                                <td>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" [disabled]="country.disable"
+                                            id="{{i}}_snd" [(ngModel)]="country.sendChecked">
+                                        <label class="custom-control-label" for="{{i}}_snd"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" [disabled]="country.disable"
+                                            id="{{i}}_acpt" [(ngModel)]="country.receiveChecked">
+                                        <label class="custom-control-label" for="{{i}}_acpt"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

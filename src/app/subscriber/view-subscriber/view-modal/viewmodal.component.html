@@ -1,0 +1,102 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'WALLET.view.wallet' | translate}}</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="code" class="custom-label" translate>{{'WALLET.wallet.owner.name' | translate}}
+            </label>
+            <input value="{{user.walletOwnerName}}" type="text" class="form-control" id="code" readonly>
+        </div>
+        <div class="col-sm-6">
+
+            <label for="role_code" class="custom-label" translate>{{'WALLET.currency.name' | translate}}
+            </label>
+
+            <input value="{{user.currencyName}}" type="text" class="form-control" id="role_code" readonly>
+
+        </div>
+
+    </div>
+ <hr>
+ <label for="first_name" class="custom-label" translate><h6>{{'WALLET.main.wallet' | translate}}</h6> </label>
+ <br>  <br> 
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label for="mainWalletvalue" class="custom-label" translate>{{'WALLET.value' | translate}} </label>
+
+            <input *ngIf="user.mainWalletvalue!='0'" value="{{user.mainWalletvalue==undefined  || null || 0?'0.00':(user.mainWalletvalue).toFixed(2) }}" type="text" class="form-control" id="mainWalletvalue" readonly>
+            <input *ngIf="user.mainWalletvalue=='0'" value="{{user.mainWalletvalue==undefined  || null || '0'?'0.00':(user.mainWalletvalue).toFixed(2) }}" type="text" class="form-control" id="mainWalletvalue" readonly>
+
+
+        </div>
+        <div class="col-sm-3">
+            <label for="mainMaxValue" class="custom-label" translate>{{'WALLET.max.value' | translate}} </label>
+
+            <input *ngIf="user.mainMaxValue!='0'" value="{{user.mainMaxValue==undefined  || null || 0?'0.00':(user.mainMaxValue).toFixed(2) }}" type="text" class="form-control" id="mainMaxValue" readonly>
+            <input *ngIf="user.mainMaxValue=='0'" value="{{user.mainMaxValue==undefined  || null || '0'?'0.00':(user.mainMaxValue).toFixed(2) }}" type="text" class="form-control" id="mainMaxValue" readonly>
+
+
+        </div>
+        <div class="col-sm-3">
+            <label for="mainMinValue" class="custom-label" translate>{{'WALLET.min.value' | translate}} </label>
+
+            <input *ngIf="user.mainMinValue!='0'" value="{{user.mainMinValue==undefined  || null || 0?'0.00':(user.mainMinValue).toFixed(2) }}" type="text" class="form-control" id="mainMinValue" readonly>
+            <input *ngIf="user.mainMinValue=='0'" value="{{user.mainMinValue==undefined  || null || '0'?'0.00':(user.mainMinValue).toFixed(2) }}" type="text" class="form-control" id="mainMinValue" readonly>
+
+
+        </div>
+        <div class="col-sm-3">
+            <label for="mainAlertValue" class="custom-label" translate>{{'WALLET.alert.value' | translate}} </label>
+
+            <input *ngIf="user.mainAlertValue!='0'" value="{{user.mainAlertValue==undefined  || null || 0?'0.00':(user.mainAlertValue).toFixed(2) }}" type="text" class="form-control" id="mainAlertValue" readonly>
+            <input *ngIf="user.mainAlertValue=='0'" value="{{user.mainAlertValue==undefined  || null || '0'?'0.00':(user.mainAlertValue).toFixed(2) }}" type="text" class="form-control" id="mainAlertValue" readonly>
+
+
+        </div>
+ 
+    </div>
+    <hr>
+    <label *ngIf="user.walletOwnerCategoryCode != '100007'"  for="last_name" class="custom-label" translate><h6>{{'WALLET.commision.wallet' | translate}} </h6></label>
+    <br>  <br> 
+    <div   class="form-group row">
+        <div  class="col-sm-3">
+            <label for="last_name" class="custom-label" translate>{{'WALLET.value' | translate}}</label>
+
+            <input *ngIf="user.commisionWalletvalue!='0'" value="{{user.commisionWalletvalue==undefined || null || 0 ?'0.00': (user.commisionWalletvalue).toFixed(2)}}" type="text" class="form-control" readonly>
+            <input *ngIf="user.commisionWalletvalue=='0'" value="{{user.commisionWalletvalue==undefined || null || '0' ?'0.00': (user.commisionWalletvalue).toFixed(2)}}" type="text" class="form-control" readonly>
+ 
+        </div>
+        <div class="col-sm-3">
+            <label for="commisionMaxValue" class="custom-label" translate>{{'WALLET.max.value' | translate}} </label>
+
+            <input *ngIf="user.commisionMaxValue!='0'" value="{{user.commisionMaxValue==undefined  || null || 0?'0.00':(user.commisionMaxValue).toFixed(2) }}" type="text" class="form-control" id="commisionMaxValue" readonly>
+            <input *ngIf="user.commisionMaxValue=='0'" value="{{user.commisionMaxValue==undefined  || null || '0'?'0.00':(user.commisionMaxValue).toFixed(2) }}" type="text" class="form-control" id="commisionMaxValue" readonly>
+
+
+        </div>
+        <div class="col-sm-3">
+            <label for="commisionMinValue" class="custom-label" translate>{{'WALLET.min.value' | translate}} </label>
+
+            <input *ngIf="user.commisionMinValue!='0'" value="{{user.commisionMinValue==undefined  || null || 0?'0.00':(user.commisionMinValue).toFixed(2) }}" type="text" class="form-control" id="commisionMinValue" readonly>
+            <input *ngIf="user.commisionMinValue=='0'" value="{{user.commisionMinValue==undefined  || null || '0'?'0.00':(user.commisionMinValue).toFixed(2) }}" type="text" class="form-control" id="commisionMinValue" readonly>
+
+
+        </div>
+        <div class="col-sm-3">
+            <label for="commisionAlertValue" class="custom-label" translate>{{'WALLET.alert.value' | translate}} </label>
+
+            <input *ngIf="user.commisionAlertValue!='0'" value="{{user.commisionAlertValue==undefined  || null || 0?'0.00':(user.commisionAlertValue).toFixed(2) }}" type="text" class="form-control" id="commisionAlertValue" readonly>
+            <input *ngIf="user.commisionAlertValue=='0'" value="{{user.commisionAlertValue==undefined  || null || '0'?'0.00':(user.commisionAlertValue).toFixed(2) }}" type="text" class="form-control" id="commisionAlertValue" readonly>
+
+
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'WALLET.close' | translate}}</button>
+</div>

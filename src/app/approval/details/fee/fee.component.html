@@ -1,0 +1,119 @@
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="!fee" class="spinner-aligning">
+    <div class="spinner-border" fee="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="fee">
+    <!-- name / code -->
+    <div class="form-group row">
+        <!-- name -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">{{'APPROVAL.approval.code' | translate }}</label>
+            <input type="text" class="form-control unchanged-data" [value]="fee.entityCode" disabled>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">{{'APPROVAL.approval.name' | translate }}</label>
+            <input *ngIf="unchanged.name" type="text" class="form-control unchanged-data" [value]="fee.entityName" disabled>
+            <a *ngIf="!unchanged.name" [ngbTooltip]="'earlier it was: '+oldname">
+                <input type="text" class="form-control" [value]="fee.entityName" disabled>
+            </a>
+        </div>
+        <!-- code -->
+        
+    </div>
+    <!-- status / createdOn -->
+    <div class="form-group row">
+        <!-- status -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="unchanged.status" type="text" class="form-control unchanged-data" [value]="fee.status" disabled>
+            <a *ngIf="!unchanged.status" [ngbTooltip]="'earlier it was: '+oldstatus">
+                <input type="text" class="form-control" [value]="fee.status" disabled>
+            </a>
+        </div>
+        <!-- createdOn -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">{{'APPROVAL.created.on' | translate }}</label>
+            <input type="text" class="form-control unchanged-data" [value]="fee.creationDate | date: 'short'" disabled>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        
+        <!-- list -->
+        <div class="col-sm-12 parallel-col-margin">
+            <label class="custom-label">{{'APPROVAL.transaction.template.list' | translate }}</label>
+            <div class="card " style="border: 1px solid #d1d3e2;    color: #6e707e;">
+                <div class="row">     <div *ngFor="let transaction of feelatelist" class="mx-3 my-2" style="width: max-content;">{{transaction.transTypeName}} </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- features -->
+    <!-- <div class="form-group row" *ngIf="isPermission">
+        <table *ngIf="featuresList.length" class="table table-bordered table-striped premission-table margin-1"
+            cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <label class="form-check-label">{{ 'fee.featureTxt' | translate}}</label>
+                        </div>
+                    </th>
+                    <th class="text-center">{{ 'fee.approveTxt' | translate}}</th>
+                    <th class="text-center">{{ 'fee.viewTxt' | translate}}</th>
+                    <th class="text-center">{{ 'fee.addTxt' | translate}}</th>
+                    <th class="text-center">{{ 'fee.editTxt' | translate}}</th>
+                    <th class="text-center">{{ 'fee.deleteTxt' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feature of featuresList; let i = index;">
+                    <td>
+                        
+                        <div class="feature-name">
+                            <label class="form-check-label">
+                                {{ feature.name }}
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                
+                        <div class="text-center" ngbTooltip="{{ 'fee.approveTxt' | translate}}">
+                            <div class="custom-control custom-switch">
+                                <input class="custom-control-input" type="checkbox" [checked]="feature.approve"
+                                    id="{{i}}_ap" disabled>
+                                <label class="custom-control-label" for="{{i}}_ap"></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                   
+                        <div class="text-center" ngbTooltip="{{ 'fee.viewTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.view" disabled>
+                        </div>
+                    </td>
+                    <td>
+                
+                        <div class="text-center" ngbTooltip="{{ 'fee.addTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.create" disabled>
+                        </div>
+                    </td>
+                    <td>
+          
+                        <div class="text-center" ngbTooltip="{{ 'fee.editTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.edit" disabled>
+                        </div>
+                    </td>
+                    <td>
+                 
+                        <div class="text-center" ngbTooltip="{{ 'fee.deleteTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.delete" disabled>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>

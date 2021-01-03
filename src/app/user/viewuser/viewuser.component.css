@@ -1,0 +1,46 @@
+::ng-deep .page-titles {
+    margin-bottom: 5px;
+    padding: 0p
+  }
+  .form-control:disabled, .form-control[readonly] {
+    background-color: transparent;
+    opacity: 1;
+    border: none;
+}
+.form-group {
+  margin-bottom: 0;
+  margin: auto;
+}
+
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+
+.table thead th, .table th {
+  font-weight: bold;
+}
+
+.required-field {
+  color: #e74a3b;
+}
+
+.validation-message {
+  color: #e74a3b;
+  font-size: smaller;
+  border: solid 1px #e74a3b;
+  border-radius: 3px;
+  padding: 2px;
+  background-color: bisque;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.custom-label{
+  margin-bottom: auto;
+  font-style: italic;
+}

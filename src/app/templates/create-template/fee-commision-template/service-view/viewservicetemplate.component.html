@@ -1,0 +1,65 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.view.slab' | translate}}</h6>
+
+</div>
+<div class="modal-body">
+
+   
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.service.provider' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.serviceProviderName}}" readonly>
+        </div>
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.wallet.owner.category' | translate}} </label>
+            <input type="text" class="form-control" value="{{data.walletOwnerCategoryName}}" readonly>
+        </div>
+       
+        <!-- <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Channel Type</label>
+            <input type="text" class="form-control" value="{{data.channelTypeName}}" readonly>
+        </div> -->
+    </div>
+    <div class="form-group row">
+
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.tax.type' | translate}} </label>
+            <!-- <input type="text" class="form-control" value="{{data.taxTypeName}}" readonly> -->
+            <ng-multiselect-dropdown #multiSelect  *ngIf="istaxtype"
+            [placeholder]="'Select Tax Type'" 
+            [data]="taxTypeList" 
+            [formControl]="f1.taxTypeCode" 
+            [settings]="settings"
+            [disabled]="true"
+         
+            >
+              </ng-multiselect-dropdown>
+        </div>
+        <div class="col-sm-6">
+
+            <label for="name" class="custom-label" translate>{{'TEMPLATE.template.tax.settlement.account' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.taxAccountName}}" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.commision.percent' | translate}} </label>
+            <input type="text" class="form-control" value="{{data.percentComiValue}}" readonly>
+        </div>
+    </div>
+    <!-- <div class="form-group row"> -->
+        
+        <!-- <div class="col-sm-3">
+            <label for="name"  class="custom-label" >Commision [Fixed]  </label>
+            <input type="text" class="form-control" value="{{data.fixedComiValue}}" readonly>
+        </div> -->
+       
+    <!-- </div> -->
+     
+</div>
+ 
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'TEMPLATE.template.close' | translate}} </button>
+ </div> 

@@ -1,0 +1,82 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'COUNTRY.viewRegion' |  translate}}</h6>
+</div>
+
+<div class="modal-body">
+
+    <div *ngIf="fetchingData" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="!fetchingData && !errorMessage">
+        <!-- country / code -->
+        <div class="form-group row">
+            <!-- country -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.countryTitle' |  translate}}</label>
+                <input type="text" class="form-control" [value]="country.name" disabled>
+            </div>
+            <!-- code -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.code_label' |  translate}}</label>
+                <input type="text" class="form-control" [value]="country.isoCode" disabled>
+            </div>
+        </div>
+        <!-- currencyCode / currencySymbol -->
+        <!-- <div class="form-group row">
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">currency code</label>
+                <input type="text" class="form-control" [value]="country.currencyCode" disabled>
+            </div>
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">currency symbol</label>
+                <input type="text" class="form-control" [value]="country.currencySymbol" disabled>
+            </div>
+        </div> -->
+        <!-- add region link -->
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h1 class="h3 mb-0 text-gray-800"></h1>
+            <a *ngIf="setPermission.create" (click)="addRegion(country.code)" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus-circle"></i> {{'COUNTRY.addRegion_button' |  translate}}</a>
+        </div>
+        <hr>
+        <!-- region listing -->
+        <div class="table-responsive">
+            <table datatable class="table table-bordered table-striped" [dtOptions]="dtOption"
+                width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>{{'COUNTRY.name_label' |  translate}}</th>
+                        <th>{{'COMMON.action_label' |  translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let region of country.regionList; let i = index;">
+                        <td>
+                            <div class="feature-name">
+                                <label class="form-check-label">{{ region.name }}</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="feature-name">
+                                <a *ngIf="setPermission.edit" (click)="editRegion(country.code, region.name, region.code)" style="cursor:pointer"
+                                    placement="left" ngbTooltip="Edit">
+                                    <i class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                <!-- <a class="custom-hyperlink" ngbTooltip="Delete">
+                                    <i class="fas fa-trash-alt text-danger"></i></a> -->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'COMMON.button.close' |  translate}}</button>
+</div>

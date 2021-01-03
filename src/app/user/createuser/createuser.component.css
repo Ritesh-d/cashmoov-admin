@@ -1,0 +1,54 @@
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+
+::ng-deep .wrapper{
+
+  margin-top: 5px;
+
+}
+ 
+.table thead th, .table th {
+  font-weight: bold;
+}
+
+.required-field {
+  color: #e74a3b;
+}
+
+.validation-message {
+  color: #e74a3b;
+  font-size: smaller;
+  /* border: solid 1px #e74a3b; */
+  border-radius: 3px;
+  padding: 2px;
+  /* background-color: bisque; */
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.color-white a {
+  color: white;
+}
+.float-right{
+  float: right;
+}
+.custom-hyperlink {
+  cursor: pointer;
+}
+.disable-option {
+  background-color: lightsteelblue;
+  cursor: not-allowed;
+}
+.custom-label{
+  margin-bottom: auto;
+  /* font-style: italic; */
+}
+.datapicker-input{
+background-color: #fff;
+}

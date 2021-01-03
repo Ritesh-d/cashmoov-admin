@@ -1,0 +1,56 @@
+@import './../add-subscriber/add-subscriber.component.scss';
+
+.radio-margin-left {
+    margin-left: 10%;
+}
+.first-radio {
+    margin-left: 4%;
+}
+
+.form-check-radio{
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.placement {
+    /* font-size: 20px; */
+    padding: .2rem;
+}
+.doc-icons-block {
+    display: inline;
+    margin-left: 18rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.file-upload-progress {
+    width: 50%;
+    margin-left: -2rem;
+    margin-top: .5rem;
+}
+
+.upload-margin {
+    margin-bottom: .5rem;
+}
+.margin-r-1 {
+    margin-right: 1rem;
+}
+.block {
+    display: block;
+}
+
+.file-width {
+    width: 41%;
+}
+.hideoption {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .showoption {
+    position : 'static';
+    opacity: 1;
+    pointer-events: 'all'
+  }

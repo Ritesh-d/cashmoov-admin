@@ -1,0 +1,19 @@
+@import '../details.component.css';
+
+.required-field {
+    color: #e74a3b;
+}
+.parallel-col-margin {
+    margin-bottom: 1rem;
+}
+
+.file-width {
+    width: 41%;
+}
+.doc-icons-block {
+    display: inline;
+    margin-left: 18rem;
+}
+.full-width {
+    width: 100%;
+}

@@ -1,0 +1,298 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 *ngIf="!editMode" class="m-0 font-weight-bold text-primary">{{'EXCHANGERATE.addScreenTitle'  | translate}}</h6>
+            <h6 *ngIf="editMode" class="m-0 font-weight-bold text-primary">{{'EXCHANGERATE.editScreenTitle'  | translate}}</h6>
+        </div>
+        <div class="table-responsive">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        <form [formGroup]="createExchnageRateForm">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="name" class="custom-label">{{'EXCHANGERATE.name_label'  | translate}}
+                                        <span class="required-field">*</span>
+                                    </label>  
+                                    <input formControlName="name" type="text" class="form-control" id="name" maxlength="30">
+                                    <!-- <span *ngIf="submitted && f.name.errors" class="validation-message"> -->
+                                        <div *ngIf="submitted && f.name.errors && f.name.errors.required" class="validation-message"  translate>{{'EXCHANGERATE.pleaseentername'  | translate}} </div>
+                                        <div *ngIf="f.name.errors?.pattern" class="validation-message"  translate>{{'EXCHANGERATE.pleaseentervalidname'  | translate}} </div>
+                                        <div *ngIf="f.name.errors?.minlength" class="validation-message"  translate>{{'EXCHANGERATE.namemustbeatleast5characterslong'  | translate}} </div>
+                                    <!-- </span> -->
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="type" class="custom-label">{{'EXCHANGERATE.applicable_for_label'  | translate}} </label>
+                                    <!-- <label for="type" class="custom-label"> &nbsp; &nbsp; </label> -->
+                                    <div class="custom-control custom-switch">
+
+                                            <input *ngIf= "!editMode" formControlName="instituteType" class="custom-control-input" id="instituteType"
+                                                type="checkbox" >
+                                            <input *ngIf= "editMode" formControlName="instituteType" class="custom-control-input" id="instituteType"
+                                            type="checkbox" disabled >
+                                        <label class="custom-control-label" for="instituteType">{{'EXCHANGERATE.institute_type_label'  | translate}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                     <label for="type" class="custom-label"> &nbsp; &nbsp; </label>
+                                    <div class="custom-control custom-switch">
+
+                                            <input *ngIf= "!editMode" formControlName="agentType" class="custom-control-input" id="agentType"
+                                                type="checkbox" >
+                                            <input *ngIf= "editMode" formControlName="agentType" class="custom-control-input" id="agentType"
+                                            type="checkbox" disabled >
+                                        <label class="custom-control-label" for="agentType">{{'EXCHANGERATE.agent_type_label'  | translate}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="type" class="custom-label"> &nbsp; &nbsp; </label>
+                                    <div class="custom-control custom-switch">
+
+                                        <input *ngIf= "!editMode" formControlName="branchType" class="custom-control-input" id="branchType"
+                                            type="checkbox">
+                                            <input *ngIf= "editMode" formControlName="branchType" class="custom-control-input" id="branchType"
+                                            type="checkbox" disabled>
+                                            
+                                        <label class="custom-control-label" for="branchType">{{'EXCHANGERATE.branch_type_label'  | translate}}</label>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+             
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+
+                                    <label for="sending_country" class="custom-label" >{{'EXCHANGERATE.sending_country'  | translate}}<span
+                                            class="required-field">*</span></label>
+
+                                    <select formControlName="sending_country" class="custom-select form-control" (change)="onchangeSend($event)"
+                                        id="sending_country">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+
+
+                                        <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}} 
+                                        </option>
+                                    </select>
+                                    <span *ngIf="submitted && f.sending_country.errors" class="validation-message">
+                                        <div *ngIf="f.sending_country.errors.required" translate>{{'EXCHANGERATE.pleaseselectsendingcountry'  | translate}}</div>
+                                        <div *ngIf="f.sending_country.errors.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingcountryshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="receiving_country " class="custom-label" translate>{{'EXCHANGERATE.receiving_country'  | translate}}
+                                        <span class="required-field">*</span></label>
+
+                                    <!-- (change)="checkApplicableCountry2($event)" -->
+                                    <select formControlName="receiving_country" class="custom-select form-control"
+                                        id="receiving_country " (change)="onchangeRecv($event)">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <!-- [ngClass]="{'disable-option': group.disabled}" -->
+                                        <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}}
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.receiving_country.errors" class="validation-message">
+                                        <div *ngIf="f.receiving_country.errors.required" translate>{{'EXCHANGERATE.pleaseselectreceivingcountry'  | translate}}</div>
+                                        <div *ngIf="f.receiving_country.errors.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingcountryshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="sending_currency" class="custom-label">{{'EXCHANGERATE.sending_currency'  | translate}}
+                                        <!-- <span class="required-field">*</span> -->
+                                    </label>
+                                    <select formControlName="sending_currency" class="custom-select form-control"
+                                        id="sending_currency">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <option *ngFor="let data of currencies" value="{{data.code}}">
+                                            {{data.currencyCode}} - {{data.name}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="receiving_currency" class="custom-label">{{'EXCHANGERATE.receiving_currency'  | translate}}
+                                        <!-- <span class="required-field">*</span> -->
+                                    </label>
+                                    <select formControlName="receiving_currency" class="custom-select form-control"
+                                        id="receiving_currency">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+
+                                        <option *ngFor="let data of currencies" value="{{data.code}}">
+                                            {{data.currencyCode}} - {{data.name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                            <div *ngIf="showinstitute" class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="remit_institute" class="custom-label"  >{{'EXCHANGERATE.sending_institute'  | translate}}
+                                          <span class="required-field">*</span></label>
+
+                                    <select formControlName="remit_institute" class="custom-select form-control"
+                                        id="remit_institute">
+                                        <option value="" selected>Any</option>
+                                        <option *ngFor="let data of institutes" value="{{data.code}}">{{data.ownerName}}
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.remit_institute.errors" class="validation-message">
+                                        <div *ngIf="f.remit_institute.errors?.required" translate>{{'EXCHANGERATE.pleaseselectsendingintitute'  | translate}}
+                                        </div>
+                                        <div *ngIf="f.remit_institute.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivinginstituteshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="paying_institute" class="custom-label" translate>{{'EXCHANGERATE.receiving_institute'  | translate}} <span
+                                            class="required-field">*</span></label>
+
+                                    <select formControlName="paying_institute" class="custom-select form-control"
+                                        id="paying_institute">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <option *ngFor="let data of institutes" value="{{data.code}}">{{data.ownerName}}
+                                        </option>
+                                    </select>
+                                    <span *ngIf="submitted && f.paying_institute.errors" class="validation-message">
+                                        <div *ngIf="f.paying_institute.errors?.required" translate>{{'EXCHANGERATE.pleaseselectreceivinginstitute'  | translate}}</div>
+                                        <div *ngIf="f.paying_institute.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivinginstituteshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+
+
+                            </div>
+                            <div *ngIf="showagent" class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="remit_agent" class="custom-label"  >{{'EXCHANGERATE.sending_agent'  | translate}}
+                                          <span class="required-field">*</span></label>
+
+                                    <select formControlName="remit_agent" class="custom-select form-control"
+                                        id="remit_agent">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <!-- <option *ngFor="let data of agents" value="{{data.code}}">{{data.ownerName}}
+                                            
+                                        </option> -->
+                                        <option *ngFor="let data of sendingagent" value="{{data.code}}">{{data.ownerName}}
+                                             
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.remit_agent.errors" class="validation-message">
+                                        <div *ngIf="f.remit_agent.errors?.required" translate>{{'EXCHANGERATE.pleaseselectsendingagent'  | translate}}
+                                        </div>
+                                        <div *ngIf="f.remit_agent.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingagentshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="paying_agent" class="custom-label" translate>{{'EXCHANGERATE.receiving_agent'  | translate}} <span
+                                            class="required-field">*</span></label>
+
+                                    <select formControlName="paying_agent" class="custom-select form-control"
+                                        id="paying_agent">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <!-- <option *ngFor="let data of agents" value="{{data.code}}">{{data.ownerName}}
+                                        </option> -->
+                                        <option *ngFor="let data of receivingagent" value="{{data.code}}">{{data.ownerName}}
+                                        </option>
+                                        
+                                    </select>
+                                    <span *ngIf="submitted && f.paying_agent.errors" class="validation-message">
+                                        <div *ngIf="f.paying_agent.errors?.required" translate>{{'EXCHANGERATE.pleaseselectreceivingagent'  | translate}}</div>
+                                        <div *ngIf="f.paying_agent.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingagentshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+
+
+                            </div>
+                            <div *ngIf="showbranch" class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="remit_branch" class="custom-label" translate>{{'EXCHANGERATE.sending_branch'  | translate}}
+                                          <span class="required-field">*</span></label>
+
+                                    <select formControlName="remit_branch" class="custom-select form-control"
+                                        id="remit_branch">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <option *ngFor="let data of sendingbranch" value="{{data.code}}">
+                                            {{data.ownerName}}
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.remit_branch.errors" class="validation-message">
+                                        <div *ngIf="f.remit_branch.errors?.required" translate>{{'EXCHANGERATE.pleaseselectsendingbranch'  | translate}} </div>
+                                        <div *ngIf="f.remit_branch.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingbranchshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <label for="paying_branch" class="custom-label" translate>{{'EXCHANGERATE.receiving_branch'  | translate}} <span
+                                            class="required-field">*</span></label>
+
+                                    <select formControlName="paying_branch" class="custom-select form-control"
+                                        id="paying_branch">
+                                        <option value="" selected>{{'EXCHANGERATE.any'  | translate}}</option>
+                                        <option *ngFor="let data of receivingbranch" value="{{data.code}}">
+                                            {{data.ownerName}}
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.paying_branch.errors" class="validation-message">
+                                        <div *ngIf="f.paying_branch.errors?.required" translate>{{'EXCHANGERATE.pleaseselectreceivingbranch'  | translate}}</div>
+                                        <div *ngIf="f.paying_branch.errors?.mustMatch" translate>{{'EXCHANGERATE.sendingandreceivingbranchshouldnotbesame'  | translate}}</div>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="exchange_rate" class="custom-label" translate>{{'EXCHANGERATE.conversionrate_label'  | translate}}
+                                      
+                                        <span class="required-field">*</span>
+                                    </label>
+
+
+                                    <input formControlName="exchange_rate" type="number" maxlength="30" class="form-control"
+                                        id="exchange_rate">
+                                    <!-- <span *ngIf="submitted && f.exchange_rate.errors" class="validation-message"> -->
+                                        <div *ngIf="  submitted && f.exchange_rate.errors && f.exchange_rate.errors.required" class="validation-message"  translate>{{'EXCHANGERATE.pleaseenterexchangerate'  | translate}} </div>
+                                        <div *ngIf="f.exchange_rate.errors?.pattern" class="validation-message"  translate>{{'EXCHANGERATE.pleaseentervalidexchangerate'  | translate}}</div>
+                                    <!-- </span> -->
+                                </div>
+
+                                <div *ngIf="editMode" class="col-sm-6">
+                                    <label for="status" class="custom-label" translate translate>{{'COMMON.status_label'  | translate}} </label>
+
+                                    <select formControlName="status" class="custom-select form-control" id="status">
+                                        <!-- <option value="{{status}}" selected>{{status}}</option> -->
+                                        <option value="Y">{{'EXCHANGERATE.active'  | translate}}</option>
+                                        <option value="N">{{'EXCHANGERATE.inactive'  | translate}}</option>
+                                    </select>
+                                </div>
+
+         
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" (click)="onCancel()" class="btn btn-danger px-3">
+                                        <i class="fas fa-arrow-circle-left"></i> {{'COMMON.button.back'  | translate}}</button>&nbsp;
+                                    <button *ngIf="!editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-save"></i> {{'COMMON.button.save'  | translate}}</button>
+                                    <button *ngIf="editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-refresh"></i> {{'COMMON.button.update'  | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <!-- <div class="card-header">
+            <h6 *ngIf="!editMode" class="m-0 font-weight-bold text-primary">Add Load Money</h6>
+            <h6 *ngIf="editMode" class="m-0 font-weight-bold text-primary">Edit Load Money</h6>
+        </div> -->
+        <div class="table-responsive">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        <form [formGroup]="createForm">
+                            <!-- <div class="form-group row mt-2">
+                                <label for="name" class="col-sm-3 col-form-label text-right">{{ 'ROLE.nameTxt' | translate}}
+                                    <span class="required-field">*</span>
+                                </label>
+                                <div class="col-sm-5">
+                                    <input formControlName="name" type="text" class="form-control" id="name">
+                                    <div *ngIf="submitted && f.name.errors && f.name.errors.required" class="validation-message" translate>please enter name</div>
+                                    <div *ngIf="f.name.errors?.pattern" class="validation-message"  translate>Please enter in valid format  </div>
+                                </div>
+                            </div> -->
+                            <div class="form-group ">
+                                <div class="row mt-2">
+                                    <label for="control_account" class="custom-label col-sm-3 col-form-label text-right">{{ 'EMONEY.accountType' | translate }} 
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <select formControlName="control_account" (change)="getWalletAccount($event)" class="custom-select form-control"
+                                    id="control_account">
+                                        <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                        <option *ngFor="let category of categories" value="{{category.code}}">
+                                            {{category.name}} - ({{category.code}})
+                                        </option>
+                                       
+                                  </select>
+                                    <span *ngIf="submitted && f.control_account.errors" class="validation-message">
+                                        <div *ngIf="f.control_account.errors.required" translate>{{ 'EMONEY_ERR.selectAccount' | translate }} </div>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="name" class="custom-label col-sm-3 col-form-label text-right"> {{ 'EMONEY.accountName' | translate }}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <select formControlName="account" (change)="getWalletOwnerCurrency($event)" class="custom-select form-control"
+                                    id="account">
+                                        <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                        <option *ngFor="let walletOwner of walletOwners" value="{{walletOwner.code}}">
+                                            {{walletOwner.ownerName}} - ({{walletOwner.code}})
+                                        </option>
+                                  </select>
+                                    <span *ngIf="submitted && f.account.errors" class="validation-message">
+                                        <div *ngIf="f.account.errors.required" translate>{{ 'EMONEY_ERR.selectAccountName' | translate }}</div>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="currency" class="custom-label col-sm-3 col-form-label text-right">{{ 'MASTER.currency' | translate }}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-5">
+                                        <select formControlName="currency" class="custom-select form-control"
+                                        id="currency">
+                                        <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                        <option *ngFor="let data of currencies" value="{{data.code}}">
+                                            {{data.currencyCode}} - {{data.currencyName}}
+                                        </option>
+
+                                    </select>
+                                    <span *ngIf="submitted && f.currency.errors" class="validation-message">
+                                        <div *ngIf="f.currency.errors.required" translate>{{ 'EMONEY_ERR.selectCurrency' | translate }} </div>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="name" class="custom-label col-sm-3 col-form-label text-right"> {{ 'MASTER.amount' | translate }} 
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <input type="number" formControlName="amount" class="form-control" id="amount">
+                                   </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="name" class="custom-label col-sm-3 col-form-label text-right"> {{ 'EMONEY.bankReferenceNumber' | translate }}
+                                         
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <input type="text" formControlName="referenceNumber" class="form-control" id="referencenumber">
+                                   </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="name" class="custom-label col-sm-3 col-form-label text-right"> {{ 'MASTER.comments' | translate }}
+                                        
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <input type="text" formControlName="comment" class="form-control" id="referencenumber">
+                                   </div>
+                                </div>
+                                <!-- <div class="row mt-2">
+                                    <label for="channel" class="custom-label col-sm-3 col-form-label text-right"> Channel 
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-5">
+                                    <input type="text" formControlName="channel" class="form-control" id="channel">
+                                   </div>
+                                </div> -->
+                            </div>
+                            <!-- <div class="form-group ">
+                               
+                            </div> -->
+                            <div *ngIf="editMode" class="form-group row">
+                               
+
+                                <div  class="col-sm-6">
+                                    <label for="status" class="custom-label" translate translate>{{ 'MASTER.status' | translate }} </label>
+
+                                    <select formControlName="status" class="custom-select form-control" id="status">
+                                     
+                                        <option value="Y">{{ 'MASTER.active' | translate }}</option>
+                                        <option value="N">{{ 'MASTER.inactive' | translate }}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" (click)="onCancel()" class="btn btn-danger px-3">
+                                        <i class="fas fa-arrow-circle-left"></i> {{ 'MASTER.back' | translate }}</button>&nbsp;
+                                    <button *ngIf="!editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-save"></i> {{ 'MASTER.save' | translate }}</button>
+                                    <button *ngIf="editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-refresh"></i> {{ 'MASTER.update' | translate }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+       
+            <h6 class="m-0 font-weight-bold text-primary">{{'WALLETSERVICEPROVIDER.editTitle' | translate}}</h6>
+        </div>
+<div class="card-body">
+    <div *ngIf="serviceErrorMessage" class="alert alert-danger">{{ serviceErrorMessage }}</div>
+    <div *ngIf="seriveSuccessmessage" class="alert alert-success">{{ seriveSuccessmessage }}</div>
+
+    
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_label' | translate}}</label>
+            <div class="col-sm-5">
+                   
+                <input  type = "text " readonly  class="form-control" value="{{serviceName}}" >
+     
+                
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_category_label' | translate}}</label>
+            <div class="col-sm-5">
+
+                <input  type = "text " readonly  class="form-control" value="{{serviceCategoryName}}" >
+            
+               
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_provider_label' | translate}}</label>
+            <div class="col-sm-5">
+
+                <input  type = "text " readonly  class="form-control" value="{{serviceProviderMasterName}}" >
+            
+               
+            </div>
+        </div>
+        <form [formGroup]="serviceProviderForm"> 
+            <div class="form-group row mt-2">
+                <label class="col-sm-3 col-form-label text-right">{{'COMMON.status_label' | translate}}</label>
+                  <div class="col-sm-5">
+                    <select formControlName="status"  class="custom-select form-control"  >
+                         <option value="Y">{{'COMMON.active' | translate}}</option>
+                        <option value="N">{{'COMMON.inactive' | translate}}</option>
+                        
+                    </select>
+                  </div>
+            </div>
+        </form>
+        <div class="form-group row mt-2">
+            <div class="col-sm-8 text-right">
+                <button   (click)="onCancel()" class="btn btn-danger px-3">
+                    <i class="fas fa-arrow-circle-left"></i>{{'COMMON.button.back' | translate}}</button> &nbsp;&nbsp;
+                    <button   (click)="onSaveService()" class="btn btn-primary px-3">
+                        <i class="fas fa-refresh"></i> {{'COMMON.button.update' | translate}}</button>
+              
+            </div>
+             
+        </div>
+ 
+    </div>
+    </div>
+    </div>
+    

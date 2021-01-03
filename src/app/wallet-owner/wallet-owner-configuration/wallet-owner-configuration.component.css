@@ -1,0 +1,15 @@
+.region-currency-icon {
+    font-size: 8rem;
+    padding: 2rem;
+  }
+  
+  .region-currency-icon :hover {
+    text-decoration: none;
+    color: #4e73df;
+  }
+  
+  .region-currency-icon p {
+    font-size: 20px;
+    padding: 0;
+    color: #858796;
+  }

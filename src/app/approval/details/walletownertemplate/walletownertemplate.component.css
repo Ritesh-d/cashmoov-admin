@@ -1,0 +1,18 @@
+
+ 
+.unchanged-data {
+    background-color: #fff;
+}
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+
+.parallel-col-margin{
+    margin-bottom: 1rem;
+}
+
+.tooltip-inner{
+    width: 400px;
+    background-color : #282c3f;
+  } 

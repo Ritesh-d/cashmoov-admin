@@ -1,0 +1,127 @@
+<div *ngIf="!data" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+ 
+<div *ngIf="data">
+
+    <div class="form-group row">
+        
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.template.name' | translate }}</label>
+            <input *ngIf="this.unchanged.name" type="text" class="form-control unchanged-data" id="name"
+                [value]="data.name==undefined?'':data.name" disabled>
+            <span *ngIf="!this.unchanged.name" [ngbTooltip]="'earlier it was: '+ data.name">
+                <input type="text" class="form-control" id="name" [value]="updatedInfo.name" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.template.category' | translate }}</label>
+            <input   type="text" class="form-control unchanged-data" id="templateCategoryName"
+                [value]="data.templateCategoryName==undefined?'':data.templateCategoryName" disabled>
+            
+        </div>
+    </div>
+  
+    <div class="form-group row">
+      
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.wallet.owner.category' | translate }}</label>
+            <input *ngIf="this.unchanged.walletOwnerCategoryName" type="text" class="form-control unchanged-data" id="walletOwnerCategoryName"
+                [value]="data.walletOwnerCategoryName==undefined?'':data.walletOwnerCategoryName" disabled>
+            <span *ngIf="!this.unchanged.walletOwnerCategoryName" [ngbTooltip]="'earlier it was: '+ data.walletOwnerCategoryName">
+                <input type="text" class="form-control" id="walletOwnerCategoryName" [value]="updatedInfo.walletOwnerCategoryCode" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="data.status==undefined?'':data.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ data.status">
+                <input type="text" class="form-control" id="status" [value]="statusName" disabled>
+            </span>
+        </div>
+    
+    </div>
+    <div class="form-group row">
+        <div class="table-responsive">
+            <table   datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                cellspacing="0">
+                <thead>
+                    <tr>
+                       
+                        <th> {{'APPROVAL.wallet.owner.category' | translate }} </th>
+                        <th>  {{'APPROVAL.service.name' | translate }}</th>
+                        <th> {{'APPROVAL.service.category' | translate }}</th>
+                        <th>  {{'APPROVAL.service.provider' | translate }}</th>
+                        <th> {{'APPROVAL.channel.type' | translate }}</th>
+                        <th> {{'APPROVAL.trans.type' | translate }} </th>
+                        <th>  {{'APPROVAL.min.trans.value' | translate }}</th>
+                        <th> {{'APPROVAL.max.trans.value' | translate }} </th>
+                        <th> {{'APPROVAL.action' | translate }}</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let serviceTemplate of serviceList">
+                        <td>{{serviceTemplate.templateName}}</td>
+                        <td>{{serviceTemplate.channelTypeName}} </td>
+                        <td>{{serviceTemplate.serviceName}} </td>
+                        <td>{{serviceTemplate.serviceCategoryName}}</td>
+                        <td>{{serviceTemplate.serviceProviderName}} </td>
+                        <td>{{serviceTemplate.transTypeName}} </td>
+                        <td>{{serviceTemplate.minTransValue}}</td>
+                        <td>{{serviceTemplate.maxTransValue}}</td>
+                        <td>
+                            <a style="cursor:pointer" placement="bottom"  (click)="viewForm(serviceTemplate)"
+                            ngbTooltip="View"><i class="fas fa-eye text-primary"></i></a>&nbsp;
+                        </td>
+                    </tr>
+
+                    <!-- <tr *ngFor="let serviceTemplate of serviceList;">
+                              <td>{{showOldValue(serviceTemplate)}}</td>
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.templateName==undefined ||(oldvalue.templateName ==serviceTemplate.templateName)" > {{serviceTemplate.templateName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.templateName != serviceTemplate.templateName )" [ngbTooltip]="'earlier it was: '+ oldvalue.templateName">{{serviceTemplate.templateName}}  </span>
+                        </td>
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.serviceName==undefined || (oldvalue.serviceName ==serviceTemplate.serviceName)" > {{serviceTemplate.serviceName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.serviceName != serviceTemplate.serviceName) " [ngbTooltip]="'earlier it was: '+ oldvalue.serviceName">{{serviceTemplate.serviceName}}  </span>
+                        </td>
+                        
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.serviceCategoryName==undefined|| (oldvalue.serviceCategoryName ==serviceTemplate.serviceCategoryName)" > {{serviceTemplate.serviceCategoryName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.serviceCategoryName != serviceTemplate.serviceCategoryName )" [ngbTooltip]="'earlier it was: '+ oldvalue.serviceCategoryName">{{serviceTemplate.serviceCategoryName}}  </span>
+                        </td>
+                       
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.serviceProviderName==undefined || (oldvalue.serviceProviderName ==serviceTemplate.serviceProviderName)" > {{serviceTemplate.serviceProviderName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.serviceProviderName != serviceTemplate.serviceProviderName) " [ngbTooltip]="'earlier it was: '+ oldvalue.serviceProviderName">{{serviceTemplate.serviceProviderName}}  </span>
+                        </td>
+                   
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.channelTypeName==undefined || (oldvalue.channelTypeName ==serviceTemplate.channelTypeName)" > {{serviceTemplate.channelTypeName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.channelTypeName != serviceTemplate.channelTypeName )" [ngbTooltip]="'earlier it was: '+ oldvalue.channelTypeName">{{serviceTemplate.channelTypeName}}  </span>
+                        </td>
+                       
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.transTypeName==undefined || (oldvalue.transTypeName ==serviceTemplate.transTypeName)" > {{serviceTemplate.transTypeName}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.transTypeName != serviceTemplate.transTypeName) " [ngbTooltip]="'earlier it was: '+ oldvalue.transTypeName">{{serviceTemplate.transTypeName}}  </span>
+                        </td>
+                        
+                       
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.minTransValue==undefined || (oldvalue.minTransValue ==serviceTemplate.minTransValue)" > {{serviceTemplate.minTransValue}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.minTransValue != serviceTemplate.minTransValue) " [ngbTooltip]="'earlier it was: '+ oldvalue.minTransValue">{{serviceTemplate.minTransValue}}  </span>
+                        </td>
+                        
+                        <td  > <span *ngIf="oldvalue==undefined || !oldvalue.maxTransValue==undefined || (oldvalue.maxTransValue ==serviceTemplate.maxTransValue)" > {{serviceTemplate.maxTransValue}} </span>
+                            <span *ngIf="oldvalue && (oldvalue.maxTransValue != serviceTemplate.maxTransValue) " [ngbTooltip]="'earlier it was: '+ oldvalue.maxTransValue">{{serviceTemplate.maxTransValue}}  </span>
+                        </td>
+                 
+
+                    </tr> -->
+                  
+                </tbody>
+        
+            </table>
+          
+        </div>
+
+    </div>
+ 
+</div>

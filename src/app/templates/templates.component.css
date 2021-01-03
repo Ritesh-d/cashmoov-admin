@@ -1,0 +1,10 @@
+.table thead th, .table th {
+    font-weight: bold;
+}
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+.custom-hyperlink{
+    cursor: pointer;
+}

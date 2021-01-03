@@ -1,0 +1,13 @@
+@import '../rolegroup.component.css';
+.required-field {
+    color: #e74a3b;
+}
+.premission-table {
+    margin: auto;
+}
+.feature-name {
+    margin-left: 1.2rem;
+}
+.margin-bottom {
+    margin-bottom: 1rem;;
+}

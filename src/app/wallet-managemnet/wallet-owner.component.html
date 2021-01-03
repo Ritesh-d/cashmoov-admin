@@ -1,0 +1,211 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'WALLET.emoneymanagemnt' | translate}}</h1>
+    <!-- <a *ngIf="viewType(category_I)" (click)="navigateToAdd(category_I)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> Add Trust Account</a>
+    <a *ngIf="viewType(category_A)" (click)="navigateToAdd(category_A)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> Add Tax Account</a>
+    <a *ngIf="viewType(category_B)" (click)="navigateToAdd(category_B)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> Add Service Provider</a> -->
+        <div *ngIf="setPermission.create" >
+        <a   (click)="navigateToAdd(category_I)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> {{'WALLET.addtrust' | translate}} </a> &nbsp;
+        <a   (click)="navigateToAdd(category_A)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> {{'WALLET.addtax' | translate}}</a>&nbsp;
+        <a (click)="navigateToAdd(category_B)"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> {{'WALLET.addserviceprovider' | translate}}</a>
+        </div>
+</div>
+<!-- <nav>
+    <ol class="breadcrumb">
+        <li *ngIf="showbreadCrumb('institution')" class="breadcrumb-item custom-hyperlink">
+            <a (click)="navigateTo('institution')">Trust Account</a></li>
+        <li *ngIf="showbreadCrumb('agent')" class="breadcrumb-item custom-hyperlink">
+            <a (click)="navigateTo('agent')">Tax Account</a></li>
+        <li *ngIf="showbreadCrumb('branch')" class="breadcrumb-item"><a>Service Provider</a></li>
+    </ol>
+</nav> -->
+
+<!-- Content Row -->
+<div class="row">
+    <!-- main area -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <!-- <h6 *ngIf="viewType(category_I)" class="m-0 font-weight-bold text-primary">Trust Account</h6>
+                <h6 *ngIf="viewType(category_A)" class="m-0 font-weight-bold text-primary">Tax Account</h6>
+                <h6 *ngIf="viewType(category_B)" class="m-0 font-weight-bold text-primary">Service Provider</h6> -->
+                <h6   class="m-0 font-weight-bold text-primary">{{'WALLET.emoneymanagemnt' | translate}}</h6> 
+                     <div>
+                    <span class="custom-hyperlink" (click)="advanceSearchOption($event)">
+                    <i placement="bottom" ngbTooltip="{{'MASTER.advanceSearch' | translate}}"  class="fa fa-plus-circle toggle-i"
+                        aria-hidden="true"></i></span><span>{{'WALLET.advance.search' | translate}}</span>
+                   </div>
+                     </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <!-- advance search form -->
+                <form id="advSearchOpt" style="display:none" [formGroup]="walletOwnerSearchForm">
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <input formControlName="code" type="text" autocomplete="off" class="form-control"
+                                placeholder="{{'WALLET.code' |  translate}}">
+                        </div>
+                        <div class="col-lg-3">
+                            <input formControlName="name" type="text" autocomplete="off" class="form-control"
+                                placeholder="{{'WALLET.name' |  translate}}">
+                        </div>
+                        <div class="col-lg-3">
+                            <input formControlName="mobileNumber" type="text" autocomplete="off" class="form-control"
+                                placeholder="{{'WALLET.mobile.Number' |  translate}}">
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="custom-select" formControlName="category">
+                                <option selected [value]="''">{{'WALLET.select.category' |  translate}}</option>
+                                <option *ngFor="let category of categories;" [value]="category.code">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <!-- <div class="col-lg-3">
+                            <select class="custom-select" formControlName="status">
+                                <option [value]="''">select status</option>
+                                <option [value]="'Active'">Active</option>
+                                <option [value]="'Inactive'">Inactive</option>
+                            </select>
+                        </div> -->
+                        <div class="col-lg-3">
+                            <button type="button" (click)="searchData()" class="btn btn-primary"><i
+                                    class="fas fa-search"></i> {{'WALLET.search' |  translate}}</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- data table -->
+                <div class="table-responsive">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <div *ngIf="!walletOwners && !errorMessage" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                        </div>
+                    </div>
+                    <!-- basic info of wallet-owner / parent  -->
+                    <div *ngIf="walletOwners && showInfo()">
+                        <!-- name / code -->
+                        <div class="form-group row">
+                            <!-- ownerName -->
+                            <div class="col-sm-6">
+                                <label *ngIf="viewType(category_A)" for="ownerName" class="custom-label">{{'WALLET.institution.name' |  translate}}</label>
+                                <label *ngIf="viewType(category_B)" for="ownerName" class="custom-label">{{'WALLET.agent.name' |  translate}}</label>
+                                <input type="text" class="form-control" id="ownerName" name="ownerName"
+                                    [value]="walletOwnerInfo.ownerName" readonly>
+                            </div>
+                            <!-- code -->
+                            <div class="col-sm-6">
+                                <label for="code" class="custom-label">{{'WALLET.Code' |  translate}}</label>
+                                <input type="text" class="form-control" id="code" name="code"
+                                    [value]="walletOwnerInfo.code" readonly>
+                            </div>
+                        </div>
+                        <!-- status / createdOn -->
+                        <div class="form-group row">
+                            <!-- mobileNumber -->
+                            <div class="col-sm-6">
+                                <label for="mobileNumber" class="custom-label">{{'WALLET.Mobile.No' |  translate}}</label>
+                                <input type="text" class="form-control" id="mobileNumber" name="mobileNumber"
+                                    [value]="walletOwnerInfo.mobileNumber" readonly>
+                            </div>
+                            <!-- status -->
+                            <div class="col-sm-6">
+                                <label for="status" class="custom-label">{{'WALLET.Status' |  translate}}</label>
+                                <input type="text" class="form-control" id="status" name="status"
+                                    [value]="walletOwnerInfo.status" readonly>
+                            </div>
+                            <!-- createdOn -->
+                            <!-- <div class="col-sm-6">
+                                <label for="createdOn" class="custom-label">created On</label>
+                                <input type="text" class="form-control" id="createdOn" name="createdOn"
+                                    [value]="walletOwnerInfo.creationDate | dateFormat: 'dateTime' " readonly>
+                            </div> -->
+                        </div>
+                        <hr>
+                    </div>
+                    <table *ngIf="walletOwners" class="table table-bordered table-striped" datatable
+                        [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'WALLET.code' |  translate}}</th>
+                                <th>{{'WALLET.name' |  translate}}</th>
+                                <th>{{'WALLET.Mobile.No' |  translate}}</th>
+                                <th>{{'WALLET.Type' |  translate}}</th>
+                                <th>{{'WALLET.Country' |  translate}}</th>
+                                <th>{{'WALLET.createdOn' |  translate}}</th>
+                                <th>{{'WALLET.Status' |  translate}}</th>
+                                <th>{{'WALLET.State' |  translate}}</th>
+                                <th>{{'WALLET.action' |  translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let walletOwner of walletOwners; let i = index;">
+                                <td>{{ walletOwner.code }}</td>
+                                <td>{{ walletOwner.ownerName }}</td>
+                                <td>{{ walletOwner.mobileNumber }}</td>
+                                <td>{{ getCategoryOnCode(walletOwner.walletOwnerCategoryCode) }}</td>
+                                <td>{{ walletOwner.registerCountryName }}</td>
+                                <td><span type="hidden" style="display: none;">{{ walletOwner.creationDate | date: 'YYYYMMDD'}} </span>{{ walletOwner.creationDate | dateFormat: 'dateTime' }}</td>
+                                <td>{{ walletOwner.status }}</td>
+                                <td>{{ walletOwner.state }}</td>
+                                <td>
+                                    <!-- view link -->
+                                        <a *ngIf="setPermission.view" class="custom-hyperlink" ngbTooltip="{{'MASTER.view' | translate}}"
+                                        (click)="viewWalletOwner(walletOwner.code)">
+                                        <i class="fas fa-eye text-primary"></i></a>
+                                    <!-- edit link --> 
+                                       <a *ngIf="walletOwner.state === 'Approved' && setPermission.edit" class="custom-hyperlink"
+                                        ngbTooltip="{{'MASTER.edit' | translate}}" (click)="editWalletOwner(walletOwner.code)">
+                                        <i class="fas fa-edit text-primary"></i></a>
+                                        <a *ngIf="(walletOwner.state === 'Approved' && walletOwner.walletOwnerCategoryCode === category_B) && setPermission.edit" class="custom-hyperlink"
+                                        ngbTooltip="{{'MASTER.services' | translate}}" (click)="viewWalletOwner(walletOwner.code,'serviceBlock')">
+                                        <i class="fas fa-cogs text-primary"></i></a>
+                                    <!-- enroll link -->
+                                    <a *ngIf="walletOwner.state === 'Enrolled'" class="custom-hyperlink"
+                                    ngbTooltip="{{'MASTER.enroll' | translate}}"
+                                    (click)="enrolledWalletOwner(walletOwner.code, walletOwner.state, walletOwner.stage)">
+                                    <i class="fas fa-registered text-primary"></i></a>
+                                 
+                                    <!-- <a *ngIf="viewType(category_I) || viewType(category_A)" class="custom-hyperlink"
+                                        ngbTooltip="View Sub-wallet-owners" (click)="viewChild(walletOwner.code)">
+                                        <i class="fas fa-sitemap text-primary"></i></a> -->
+                                    <!-- add user link -->
+                                    <!-- <a   class="custom-hyperlink"
+                                        ngbTooltip="Add User" (click)="addUser(walletOwner.code)">
+                                        <i class="fas fa-user-plus text-primary"></i></a> -->
+                                    <!-- users link -->
+                                    <!-- <a   class="custom-hyperlink"
+                                        ngbTooltip="Users" (click)="viewUsers(walletOwner.code)">
+                                        <i class="fas fa-users text-primary"></i></a> -->
+                                    <!-- config link --> 
+                                    <!-- <a   class="custom-hyperlink"
+                                        ngbTooltip="Configuration" (click)="configuration(walletOwner.code,walletOwner)">
+                                        <i class="fas fa-cogs text-primary"></i></a> -->
+                                    <!-- delete link -->
+                                    <!-- <a class="custom-hyperlink" ngbTooltip="Delete">
+                                        <i class="fas fa-trash-alt text-danger"></i></a> -->
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

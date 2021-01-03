@@ -1,0 +1,16 @@
+@import '../rolegroup.component.css';
+
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+.table thead th, .table th {
+  font-weight: bold;
+}
+.margin-1 {
+  margin: 1rem;
+}
+.modal-body{
+  max-height: 450px !important;
+  overflow: auto !important;
+}

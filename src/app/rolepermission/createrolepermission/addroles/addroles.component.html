@@ -1,0 +1,109 @@
+<form [formGroup]="addRolePermissionForm" > 
+    <div class="form-group row">
+        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+        <div class="col-sm-9 text-right">
+            <a class="custom-hyperlink" (click)="onEditForm()"><i class="fas fa-edit text-primary"></i></a>&nbsp;
+            <a class="custom-hyperlink" (click)="onRemoveForm()"><i
+                    class="fas fa-trash-alt text-danger"></i></a>&nbsp;
+            <a class="custom-hyperlink" (click)="submitForm()"><i class="fas fa-save text-primary"></i></a>
+        </div>
+        </div>
+
+
+    <!--removed permission and role -->
+    
+    <!-- <div class="form-group row mt-2">
+        <label for="permission" class="col-sm-3 col-form-label text-right">Permission</label>
+        <div class="col-sm-5">
+        <input  formControlName="permission"  type="text" class="form-control" id="permission" >
+        </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="role" class="col-sm-3 col-form-label text-right">Role</label>
+            <div class="col-sm-5">
+             <select  formControlName="role"  class="custom-select form-control" id="role">
+                <option value="select" selected>select</option>
+                <option value="Active">role_1</option>
+                <option value="Inactive">role_1</option>
+                <option value="Inactive">role_1</option>
+            </select>
+            </div>
+            </div> -->
+        <div class="form-group row">
+            <label for="featureCode" class="col-sm-3 col-form-label text-right"><b>{{'ROLE.feature' | translate}}
+                <span class="required-field">*</span>
+            </b></label>
+            
+
+            <div class="col-sm-5">
+             <select  (change)= "onChange($event)" formControlName="featureCode"  class="custom-select form-control" id="featureCode">
+                <option value="" selected>{{'MASTER.select' | translate}}</option>
+                <option  [ngClass]= "{'disable-option': feature.disabled}" *ngFor = "let feature of systemUserConfigurationService.sharedData" value="{{feature.code}}" [disabled]="feature.disabled">{{feature.name}}</option>
+              
+            </select>
+            <!-- <span class="validation-message" *ngIf="addRolePermissionForm.enabled
+            && addRolePermissionForm.get('featureCode').touched
+            && !addRolePermissionForm.get('featureCode').valid">Please select Feature</span> -->
+            <span *ngIf="submitted && f.featureCode.errors" class="validation-message">
+                <div *ngIf="f.featureCode.errors.required" translate>{{'ROLE.pleaseselectFeature' | translate}}</div>  
+            </span>
+        </div>
+            </div>
+            <!-- <div class="form-group row mt-2">
+                <label for="status" class="col-sm-3 col-form-label text-right">Staus</label>
+                <div class="col-sm-5">
+                 <select formControlName="status"  class="custom-select form-control" id="status">
+                    <option value="select" selected>Select</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                </div>
+                </div> -->
+               
+                       
+                 
+                
+                <div class="form-group row">
+                    <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                    <!-- <div class="col-sm-5"> -->
+                    
+                    <div class="custom-control ">
+                     
+                    <input  formControlName= "create"  type="checkbox"   id="create"> &nbsp;
+                    <label       for="create">{{'ROLE.create' | translate}}</label>
+                    </div> &nbsp; &nbsp;
+                    <div class="custom-control">
+                    <input formControlName= "view"  type="checkbox"    id="view">  &nbsp;
+                    <label       for="view">{{'MASTER.view' | translate}}</label>
+                    </div> &nbsp; &nbsp;
+                    
+                    <div class="custom-control">
+                    <input formControlName= "edit"  type="checkbox"   id="edit">   &nbsp;
+                    <label     for="edit">{{'MASTER.edit' | translate}}</label>
+                    </div> &nbsp; &nbsp;
+                    <div class="custom-control">
+                    <input formControlName= "approve"  type="checkbox"   id="approve">  &nbsp; 
+                    <label     for="approve">{{'Role.approve' | translate}}</label>
+                    </div> &nbsp; &nbsp;
+                    <div class="custom-control">
+                    <input formControlName= "delete"  type="checkbox"   id="delete"> &nbsp;
+                    <label     for="delete">{{'MASTER.delete' | translate}}</label>
+                    </div>
+                    
+                    <!-- </div> -->
+                    </div>
+                    <!-- <span *ngIf="submitted && validatemsg" class="validation-message">
+                        <div   translate>Atleast one permission should be selected</div>  
+                    </span> -->
+ 
+      <!-- <div class="form-group row">
+        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+        <div class="col-sm-9 text-right">
+            <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i class="fas fa-times-circle"></i> Cancel</button>
+            <button type="button" (click)="onSubmit()" class="btn btn-primary px-3"><i class="fas"></i> Submit</button> 
+
+        </div>
+        </div> -->
+        <div style="display: none;" id="form_{{formIndex}}"><button type="submit"></button></div>
+
+</form>

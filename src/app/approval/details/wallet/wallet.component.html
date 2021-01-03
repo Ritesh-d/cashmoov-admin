@@ -1,0 +1,70 @@
+<div *ngIf="!wallet" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+ 
+<div *ngIf="wallet">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="code" class="custom-label" translate>{{'WALLET.wallet.owner.name' | translate}}
+            </label>
+            <input value="{{wallet.walletOwnerName}}" type="text" class="form-control unchanged-data
+            " id="code" readonly>
+        </div>
+        <div class="col-sm-6">
+
+            <label for="role_code" class="custom-label" translate>{{'WALLET.currency.name' | translate}}
+            </label>
+
+            <input value="{{wallet.currencyName}}" type="text" class="form-control unchanged-data
+            " id="role_code" readonly>
+
+        </div>
+
+    </div>
+  
+    <!-- <hr> -->
+    <label  *ngIf="wallet.walletTypeCode=='100008'" class="custom-label" translate><h6>{{'WALLET.main.wallet' | translate}} </h6></label>
+
+    <label  *ngIf="wallet.walletTypeCode=='100009'" class="custom-label" translate><h6>{{'WALLET.commision.wallet' | translate}} </h6></label>
+    <br>   
+    <div   class="form-group row">
+        <div  class="col-sm-3">
+            <label for="last_name" class="custom-label" translate>{{'WALLET.value' | translate}}</label>
+
+            <input   value="{{wallet.value==undefined ?'0' :wallet.value}}" type="text" class="form-control unchanged-data
+            " readonly >
+  
+        </div>
+        <!-- <div  *ngIf="wallet.walletTypeCode=='100009'" class="col-sm-3">
+            <label for="last_name" class="custom-label" translate>{{'WALLET.value' | translate}}</label>
+          
+            <input   value="{{wallet.commisionWalletvalue==undefined ?'0' :wallet.commisionWalletvalue}}" type="text" class="form-control" readonly >
+  
+        </div> -->
+        <div class="col-sm-3">
+            <label for="maxValue" class="custom-label" translate>{{'WALLET.max.value' | translate}} </label>
+ <span  [ngbTooltip]="'earlier it was: '+ wallet.maxValue">
+            <input   value="{{updatedInfo.maxValue==undefined ?'0' :updatedInfo.maxValue}}" type="text" class="form-control"  readonly >
+ </span>
+
+        </div>
+        <div class="col-sm-3">
+            <label for="minValue" class="custom-label" translate>{{'WALLET.min.value' | translate}} </label>
+            <span  [ngbTooltip]="'earlier it was: '+ wallet.minValue">
+            <input value="{{updatedInfo.minValue==undefined ?'0' :updatedInfo.minValue}}" type="text" class="form-control" readonly >
+        </span>
+
+        </div>
+        <div class="col-sm-3">
+            <label for="alertValue" class="custom-label" translate>{{'WALLET.alert.value' | translate}} </label>
+            <span  [ngbTooltip]="'earlier it was: '+ wallet.alertValue">
+            <input  value="{{updatedInfo.alertValue==undefined ?'0' :updatedInfo.alertValue}}"   type="text" class="form-control" readonly >
+ </span>
+
+        </div>
+    </div>
+ 
+</div>

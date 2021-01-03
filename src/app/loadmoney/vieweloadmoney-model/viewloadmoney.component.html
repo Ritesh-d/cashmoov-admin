@@ -1,0 +1,87 @@
+<ng-template #content let-c="close" let-d="dismiss" class="custom-modal-body" >
+	<div class="modal-header">
+		<h6 class="m-0 font-weight-bold text-primary">{{ 'EMONEY.viewReceipt' | translate }}</h6> 
+	</div>
+ 
+	  <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	  </button> -->
+	 
+   <div class="modal-body" > 
+	<app-image-viewer *ngIf="viewDocument" [fullscreenTooltipLabel] = "'Fullscreen'" id="viewer"  [images]="[receiptFile]"
+	 [idContainer]="'idOnHTML'" [loadOnInit]="true" [enableTooltip] = "false" [download]="false" [showOptions]="false"
+	  [showPDFOnlyOption]="false" autofocus></app-image-viewer >  
+		<div class="modal-footer">
+			<button type="button" (click)="d('Cross click')" class="btn btn-danger px-3"><i class="fas fa fa-times"></i> {{ 'MASTER.close' | translate }}</button>
+		</div>
+	</div> 
+	 
+  </ng-template>
+
+
+<div class="card-header">
+	<h6 class="m-0 font-weight-bold text-primary">{{ 'EMONEY.viewLoadMoney' | translate }}</h6> </div>
+<div class="modal-body">
+	<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+	<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+	<div class="form-group row">
+		<!-- <div class="col-sm-6">
+			<label for="control_account" class="custom-label" translate>Account Type</label>
+            <input type="text" value="{{data.accountTypeName}}" class="form-control" readonly> 
+        </div> -->
+		
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-6">
+			<label for="account " class="custom-label" translate>{{ 'EMONEY.accountName' | translate }}</label>
+            <input type="text" value="{{data.srcWalletOwnerName}}" class="form-control" readonly> 
+        </div>
+		<div class="col-sm-6">
+			<label for="currency" class="custom-label" translate>{{ 'MASTER.currency' | translate }}</label>
+            <input type="text" value="{{data.srcCurrencyName}}" class="form-control" readonly>
+        </div>
+		
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-6">
+			<label for="amount " class="custom-label" translate>{{ 'MASTER.amount' | translate }}</label>
+            <input type="number" value="{{data.amount}}" class="form-control" readonly>
+        </div>
+		<div class="col-sm-6">
+			<label for="currency" class="custom-label" translate>{{ 'EMONEY.bankReferenceNumber' | translate }}</label>
+            <input type="text" value="{{data.bankReferenceNo}}" class="form-control" readonly>
+        </div>
+		
+	</div>
+	
+	<div class="form-group row">
+		<div class="col-sm-6">
+			<label class="custom-label" translate> {{ 'MASTER.receipt' | translate }} &nbsp;&nbsp;  
+			<!-- <i *ngIf="data.fileName" placement="bottom" ngbTooltip="Download" (click)="downloadReceipt()"class="fas fa-download text-primary"></i> </label> -->
+			<i *ngIf="data.fileName" placement="bottom" ngbTooltip="{{ 'MASTER.ViewReceipt' | translate }}" (click)="getReceiptFile(content)"class="fas fa-eye text-primary"></i> </label>
+
+			 <input  class="form-control" value="{{data.fileName}}"  readonly >  
+				
+		 
+		 
+		</div>
+		<div class="col-sm-6">
+			<label for="amount " class="custom-label" translate>{{ 'MASTER.comments' | translate }}</label>
+            <input type="text" value="{{data.comments}}" class="form-control" readonly>
+        </div>
+		
+		 
+		 
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-6">
+			<label class="custom-label" translate>{{ 'MASTER.status' | translate }}</label>
+            <input type="text" class="form-control" value="{{data.status}}" readonly> 
+        </div>
+	</div> 
+
+	<div class="modal-footer">
+		<button type="button"  (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i class="fas fa fa-times"></i> {{ 'MASTER.close' | translate }}</button>
+    </div>
+</div> 

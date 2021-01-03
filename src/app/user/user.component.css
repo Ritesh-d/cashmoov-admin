@@ -1,0 +1,35 @@
+::ng-deep .page-titles {
+    margin-bottom: 2px;
+    padding: 0p
+  }
+
+  .table thead th, .table th {
+    font-weight: bold;
+  }
+  .spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+p-calendar.calendar-control  {
+  opacity: 1;
+  color: black;
+  background: red;
+}
+.toggle-i{
+  margin-top: 10px;
+  font-size:20px;
+  color:#1cc88a;
+  
+}
+
+.mb-4, .my-4 {
+  margin-bottom: 0.5rem !important;
+}
+
+/* .advance-search-icon
+{
+  background-image: url('../../assets/images/icon/advanced_search.png');
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 20px;
+  } */

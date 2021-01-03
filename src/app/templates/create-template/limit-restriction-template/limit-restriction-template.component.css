@@ -1,0 +1,33 @@
+::ng-deep .table{
+    width: 800px;
+    text-align:  left;
+    margin-right: auto;
+    margin-left: auto;
+    vertical-align: center;
+}
+th  {
+    padding: 5px;
+    background-color: rgba(29,150,178,1);
+    border: 1px solid rgba(29,150,178,1);
+    font-weight: normal;
+    text-align: center;
+    color: white;
+    white-space: normal;
+  }
+
+  td {
+    padding: 5px;
+    vertical-align: middle;
+
+  }
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+  

@@ -1,0 +1,51 @@
+<div *ngIf="!wallet" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+ 
+<div  >
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="code" class="custom-label" translate>{{'WALLET.wallet.owner.code' | translate}}
+            </label>
+            <input value="{{wallet.walletOwnerCode}}" type="text" class="form-control unchanged-data
+            " id="code" readonly>
+        </div>
+        <div class="col-sm-6">
+            <label for="name" class="custom-label" translate>{{'WALLET.wallet.owner.name' | translate}}
+            </label>
+            <input value="{{wallet.ownerName}}" type="text" class="form-control unchanged-data
+            " id="code" readonly>
+        </div>
+
+    </div>
+  
+    <!-- <hr> -->
+    <!-- <label   class="custom-label" translate><h6>{{'WALLET.template' | translate}} </h6></label> -->
+
+     <br>   
+    <div *ngFor="let template of templatesControlOfList"  class="form-group row">
+        
+        <div   class="col-sm-6">
+            <label for="code" class="custom-label" translate> {{'WALLET.template.category' | translate}}</label>
+       
+            <input readonly value="{{template.templateCategoryName}}" type="text" class="form-control unchanged-data" >
+
+         </div>
+         <div   class="col-sm-6">
+            <label for="code" class="custom-label" translate> {{'WALLET.template.name' | translate}}</label>
+       
+           <span  *ngIf="template.templateNameOld && (template.templateNameOld != template.templateName) ; else temp;"  [ngbTooltip]="'earlier it was: '+ template.templateNameOld">
+              <input value="{{template.templateName}}" type="text" class="form-control" readonly>
+           </span>
+           <ng-template #temp>
+            <input   value="{{template.templateName}}" type="text" class="form-control unchanged-data" readonly >
+
+           </ng-template>
+        </div>
+         
+    </div>
+ 
+</div>

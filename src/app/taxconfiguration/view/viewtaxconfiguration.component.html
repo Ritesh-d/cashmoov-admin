@@ -1,0 +1,59 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{ 'TAXCONFIGURATION.viewTaxConfiguration' | translate }}</h6>
+
+</div>
+<div class="modal-body">
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{ 'TAXCONFIGURATION.taxType' | translate }} </label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="{{data.taxTypeName}}"class= "form-control">
+             
+        </div>
+    </div>
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{ 'TAXCONFIGURATION.calculationType' | translate }} </label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="{{data.calculationTypeName}}" class= "form-control">
+             
+        </div>
+    </div>
+   
+     
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{'TEMPLATE.template.range.mintomax' | translate}} </label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="[{{data.minValue}} - {{data.maxValue}}]" class= "form-control">
+             
+        </div>
+    </div>
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{'TEMPLATE.template.value.percent' | translate}}</label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="{{data.percentValue}}" class= "form-control">
+             
+        </div>
+    </div>
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{ 'TAXCONFIGURATION.valueFixed' | translate }}  </label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="{{data.value}}" class= "form-control">
+             
+        </div>
+    </div>
+    <div class="form-group row mt-2">
+        <label class="col-sm-3 col-form-label text-right">{{ 'TAXCONFIGURATION.status' | translate }} </label>
+        <div class="col-sm-5">
+            <input readonly type="text" value="{{data.status}}" class= "form-control">
+             
+        </div>
+    </div>
+
+   
+  
+   
+
+ </div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{ 'TAXCONFIGURATION.close' | translate }}</button>
+ </div>

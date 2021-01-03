@@ -1,0 +1,135 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'USER.viewUser' | translate }}</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="code" class="custom-label" translate>{{'USER.code'   }}
+            </label>
+            <input value="{{code}}" type="text" class="form-control" id="code" readonly>
+        </div>
+        <div class="col-sm-6">
+
+            <label for="role_code" class="custom-label" translate>{{'USER.roleName'   }}
+            </label>
+
+            <input value="{{roleName}}" type="text" class="form-control" id="role_code" readonly>
+
+        </div>
+     
+    </div>
+
+    <div class="form-group row">
+       
+
+      
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="first_name" class="custom-label" translate>{{'USER.firstName'   }} </label>
+
+            <input value="{{first_name}}" type="text" class="form-control" id="first_name" readonly>
+
+        </div>
+
+        <div class="col-sm-6">
+            <label for="last_name" class="custom-label" translate>{{'USER.lastName'   }}
+
+            </label>
+
+            <input value="{{last_name}}" type="text" class="form-control" id="last_name" readonly>
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="user_name" class="custom-label" translate>{{'USER.userName'   }} </label>
+
+            <input value="{{user_name}}" type="text" class="form-control" id="user_name" readonly>
+
+        </div>
+
+        <div class="col-sm-6">
+            <label for="email" class="custom-label" translate>{{'USER.email'   }} </label>
+
+
+            <input readonly value="{{email}}" type="text" class="form-control" id="email">
+
+        </div>
+
+    </div>
+    <div class="form-group row" >
+        <div class="col-sm-6">
+            <label for="employeeId" class="custom-label" translate>{{'USER.employeeId'   }} </label>
+
+            <input readonly value="{{employeeId}}" type="text" class="form-control" id="employeeId">
+
+        </div>
+        <div class="col-sm-6">
+            <label for="mobile_number" class="custom-label" translate>{{'USER.mobileNumber'   }} </label>
+
+            <input readonly value="{{mobile_number}}" type="text" class="form-control" id="mobile_number">
+
+        </div>
+    </div>
+    <!-- <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="idProofNumber" class="custom-label" translate>{{'USER.idProofNumber'   }} </label>
+
+            <input readonly value="{{idProofNumber}}" type="text" class="form-control" id="idProofNumber">
+
+        </div>
+        <div class="col-sm-3">
+            <label for="idProofTypeName" class="custom-label" translate>{{'USER.idProfType'   }} </label>
+
+            <input readonly value="{{idProofTypeName}}" type="text" class="form-control" id="idProofTypeName">
+
+        </div>
+        <div class="col-sm-3">
+            <label for="idExpiryDate" class="custom-label" translate>{{'USER.IdexpityDate'   }} </label>
+
+            <input readonly value="{{idExpiryDate}}" type="text" class="form-control" id="idExpiryDate">
+
+        </div>
+     
+
+      
+    </div> -->
+    <div class="form-group row">
+        
+     
+        <div class="col-sm-6">
+            <label for="status" class="custom-label" translate>{{'USER.status'   }}
+            </label>
+
+            <input value="{{status}}" type="text" class="form-control" id="status" readonly>
+
+        </div>
+        <div *ngIf="showDateOptions" class="col-sm-3">
+            <label for="fromDate" class="custom-label" translate>{{'USER.fromdate'   }}
+            </label>
+
+            <input value="{{fromDate}}" type="text" class="form-control" id="fromDate" readonly>
+
+        </div>
+        <div *ngIf="showDateOptions"  class="col-sm-3">
+            <label for="toTate" class="custom-label" translate>{{'USER.todate'   }}
+            </label>
+
+            <input value="{{toDate}}" type="text" class="form-control" id="toTate" readonly>
+
+        </div>
+
+
+    </div>
+
+    <!-- <app-viewuser [userid]="userid"></app-viewuser> -->
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'USER.button.close' | translate}}</button>
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
+</div>

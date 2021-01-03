@@ -1,0 +1,112 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{ 'ROLE.viewRoleTxt' | translate}}</h6>
+</div>
+
+<div class="modal-body">
+    <div *ngIf="!role && !errorMessage" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+        </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="role">
+        <!-- name / code -->
+        <div class="form-group row">
+            <!-- name -->
+            <div class="col-sm-6">
+                <label for="name" class="custom-label">{{ 'ROLE.nameTxt' | translate | titlecase}}</label>
+                <input type="text" class="form-control" id="name" name="name" [value]="role.name" readonly>
+            </div>
+            <!-- code -->
+            <div class="col-sm-6">
+                <label for="code" class="custom-label">{{ 'ROLE.codeTxt' | translate | titlecase}}</label>
+                <input type="text" class="form-control" id="code" name="code" [value]="role.code" readonly>
+            </div>
+        </div>
+        <!-- status / createdOn -->
+        <div class="form-group row">
+            <!-- status -->
+            <div class="col-sm-6">
+                <label for="status" class="custom-label">{{ 'ROLE.statusTxt' | translate | titlecase}}</label>
+                <input type="text" class="form-control" id="status" name="status" [value]="role.status" readonly>
+            </div>
+            <!-- createdOn -->
+            <div class="col-sm-6">
+                <label for="createdOn" class="custom-label">{{ 'ROLE.createdOnTxt' | translate | titlecase}}</label>
+                <input type="text" class="form-control" id="createdOn" name="createdOn"
+                    [value]="role.creationDate | dateFormat: 'dateTime' " readonly>
+            </div>
+        </div>
+        <!-- features -->
+        <div class="form-group row">
+            <table *ngIf="featuresList.length" class="table table-bordered table-striped premission-table margin-1"
+                cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-check">
+                                <label class="form-check-label">{{ 'ROLE.featureTxt' | translate}}</label>
+                            </div>
+                        </th>
+                        <th class="text-center">{{ 'ROLE.approveTxt' | translate}}</th>
+                        <th class="text-center">{{ 'ROLE.viewTxt' | translate}}</th>
+                        <th class="text-center">{{ 'ROLE.addTxt' | translate}}</th>
+                        <th class="text-center">{{ 'ROLE.editTxt' | translate}}</th>
+                        <th class="text-center">{{ 'ROLE.deleteTxt' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let feature of featuresList; let i = index;">
+                        <td>
+                            <!-- featurename checkbox -->
+                            <div class="feature-name">
+                                <label class="form-check-label">
+                                    {{ feature.name }}
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- approve checkbox/switch -->
+                            <div class="text-center" ngbTooltip="{{ 'ROLE.approveTxt' | translate}}">
+                                <div class="custom-control custom-switch">
+                                    <input class="custom-control-input" type="checkbox" [checked]="feature.approve"
+                                        id="{{i}}_ap" disabled>
+                                    <label class="custom-control-label" for="{{i}}_ap"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- view checkbox -->
+                            <div class="text-center" ngbTooltip="{{ 'ROLE.viewTxt' | translate}}">
+                                <input type="checkbox" [checked]="feature.view" disabled>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- add checkbox -->
+                            <div class="text-center" ngbTooltip="{{ 'ROLE.addTxt' | translate}}">
+                                <input type="checkbox" [checked]="feature.create" disabled>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- edit checkbox -->
+                            <div class="text-center" ngbTooltip="{{ 'ROLE.editTxt' | translate}}">
+                                <input type="checkbox" [checked]="feature.edit" disabled>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- delete checkbox -->
+                            <div class="text-center" ngbTooltip="{{ 'ROLE.deleteTxt' | translate}}">
+                                <input type="checkbox" [checked]="feature.delete" disabled>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3">
+        <i class="fas fa fa-times"></i> {{ 'ROLE.closeTxt' | translate}}</button>
+</div>

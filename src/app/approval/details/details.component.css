@@ -1,0 +1,34 @@
+.color-white a {
+    color: white;
+}
+.float-right{
+    float: right;
+}
+.custom-hyperlink {
+    cursor: pointer;
+}
+.disable-option {
+    background-color: lightsteelblue;
+    cursor: not-allowed;
+}
+.btn-reject {
+    color: #fff;
+    background-color: #B22222;
+    border-color: #800000;
+}
+.btn-disclaim {
+    color: #fff;
+    background-color: teal;
+    border-color: #a9a9a9;
+}
+.unchanged-data {
+    background-color: #fff;
+}
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+.custom-label{
+    margin-bottom: auto;
+    /* font-style: italic; */
+}

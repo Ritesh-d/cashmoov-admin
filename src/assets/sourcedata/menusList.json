@@ -1,0 +1,40 @@
+{
+  "menus": [
+    {
+      "parentLevel": "machine name",
+      "level": [
+        {
+          "somegroup": "01465",
+          "sublevel": [
+            {
+              "group": "somegroup",
+              "id": "01465"
+            },
+            {
+              "group": "othergroup",
+              "id": "32409"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "parentLevel": "machine name",
+      "level": [
+        {
+          "somegroup": "01465",
+          "sublevel": [
+            {
+              "group": "somegroup",
+              "id": "01465"
+            },
+            {
+              "group": "othergroup",
+              "id": "32409"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

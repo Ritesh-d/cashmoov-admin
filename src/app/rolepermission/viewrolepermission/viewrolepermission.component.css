@@ -1,0 +1,10 @@
+
+@import '../searchrolepermission/searchrolepermission.component.css';
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+
+::ng-deep .col-form-label{
+ font-weight: bold;
+}

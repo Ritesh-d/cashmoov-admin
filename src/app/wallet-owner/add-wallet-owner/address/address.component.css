@@ -1,0 +1,8 @@
+@import '../add-wallet-owner.component.css';
+
+div.hover-form :hover .form-action-container{
+    visibility: visible;
+}
+.form-action-container {
+    visibility: hidden;
+}

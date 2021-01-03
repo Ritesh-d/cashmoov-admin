@@ -1,0 +1,17 @@
+.table thead th, .table th {
+    font-weight: bold;
+}
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+.custom-hyperlink {
+    cursor: pointer;
+}
+.search-placement {
+    margin-right: 1.2rem;
+    margin-left: 1rem;
+}
+.mrgn-left-custom {
+    margin-left: .7rem;
+}

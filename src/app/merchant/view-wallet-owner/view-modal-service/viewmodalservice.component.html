@@ -1,0 +1,52 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'WALLETSERVICEPROVIDER.viewTitle' | translate}}</h6>
+
+</div>
+<div class="modal-body">
+ 
+        
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_label' | translate}} </label>
+            <div class="col-sm-5">
+                   
+                <input readonly value="{{data.serviceName}}"   class="form-control"  type = "text">
+           
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_category_label' | translate}} </label>
+            <div class="col-sm-5">
+
+                <input readonly value="{{data.serviceCategoryName}}"   class="form-control"   type = "text">
+
+             
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_provider_label' | translate}} </label>
+            <div class="col-sm-5">
+
+                <input readonly value="{{data.name}}"   class="form-control"   type = "text">
+
+             
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label class="col-sm-3 col-form-label text-right">{{'COMMON.status_label' | translate}} </label>
+            <div class="col-sm-5">
+
+                <input readonly value="{{data.status}}"   class="form-control"   type = "text">
+
+             
+            </div>
+        </div>
+ 
+
+
+    
+
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'COMMON.button.close' | translate}}</button>
+</div>

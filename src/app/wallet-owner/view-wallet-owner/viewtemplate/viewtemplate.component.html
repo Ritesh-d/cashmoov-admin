@@ -1,0 +1,73 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.view' | translate}}</h6>
+
+</div>
+<div class="modal-body">
+ <!-- <app-viewfee-template ></app-viewfee-template> -->
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label   class="custom-label" translate>{{'TEMPLATE.template.name' | translate}}
+            </label>
+            <input value="{{template.templateName}}" type="text" class="form-control"  readonly>
+        </div>
+        <div class="col-sm-6">
+
+            <label  class="custom-label" translate>{{'TEMPLATE.template.code' | translate}}
+            </label>
+
+            <input value="{{template.templateCategory}}" type="text" class="form-control"   readonly>
+
+        </div>
+
+    </div>
+    <div *ngIf="!displaytable" class="spinner-aligning">
+        <div class="spinner-border" role="status"> <span class="sr-only">{{'WALLET.loading' | translate }} </span>
+        </div>
+    </div>
+ 
+<div class="table-responsive">
+<table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>{{'TEMPLATE.template.service.category' | translate}}</th>
+            <th>{{'TEMPLATE.template.service.provider' | translate}}</th>
+            <!-- <th> Channel Type </th> -->
+            <!-- <th> Tax Account </th>
+            <th> Tax Type </th> -->
+            <th>{{'TEMPLATE.template.calculation.type' | translate}}</th>
+            <th>{{'TEMPLATE.template.range.mintomax' | translate}}</th>
+            <!-- <th> Min Value</th>
+            <th> Max Value</th> -->
+            <th>{{'TEMPLATE.template.fixed.value' | translate}}</th>
+            <th>{{'TEMPLATE.template.value.percent' | translate}}</th>
+            <th>{{'TEMPLATE.template.status' | translate}}</th>
+            <th>{{'TEMPLATE.template.state' | translate}}</th>
+            <th>{{'TEMPLATE.template.action' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let serviceTemplate of serviceTemplateList">
+            <td>{{serviceTemplate.serviceCategoryName}}</td>
+            <td>{{serviceTemplate.serviceProviderName }}</td>
+            <!--<td>{{serviceTemplate.channelTypeName}} </td> -->
+            <!--<td>{{serviceTemplate.taxAccountName}} </td>
+            <td>{{serviceTemplate.taxTypeName }} </td> -->
+            <td>{{serviceTemplate.calculationTypeName}}</td>
+            <td>[ {{serviceTemplate.minValue}} - {{serviceTemplate.maxValue}} ]</td>
+            <!-- <td>{{serviceTemplate.maxValue}} </td> -->
+            <td>{{serviceTemplate.fixedFeeValue}}</td>
+            <td>{{serviceTemplate.percentFeeValue}}</td>
+            <td>{{serviceTemplate.status}}</td>
+            <td>{{serviceTemplate.state}}</td>
+            <td> <a style="cursor:pointer" placement="bottom" (click)="viewForm(serviceTemplate)" ngbTooltip="{{'MASTER.view' |  translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp; <a *ngIf="display != 'none' && serviceTemplate.state == 'Approved'" (click)="editForm(serviceTemplate)" style="cursor:pointer" placement="bottom" ngbTooltip="Edit"><i class="fas fa-edit text-secondary"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'WALLET.close' | translate}}</button>
+</div>

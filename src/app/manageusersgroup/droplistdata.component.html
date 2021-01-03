@@ -1,0 +1,67 @@
+<!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <div> <strong>Role Name</strong>: {{roleName}}</div>
+
+</div> -->
+<div class="card shadow mb-4 ">
+
+  <div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'USER.manageUsersGroup' | translate }}</h6>
+  </div>
+  <div class="card-body">
+    <div class="cdk-group " cdkDropListGroup>
+<form [formGroup]="cdkform">
+      <div class="row cdk-container col-lg-6">
+        <select formControlName="group1" (change)="checkApplicableGroup2($event)" class="mb-4 custom-select" id="group1">
+          <option value="-1">{{'USER.selectgroup' | translate }}</option>
+          <option *ngFor="let group of group1  "   [ngClass]="{'disable-option': group.disabled}" [disabled]="group.disabled"  value="{{group.code}}">{{group.name}} </option>
+        </select>
+        <div class="cdk-list" cdkDropList #adminRightsList="cdkDropList" [cdkDropListData]="adminRights"
+          [cdkDropListConnectedTo]="[selectedRightsList]"
+          (cdkDropListDropped)="drop($event);multiSelect.dropListDropped($event)">
+
+          <div class="cdk-box" *ngFor="let item of adminRights" cdkDrag (pointerdown)="multiSelect.mouseDown($event)"
+            (pointerup)="multiSelect.mouseUp($event)"
+            (cdkDragStarted)="multiSelect.dragStarted();multiDrag.dragStarted($event)"
+            (cdkDragEnded)="multiSelect.dragEnded()">
+            {{item}}
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row cdk-container col-lg-6">
+        <select formControlName="group2" (change)="checkApplicableGroup1($event)" class="mb-4 custom-select" id="group2">
+          <option value="-1">{{'USER.selectgroup' | translate }}</option>
+          <option *ngFor="let group of group2  "   [ngClass]="{'disable-option': group.disabled}"  [disabled]="group.disabled" value="{{group.code}}">{{group.name}} </option>
+        </select>
+
+        <div class="cdk-list" cdkDropList #selectedRightsList="cdkDropList" [cdkDropListData]="selectedRights"
+          [cdkDropListConnectedTo]="[adminRightsList]"
+          (cdkDropListDropped)="drop($event);multiSelect.dropListDropped($event)">
+
+          <div class="cdk-box" *ngFor="let item of selectedRights" cdkDrag (pointerdown)="multiSelect.mouseDown($event)"
+            (pointerup)="multiSelect.mouseUp($event)"
+            (cdkDragStarted)="multiSelect.dragStarted();multiDrag.dragStarted($event)"
+            (cdkDragEnded)="multiSelect.dragEnded()">
+
+            {{item}}
+
+          </div>
+
+        </div>
+
+      </div>
+      </form>
+      <div class="row">
+        <div class="col-sm-5 text-right">
+     
+          <button type="button" class="btn btn-primary"><i class="fas fa-pen-square"></i> {{'USER.update' | translate }} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

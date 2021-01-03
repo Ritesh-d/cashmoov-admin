@@ -1,0 +1,114 @@
+<div *ngIf="!serviceCategory" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="serviceCategory">
+   
+    <!-- <div class="form-group row"> -->
+
+        <!-- <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'SERVICE.service'   }} </label>
+            <input type="text" class="form-control unchanged-data" id="serviceName"
+                [value]="serviceCategory.serviceName" disabled>
+
+        </div> -->
+
+        <!-- <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'SERVICE.category'   }}</label>
+            <input *ngIf="this.unchanged.name" type="text" class="form-control unchanged-data" id="name"
+                [value]="serviceCategory.name" disabled>
+            <span *ngIf="!this.unchanged.name" [ngbTooltip]="'earlier it was: '+ serviceCategory.name">
+                <input type="text" class="form-control" id="name" [value]="updatedInfo.name" disabled>
+            </span>
+        </div> -->
+        <!-- <div class="col-sm-6 parallel-col-margin">
+            <label class="form-check-label" translate>{{'SERVICE.product_allowed'   }}</label>
+            <input *ngIf="this.unchanged.productAllowed" type="checkbox" class="list-checkbox form-check-input unchanged-data" [checked]="serviceCategory.productAllowed" disabled>
+       
+            <span *ngIf="!this.unchanged.productAllowed" [ngbTooltip]="'earlier it was: '+ serviceCategory.productAllowed">
+                <input type="checkbox" class="list-checkbox form-check-input"   [checked]="updatedInfo.productAllowed"   disabled>
+            </span>
+        </div> -->
+      
+        <!-- <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'SERVICE.status'   }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="serviceCategory.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ serviceCategory.status">
+                <input type="text" class="form-control" id="status" [value]="updatedInfo.status" disabled>
+            </span>
+        </div> -->
+    <!-- </div> -->
+
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row mt-2">
+                     <label   class="col-sm-3 custom-label text-right">{{'SERVICE.service' |  translate}}</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control unchanged-data" id="serviceName"
+                        [value]="serviceCategory.serviceName==undefined?'':serviceCategory.serviceName" disabled>
+                    </div>
+                 </div>
+                 <div class="form-group row mt-2">
+                    <label   class="col-sm-3 custom-label text-right">{{'SERVICE.code_label' |  translate}}</label>
+                   <div class="col-sm-5">
+                       <input type="text" class="form-control unchanged-data" id="code"
+                       [value]="serviceCategory.code==undefined?'':serviceCategory.code" disabled>
+                   </div>
+                </div>
+                 <div class="form-group row mt-2">
+                    <label   class="col-sm-3 custom-label text-right">{{'SERVICE.category' |  translate}}</label>
+                   <div class="col-sm-5">
+                    <input *ngIf="this.unchanged.name" type="text" class="form-control unchanged-data" id="name"
+                    [value]="serviceCategory.name==undefined?'':serviceCategory.name" disabled>
+                <span *ngIf="!this.unchanged.name" [ngbTooltip]="'earlier it was: '+ serviceCategory.name">
+                    <input type="text" class="form-control" id="name" [value]="updatedInfo.name==undefined?'':updatedInfo.name" disabled>
+                </span>
+                   </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label   class="col-sm-3 custom-label text-right">{{'SERVICE.country' |  translate}}</label>
+                   <div class="col-sm-5">
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="'Select'" [data]="serviceCountryList"
+                    [formControl]="f1.country" [settings]="settings" [disabled]="true"></ng-multiselect-dropdown>
+                   </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label   class="col-sm-3 custom-label text-right">{{'SERVICE.product_allowed' |  translate}}</label>
+                   <div class="col-sm-5">
+                    &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;   <input  type="checkbox" class=" form-check-input unchanged-data" [checked]="serviceCategory.productAllowed" disabled>
+                    <!-- <div class="custom-control custom-switch" *ngIf="this.unchanged.productAllowed">
+                        <input *ngIf="this.unchanged.productAllowed" class="custom-control-input" type="checkbox" [checked]="serviceCategory.productAllowed"
+                           disabled>
+                        <label class="custom-control-label" for="productAllowed"></label>
+                    </div> -->
+                    <!-- [ngbTooltip]="'earlier it was: '+ serviceCategory.productAllowed" -->
+                    <span *ngIf="!this.unchanged.productAllowed"> 
+                      <input type="checkbox" class=" form-check-input"   [checked]="updatedInfo.productAllowed"   disabled>
+                      <!-- <div class="custom-control custom-switch">
+                      <input  class="custom-control-input" type="checkbox" [checked]="updatedInfo.productAllowed"
+                      disabled>
+                      <label class="custom-control-label" for="productAllowed"></label>
+                      </div> -->
+                    </span>
+                   </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label   class="col-sm-3 custom-label text-right">{{'SERVICE.status' |  translate}}</label>
+                   <div class="col-sm-5">
+                    <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                    [value]="serviceCategory.status==undefined?'':serviceCategory.status" disabled>
+                    <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ serviceCategory.status">
+                        <input type="text" class="form-control" id="status" [value]="statusName==undefined?'':statusName" disabled>
+                    </span>
+                   </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+</div>

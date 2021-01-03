@@ -1,0 +1,27 @@
+.btn-primary{
+    margin-right: 10px;
+}
+.container{
+  margin: 20px 0;
+}
+.error-msg{
+  color: red;
+  font-size: 12px;
+}
+
+.campaign_errormsg {
+  max-width: 200px;
+}
+.inputs {
+  background-color: transparent;
+  border: 0px solid;
+ 
+}
+.msgdecorator{
+  color : red;
+  margin-top : 10px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}

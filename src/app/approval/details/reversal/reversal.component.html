@@ -1,0 +1,104 @@
+
+<div *ngIf="!walletOperation" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="walletOperation">
+ 
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.transTypename' | translate }}</label>
+            <input *ngIf="this.unchanged.transTypeName" type="text" class="form-control unchanged-data" id="amount"
+                [value]="walletOperation.transTypeName" disabled>
+            <span *ngIf="!this.unchanged.transTypeName" [ngbTooltip]="'earlier it was: '+ walletOperation.transTypeName">
+                <input type="text" class="form-control " id="amount" [value]="updatedInfo.transTypeName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.transactionId' | translate }}</label>
+            <input *ngIf="this.unchanged.transactionId" type="text" class="form-control unchanged-data" id="transactionId"
+                [value]="walletOperation.transactionId==undefined?'':walletOperation.transactionId" disabled>
+            <span *ngIf="!this.unchanged.transactionId" [ngbTooltip]="'earlier it was: '+ walletOperation.transactionId">
+                <input type="text" class="form-control " id="transactionId" [value]="updatedInfo.transactionId==undefined?'':updatedInfo.transactionId" disabled>
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.srcWalletOwnerCode' | translate }}</label>
+            <input *ngIf="this.unchanged.srcWalletOwnerCode" type="text" class="form-control unchanged-data" id="amount"
+                [value]="walletOperation.srcWalletOwnerCode" disabled>
+            <span *ngIf="!this.unchanged.srcWalletOwnerCode" [ngbTooltip]="'earlier it was: '+ walletOperation.srcWalletOwnerCode">
+                <input type="text" class="form-control " id="amount" [value]="updatedInfo.srcWalletOwnerCode" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.desWalletOwnerCode' | translate }}</label>
+            <input *ngIf="this.unchanged.desWalletOwnerCode" type="text" class="form-control unchanged-data" id="desWalletOwnerCode"
+                [value]="walletOperation.desWalletOwnerCode==undefined?'':walletOperation.desWalletOwnerCode" disabled>
+            <span *ngIf="!this.unchanged.desWalletOwnerCode" [ngbTooltip]="'earlier it was: '+ walletOperation.desWalletOwnerCode">
+                <input type="text" class="form-control " id="desWalletOwnerCode" [value]="updatedInfo.desWalletOwnerCode==undefined?'':updatedInfo.desWalletOwnerCode" disabled>
+            </span>
+        </div>
+    </div>
+
+     
+     
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.srcWalletOwnerName' | translate }}</label>
+            <input *ngIf="this.unchanged.srcWalletOwnerName" type="text" class="form-control unchanged-data" id="amount"
+                [value]="walletOperation.srcWalletOwnerName" disabled>
+            <span *ngIf="!this.unchanged.srcWalletOwnerName" [ngbTooltip]="'earlier it was: '+ walletOperation.srcWalletOwnerName">
+                <input type="text" class="form-control " id="srcWalletOwnerName" [value]="updatedInfo.srcWalletOwnerName" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.desWalletOwnerName' | translate }}</label>
+            <input *ngIf="this.unchanged.desWalletOwnerName" type="text" class="form-control unchanged-data" id="desWalletOwnerName"
+                [value]="walletOperation.desWalletOwnerName==undefined?'':walletOperation.desWalletOwnerName" disabled>
+            <span *ngIf="!this.unchanged.desWalletOwnerName" [ngbTooltip]="'earlier it was: '+ walletOperation.desWalletOwnerName">
+                <input type="text" class="form-control " id="desWalletOwnerName" [value]="updatedInfo.desWalletOwnerName==undefined?'':updatedInfo.desWalletOwnerName" disabled>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.amount' | translate }}</label>
+            <input *ngIf="this.unchanged.transactionAmount" type="text" class="form-control unchanged-data" id="amount"
+                value="{{walletOperation.desCurrencySymbol}} {{walletOperation.transactionAmount |  number : '1.2-3'}}" disabled>
+            <span *ngIf="!this.unchanged.transactionAmount" [ngbTooltip]="'earlier it was: '+ walletOperation.transactionAmount">
+                <input type="text" class="form-control " id="transactionAmount" value="{{walletOperation.desCurrencySymbol}} {{updatedInfo.transactionAmount |  number : '1.2-3'}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'REVERSAL.fee' | translate }}</label>
+            <input *ngIf="this.unchanged.fee" type="text" class="form-control unchanged-data" id="fee"
+                [value]="walletOperation.fee==undefined?'':walletOperation.fee" disabled>
+            <span *ngIf="!this.unchanged.fee" [ngbTooltip]="'earlier it was: '+ walletOperation.fee">
+                <input type="text" class="form-control " id="fee" [value]="updatedInfo.fee==undefined?'':updatedInfo.fee" disabled>
+            </span>
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+         
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="walletOperation.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ walletOperation.status">
+                <input type="text" class="form-control " id="status" [value]="statusName" disabled>
+            </span>
+        </div>
+    </div>
+
+  
+ </div>

@@ -1,0 +1,49 @@
+.custom-hyperlink{
+    cursor: pointer;
+}
+.required-field {
+    color: #e74a3b;
+}
+.table thead th, .table th {
+    font-weight: bold;
+}
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+
+tr td a {
+    margin-right: .5rem;
+}
+.breadcrumb {
+    background: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: -1rem;
+}
+.breadcrumb li a {
+    color: #00abc2;
+}
+.custom-label{
+    margin-bottom: auto;
+    font-style: italic;
+}
+.toggle-i{
+    margin-top: 10px;
+    font-size:20px;
+    color:#1cc88a;
+}
+.not-clickable {
+    pointer-events: none;
+}
+.document-note {
+    color: red;
+    width: 100%;
+    font-size: 13px;
+    text-transform: lowercase;
+    text-align: right;
+    padding: 1rem;
+    font-style: italic;
+}
+ 
+ 

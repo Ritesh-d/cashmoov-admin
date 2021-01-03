@@ -1,0 +1,848 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{'WALLET.wallet.owner.details' |  translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- steps/navigation -->
+                        <ul *ngIf="serviceBlockType!='serviceBlock'"class="nav mb-3" id="pills-tab" role="tablist">
+                            <!-- step-1 -->
+                            <li class="nav-item" role="presentation">
+                                <a class="btn btn-outline-primary active mr-3" id="step-1-tab" data-toggle="pill"
+                                    href="#step-1" role="tab" aria-controls="step-1" aria-selected="true">
+                                    <i class="fas fa-user"></i> {{'WALLET.basic.information' |  translate}}</a>
+                            </li>
+                            <!-- step-2 -->
+                            <li class="nav-item" [ngClass]="{'not-clickable': sequenceNumber < 2 }" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-2-tab" data-toggle="pill"
+                                    href="#step-2" role="tab" aria-controls="step-2" aria-selected="false"
+                                    (click)="onAddressTabClicked()"><i class="fas fa-address-card"></i> {{'WALLET.address' |  translate}}</a>
+                            </li>
+                            <!-- step-3 -->
+                            <li *ngIf="category!= '100007' && category!= '100008' " class="nav-item" [ngClass]="{'not-clickable': sequenceNumber < 3 }" role="presentation">
+                                <a class="btn btn-outline-primary  mr-3" id="step-3-tab" data-toggle="pill"
+                                    href="#step-3" role="tab" aria-controls="step-3" aria-selected="false"
+                                    (click)="onBankDetailsTabClicked()"><i class="fas fa-bank"></i>
+                                    {{'WALLET.bank.details' |  translate}}</a>
+                            </li>
+                            <!-- step-4 -->
+                            <!-- <li class="nav-item" [ngClass]="{'not-clickable': sequenceNumber < 4 }" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-4-tab" data-toggle="pill"
+                                    href="#step-4" role="tab" aria-controls="step-4" aria-selected="false"
+                                    (click)="onDocumentsTabClicked()">
+                                    <i class="fas fa-files-o"></i> Documents</a>
+                            </li> -->
+                            <li  *ngIf="showwallet"  class="nav-item" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-5-tab" data-toggle="pill"
+                                    href="#step-5" role="tab" aria-controls="step-5" aria-selected="false"
+                                    (click)=" onWalletClicked()"    ><i class="fas fa-wallet "></i> {{'WALLET.wallet' |  translate}}</a>
+                            </li>
+                            <li *ngIf="!editMode &&  (category == '100008') && state !='Enrolled' && state!='Created'" class="nav-item" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-6-tab" data-toggle="pill"
+                                    href="#step-6" role="tab" aria-controls="step-6" aria-selected="false"
+                                    (click)=" onServiceClicked()"    ><i class="fas fa-cogs"></i> {{'WALLETSERVICEPROVIDER.title' | translate}}</a>
+                            </li>
+                            <!-- <li class="nav-item"  role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-6-tab" data-toggle="pill"
+                                    href="#step-6" role="tab" aria-controls="step-6" aria-selected="false"
+                                    (click)="onTemplateClicked()"><i class="fab fa-tumblr-square  fa-spin1"></i> Template</a>
+                            </li> -->
+                        </ul>
+                        <ul *ngIf="serviceBlockType=='serviceBlock'"class="nav mb-3" id="pills-tab" role="tablist">
+ 
+                            <li   class="nav-item" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-6-tab" data-toggle="pill"
+                                    href="#step-6" role="tab" aria-controls="step-6" aria-selected="true"
+                                    (click)=" onServiceClicked()"    ><i class="fas fa-cogs"></i> 
+                                    {{'WALLETSERVICEPROVIDER.title' | translate}}</a>
+                            </li> 
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <!-- STEP-1 Content : Basic Information -->
+                            <div *ngIf="serviceBlockType !='serviceBlock'" class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <div *ngIf="basicInfoSucessMessage" class="alert alert-success">
+                                    {{ basicInfoSucessMessage }}</div>
+                                <div *ngIf="basicInfoErrorMessage" class="alert alert-danger">
+                                    {{ basicInfoErrorMessage }}</div>
+                                <div *ngIf="!basicInfoForm" class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                                    </div>
+                                </div>
+                                <form *ngIf="basicInfoForm" [formGroup]="basicInfoForm"
+                                    (ngSubmit)="onBasicInfoSubmit()">
+                                    <div class="form-group row">
+                                        <!-- walletOwnerCategoryCode -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.wallet.owner.category' |  translate}}
+                                               
+                                            </label>
+                                            <select formControlName="walletOwnerCategoryCode" class="custom-select">
+                                                <option *ngFor="let category of categories" [value]="category.code">
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- walletOwnerParentCode -->
+                                        <div *ngIf="walletOwner.walletOwnerParentCode"
+                                            class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.wallet.owner.parent' |  translate}}
+                                                
+                                            </label>
+                                            <select formControlName="walletOwnerParentCode" class="custom-select">
+                                                <option *ngFor="let parentWalletOwner of parentWalletOwners"
+                                                    [value]="parentWalletOwner.code">
+                                                    {{ parentWalletOwner.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- code -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.wallet.owner.code' |  translate}}
+                                               
+                                            </label>
+                                            <input type="text" class="form-control" formControlName="code">
+                                        </div>
+                                        <!-- ownerName -->
+                                        <div *ngIf="walletOwner.walletOwnerCategoryCode=='100006'" class="col-sm-6 parallel-col-margin">
+                                            <label  class="custom-label">{{'WALLET.trustAccountName' |  translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" minlength="3" pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9-, ])*$" required formControlName="ownerName">
+                                            <div *ngIf="nextClicked && basicInfoForm.get('ownerName').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterTrustAccountName' |  translate}}  </div>
+                                            <div *ngIf="basicInfoForm.get('ownerName').errors?.pattern;else templatenametrust" class="validation-message "  translate> {{'WALLET.trustAccountNameacceptonly' |  translate}} </div>
+                                            <ng-template #templatenametrust>
+                                                <div *ngIf="basicInfoForm.get('ownerName').errors?.minlength" class="validation-message "  translate> {{'WALLET.trustAccountName' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                        </div>
+                                        <div *ngIf="walletOwner.walletOwnerCategoryCode=='100007'" class="col-sm-6 parallel-col-margin">
+                                            <label  class="custom-label">{{'WALLET.taxAccountName' |  translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" minlength="3" pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9-, ])*$" required formControlName="ownerName">
+                                            <div *ngIf="nextClicked && basicInfoForm.get('ownerName').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterTaxAccountName' |  translate}}  </div>
+                                            <div *ngIf="basicInfoForm.get('ownerName').errors?.pattern;else templatenametax" class="validation-message "  translate> {{'WALLET.taxAccountNameacceptonly' |  translate}} </div>
+                                            <ng-template #templatenametax>
+                                                <div *ngIf="basicInfoForm.get('ownerName').errors?.minlength" class="validation-message "  translate> {{'WALLET.taxAccountName' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                        </div>
+                                        <div *ngIf="walletOwner.walletOwnerCategoryCode=='100008'" class="col-sm-6 parallel-col-margin">
+                                            <label  class="custom-label">{{'WALLET.serviceProviderName' |  translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" minlength="3" pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9-, ])*$" required formControlName="ownerName">
+                                            <div *ngIf="nextClicked && basicInfoForm.get('ownerName').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterServiceProviderName' |  translate}}  </div>
+                                            <div *ngIf="basicInfoForm.get('ownerName').errors?.pattern;else templatename" class="validation-message "  translate> {{'WALLET.serviceProviderNameacceptonlyalphabetsnumbers' |  translate}} </div>
+                                            <ng-template #templatename>
+                                                <div *ngIf="basicInfoForm.get('ownerName').errors?.minlength" class="validation-message "  translate> {{'WALLET.serviceProviderName' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                        </div>
+                                        <!-- lastName -->
+                                        <div *ngIf="walletOwner.lastName" class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.lastName' |  translate}}
+                                               
+                                            </label>
+                                            <input type="text" class="form-control" minlength="3" pattern="^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$" formControlName="lastName">
+                                            <div *ngIf="basicInfoForm.get('lastName').errors?.pattern;else lastNametemp" class="validation-message "  translate> {{'WALLET.lastNameacceptonlyalphabets' |  translate}} </div>
+                                            <ng-template #lastNametemp>
+                                                <div *ngIf="basicInfoForm.get('lastName').errors?.minlength" class="validation-message "  translate> {{'WALLET.lastName' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                        </div>
+                                        <!-- dateOfBirth -->
+                                        <div *ngIf="walletOwner.dateOfBirth" class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.dateOfBirth' |  translate}}
+                                             
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="yyyy-mm-dd"
+                                                formControlName="dateOfBirth">
+                                            <!-- <div role="wrapper"
+                                                class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                                <input type="text" class="form-control" formControlName="dateOfBirth"
+                                                    placeholder="yyyy-mm-dd" ngbDatepicker #dob="ngbDatepicker">
+                                                <span class="input-group-append" role="right-icon">
+                                                    <button class="btn btn-outline-secondary border-left-0"
+                                                        type="button">
+                                                        <i class="gj-icon" (click)="dob.toggle()">event</i>
+                                                    </button>
+                                                </span>
+                                            </div> -->
+                                        </div>
+                                        <!-- gender -->
+                                        <div *ngIf="walletOwner.gender" class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.gender' |  translate}}
+                                               
+                                            </label>
+                                            <div>
+                                                <span *ngFor="let gender of genders; let i = index"
+                                                    class="form-check-radio" [ngClass]="{'radio-margin-left': i !== 0}">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="gender" [value]="gender.code"
+                                                        [id]="gender.code">
+                                                    <label class="form-check-label"
+                                                        [for]="gender.code">{{ gender.type }}</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- mobileNumber -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.mobileNumber' |  translate}}
+                                              
+                                            </label>
+                                            <input type="text" class="form-control" pattern="^[0-9]*[1-9][0-9]*$" minlength="10" formControlName="mobileNumber">
+                                            <div *ngIf="basicInfoForm.get('mobileNumber').errors?.pattern;else mobilenumtemp" class="validation-message "  translate> {{'WALLET.mobileNumberacceptonlynumbers' |  translate}} </div>
+                                            <ng-template #mobilenumtemp>
+                                                <div *ngIf="basicInfoForm.get('mobileNumber').errors?.minlength" class="validation-message "  translate> {{'WALLET.mobileNumbermustbeatleast10characterslong' |  translate}}</div>
+                                            </ng-template>
+                                        </div>
+                                        <!-- email -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.email-Id' |  translate}}
+                                               
+                                            </label>
+                                            <input type="text" pattern="^[^-\s][\w\s-]+[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9.-]+\.[a-z]{1,4}$" class="form-control" formControlName="email">
+                                            <div *ngIf="basicInfoForm.get('email').errors?.pattern" class="validation-message "  translate> {{'WALLET.email-Idmustbeinvalidformat' |  translate}}   </div>
+                                        </div>
+                                        <!-- businessTypeCode -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.businessType' |  translate}}
+                                                
+                                            </label>
+                                            <select formControlName="businessTypeCode" class="custom-select">
+                                                <option *ngFor="let businessType of businessTypes"
+                                                    [value]="businessType.code">
+                                                    {{ businessType.type }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- businessName -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.businessName' |  translate}}
+                                               
+                                            </label>
+                                            <input type="text" class="form-control"  minlength="3" pattern="^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$" formControlName="businessName">
+                                             <div *ngIf="basicInfoForm.get('businessName').errors?.pattern;else businesstemp" class="validation-message "  translate> {{'WALLET.businessNameacceptonlyalphabets' |  translate}} </div>
+                                            <ng-template #businesstemp>
+                                                <div *ngIf="basicInfoForm.get('businessName').errors?.minlength" class="validation-message "  translate> {{'WALLET.businessName' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                          
+                                        </div>
+                                        <!-- lineOfBusiness -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.lineOfBusiness' |  translate}}
+                                             
+                                            </label>
+                                            <input type="text" class="form-control" minlength="3" pattern="^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$" formControlName="lineOfBusiness">
+                                            <div *ngIf="basicInfoForm.get('lineOfBusiness').errors?.pattern;else lineOfBusinesstemp" class="validation-message "  translate> {{'WALLET.lineOfBusinessacceptonlyalphabets' |  translate}} </div>
+                                            <ng-template #lineOfBusinesstemp>
+                                                <div *ngIf="basicInfoForm.get('lineOfBusiness').errors?.minlength" class="validation-message "  translate> {{'WALLET.lineOfBusiness' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                            </ng-template>
+                                        </div>
+                                        <!-- groupCode -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.group' |  translate}}
+                                            
+                                            </label>
+                                            <select formControlName="groupCode" class="custom-select">
+                                                <option *ngFor="let group of groups" [value]="group.code">
+                                                    {{ group.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- idProofTypeCode -->
+                                        <!-- <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">ID Proof Type
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <select formControlName="idProofTypeCode" class="custom-select">
+                                                <option *ngFor="let idProofType of idProofTypes"
+                                                    [value]="idProofType.code">
+                                                    {{ idProofType.type }}
+                                                </option>
+                                            </select>
+                                        </div> -->
+                                        <!-- idProofNumber -->
+                                        <!-- <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">ID Proof Number
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" formControlName="idProofNumber">
+                                        </div> -->
+                                        <!-- idExpiryDate -->
+                                        <!-- <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">ID Expiry Date
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="yyyy-mm-dd"
+                                                formControlName="idExpiryDate"> -->
+                                            <!-- <div role="wrapper"
+                                                class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                                <input type="text" class="form-control" formControlName="idExpiryDate"
+                                                    placeholder="yyyy-mm-dd" ngbDatepicker #expiryDate="ngbDatepicker">
+                                                <span class="input-group-append" role="right-icon">
+                                                    <button class="btn btn-outline-secondary border-left-0"
+                                                        type="button">
+                                                        <i class="gj-icon" (click)="expiryDate.toggle()">event</i>
+                                                    </button>
+                                                </span>
+                                            </div> -->
+                                        <!-- </div> -->
+                                        <!-- issuingCountryCode -->
+                                        <!-- <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">ID Issuing Country
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <select formControlName="issuingCountryCode" class="custom-select">
+                                                <option *ngFor="let country of countries" [value]="country.code">
+                                                    {{ country.name }}
+                                                </option>
+                                            </select>
+                                        </div> -->
+                                        <!-- registerCountryCode -->
+                                        <div class="col-sm-6 parallel-col-margin">
+                                            <label class="custom-label">{{'WALLET.operatingCountry' |  translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            <select formControlName="registerCountryCode" class="custom-select">
+                                                <option *ngFor="let country of countries" [value]="country.code">
+                                                    {{ country.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- buttons -->
+                                    <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right">
+                                            <!-- <button *ngIf="!editMode" type="submit"
+                                                class="float-right btn btn-primary px-3">
+                                                {{'WALLET.next' |  translate}}&nbsp;<i class="fa fa-arrow-circle-right fa-lg"></i></button> -->
+                                            <button *ngIf="editMode" type="submit"
+                                                class="float-right btn btn-primary px-3">
+                                                <i class="fas fa-refresh"></i>&nbsp;{{'WALLET.update' |  translate}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- STEP-2 Content : Address-->
+                            <div *ngIf="serviceBlockType !='serviceBlock'"  class="tab-pane fade" id="step-2" role="tabpanel" aria-labelledby="step-2-tab">
+                                <div *ngIf="addressSuccessMessage" class="alert alert-success">
+                                    {{ addressSuccessMessage }}</div>
+                                <div *ngIf="addressErrorMessage" class="alert alert-danger">
+                                    {{ addressErrorMessage }}</div>
+                                <div *ngIf="!allAddresses && !addressErrorMessage" class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                                    </div>
+                                </div>
+                                <form *ngIf="allAddresses" [formGroup]="allAddresses" (ngSubmit)="onAllAddressSubmit()">
+                                    <div formArrayName="addresses">
+                                        <div *ngFor="let addressControl of getAddressesControl; let i = index"
+                                            [formGroupName]="i">
+                                            <!-- Edit/ Remove / Save -->
+                                            <div   class="full-width validation-message" style="display:none;" id= "{{i}}" >
+                                                {{'WALLET.please.provide.all.the.required.fields' | translate}}
+                                             </div>
+                                            <div *ngIf="!viewMode"
+                                                class="full-width steps-bottom-button-alligned text-right color-white ">
+                                                <a   id= "{{'edit'+i}}" class="custom-hyperlink hideoption" ngbTooltip="Edit"
+                                                    (click)="onEditAddressForm(addressControl,i)"><i
+                                                        class="fas fa-edit text-primary"></i></a> 
+                                                <a  id= "{{'save'+i}}" class="custom-hyperlink"  ngbTooltip="Save"
+                                                    (click)="submitAddress(addressControl,i)"><i
+                                                        class="fas fa-save text-primary"></i></a>&nbsp;
+                                                <a class="custom-hyperlink" ngbTooltip="Delete"
+                                                    (click)="onRemoveAddressForm(i)"><i
+                                                        class="fas fa-trash-alt text-danger"></i></a>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="form-group row">
+                                                    <!-- addType -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.addressType' |  translate}}
+                                                            <span class="required-field">*</span></label>
+                                                        <select formControlName="addTypeCode" class="custom-select"
+                                                            (change)="addressChangeHandler($event, 'addType', i)">
+                                                            <option *ngFor="let addressType of addressTypes"
+                                                                [value]="addressType.code">
+                                                                {{ addressType.type }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- location -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.location' |  translate}}
+                                                            <span class="required-field">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" formControlName="location">
+                                                        <div *ngIf="addressSubmitted && addressControl.get('location').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterLocation' |  translate}}  </div>
+                                                         <div *ngIf="addressControl.get('location').errors?.pattern;else templatelocation" class="validation-message "  translate> {{'WALLET.locationacceptonlyalphabetsnumbers' |  translate}} </div>
+                                                        <ng-template #templatelocation>
+                                                            <div *ngIf="addressControl.get('location').errors?.minlength" class="validation-message "  translate> {{'WALLET.location' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                        </ng-template>
+                                                      </div>
+                                                    <!-- addressLine1 -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.addressLine1' |  translate}}
+                                                            <span class="required-field">*</span>
+                                                        </label>
+                                                        <input type="text" minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" class="form-control"
+                                                            formControlName="addressLine1">
+                                                            <div *ngIf="addressSubmitted && addressControl.get('addressLine1').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterAddressLine1' |  translate}}  </div>
+                                                            <div *ngIf="addressControl.get('addressLine1').errors?.pattern;else templateaddressLine1" class="validation-message "  translate> {{'WALLET.pleaseenterAddressLine1' |  translate}} </div>
+                                                            <ng-template #templateaddressLine1>
+                                                                <div *ngIf="addressControl.get('addressLine1').errors?.minlength" class="validation-message "  translate> {{'WALLET.addressLine1' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                            </ng-template> 
+                                                    </div>
+                                                    <!-- addressLine2 -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.addressLine2' |  translate}}
+                                                           
+                                                        </label>
+                                                        <input type="text" minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" class="form-control"
+                                                            formControlName="addressLine2">
+                                                            <div *ngIf="addressControl.get('addressLine2').errors?.pattern;else templateaddressLine2" class="validation-message "  translate> {{'WALLET.addressLine2acceptonlyalphabetsnumbers' |  translate}} </div>
+                                                            <ng-template #templateaddressLine2>
+                                                                <div *ngIf="addressControl.get('addressLine2').errors?.minlength" class="validation-message "  translate> {{'WALLET.addressLine2' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                            </ng-template> 
+                                                    </div>
+                                                    <!-- countryCode -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.country' |  translate}}
+                                                            <span class="required-field">*</span>
+                                                        </label>
+                                                        <select formControlName="countryCode" class="custom-select"
+                                                        (change)="selectChangeHandler($event, 'country')"            >
+                                                            <option *ngFor="let country of countries"
+                                                                [value]="country.code">
+                                                                {{ country.name }}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="addressSubmitted && addressControl.get('countryCode').errors?.required" class="validation-message "  translate>{{'WALLET.pleaseselectCountry' | translate}}   </div>
+                                                    </div>
+                                                    <!-- regionCode -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.region' |  translate}}
+                                                            <span class="required-field">*</span>
+                                                        </label>
+                                                        <select formControlName="regionCode" class="custom-select">
+                                                            <option *ngFor="let region of regions" [value]="region.code">
+                                                                {{ region.name }}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="addressSubmitted && addressControl.get('regionCode').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseselectRegion' | translate}}   </div>
+                                                    </div>
+                                                    <!-- city -->
+                                                    <div class="col-sm-6 parallel-col-margin">
+                                                        <label class="custom-label">{{'WALLET.city' |  translate}}</label>
+                                                        <input type="text" class="form-control" minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" formControlName="city">
+                                                        <div *ngIf="addressControl.get('city').errors?.pattern;else templatecity" class="validation-message "  translate> {{'WALLET.cityacceptonlyalphabetsnumbers' |  translate}} </div>
+                                                        <ng-template #templatecity>
+                                                            <div *ngIf="addressControl.get('city').errors?.minlength" class="validation-message "  translate> {{'WALLET.city' |  translate}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            <hr>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="editMode || enrollMode" class="form-group row text-right">
+                                        <div class="text-right full-width steps-bottom-button-alligned color-white">
+                                            <a (click)="onAddAddressForm()"
+                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                <i class="fas fa-plus-circle"></i> {{'WALLET.addAddress' |  translate}}</a>
+                                        </div>
+                                    </div>
+                                    <!-- previous / next -->
+                                    <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right">
+                                            <button type="button" class="float-left btn btn-primary px-3"
+                                                (click)="navigateToStep1()">
+                                                <i class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' |  translate}}</button>
+                                            <button *ngIf="editMode" type="submit"
+                                                class="float-right btn btn-primary px-3">
+                                                <i class="fas fa-refresh"></i>&nbsp;{{'WALLET.update' |  translate}}</button>
+                                            <!-- <button *ngIf="!editMode" type="submit"
+                                                class="float-right btn btn-primary px-3">
+                                                {{'WALLET.next' |  translate}}&nbsp;<i class="fa fa-arrow-circle-right fa-lg"></i></button> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- STEP-3 Content: Bank Details -->
+                            <div *ngIf="serviceBlockType !='serviceBlock'"  class="tab-pane fade" id="step-3" role="tabpanel" aria-labelledby="step-3-tab">
+                                <div *ngIf="!bankDetailsForm && !bankErrorMessage" class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                                    </div>
+                                </div>
+                                <div *ngIf="bankErrorMessage" class="alert alert-danger">
+                                    {{ bankErrorMessage }}</div>
+                                <div *ngIf="bankSuccessMessage" class="alert alert-success">
+                                    {{ bankSuccessMessage }}</div>
+                                <form *ngIf="bankDetailsForm" [formGroup]="bankDetailsForm"
+                                    (ngSubmit)="onBankDetailsSubmit()">
+                                    <!-- accountName -->
+                                    <div class="form-group row">
+                                        <label for="accountName" class="col-sm-4 col-form-label">{{'WALLET.accountName' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" minlength="3"  pattern="^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$" required formControlName="accountName">
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('accountName').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterAccountName' |  translate}}  </div>
+                                         <div *ngIf="bankDetailsForm.get('accountName').errors?.pattern;else accountNametemp" class="validation-message "  translate> {{'WALLET.accountNameacceptonlyalphabets' |  translate}} </div>
+                                        <ng-template #accountNametemp>
+                                            <div *ngIf=" bankDetailsForm.get('accountName').errors?.minlength" class="validation-message "  translate> {{'WALLET.accountName' |  translate}} {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                        </ng-template>
+                                        </div>
+                                    </div>
+                                    <!-- accountType -->
+                                    <div class="form-group row">
+                                        <label for="accountType" class="col-sm-4 col-form-label">{{'WALLET.accountType' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <select formControlName="accountType" class="custom-select" required>
+                                                <option *ngFor="let accountType of accountTypes"
+                                                    [value]="accountType.code">
+                                                    {{ accountType.type }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('accountType').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseselectAccountType' |  translate}}  </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <!-- finInstitutionCode/bankName -->
+                                    <div class="form-group row">
+                                        <label for="finInstitutionCode" class="col-sm-4 col-form-label">{{'WALLET.bankName' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <select formControlName="finInstitutionCode" class="custom-select" required>
+                                                <option *ngFor="let bankName of bankNames" [value]="bankName.code">
+                                                    {{ bankName.type }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('finInstitutionCode').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseselectBankName' |  translate}}  </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- branchName -->
+                                    <div class="form-group row">
+                                        <label for="branchName" class="col-sm-4 col-form-label">{{'WALLET.branchName' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" minlength="3"   pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9-, ])*$" formControlName="branchName" required>
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('branchName').errors?.required" class="validation-message "  translate>{{'WALLET.pleaseenterBranchName' |  translate}} </div>
+                                            <div *ngIf="bankDetailsForm.get('branchName').errors?.pattern;else branchnametemp" class="validation-message "  translate> {{'WALLET.accountNameacceptonlyalphabetsnumbers' |  translate}} </div>
+                                           <ng-template #branchnametemp>
+                                               <div *ngIf=" bankDetailsForm.get('branchName').errors?.minlength" class="validation-message "  translate> {{'WALLET.branchName' |  translate}} {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                           </ng-template>
+                                        </div>
+                                    </div>
+                                    <!-- routingNo -->
+                                    <div class="form-group row">
+                                        <label for="routingNo" class="col-sm-4 col-form-label">{{'WALLET.sortCode' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" minlength="3"  pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" required formControlName="routingNo">
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('routingNo').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterSortCode' |  translate}}  </div>
+                                            <div *ngIf="bankDetailsForm.get('routingNo').errors?.pattern;else routingNotemp" class="validation-message "  translate> {{'WALLET.sortCodeacceptonlyalphabetsnumbers' |  translate}} </div>
+                                           <ng-template #routingNotemp>
+                                               <div *ngIf=" bankDetailsForm.get('routingNo').errors?.minlength" class="validation-message "  translate> {{'WALLET.sortCode' |  translate}} {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                           </ng-template>
+                                        </div>
+                                    </div>
+                                    <!-- accountNumber -->
+                                    <div class="form-group row">
+                                        <label for="accountNumber" class="col-sm-4 col-form-label">{{'WALLET.accountNumber' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" minlength="3"  pattern="^[0-9]*[1-9][0-9]*$" required formControlName="accountNumber">
+                                            <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('accountNumber').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterAccountNumber' |  translate}}  </div>
+                                            <div *ngIf="bankDetailsForm.get('accountNumber').errors?.pattern;else accountNumbertemp" class="validation-message "  translate> {{'WALLET.accountNumberacceptonlynumbers' |  translate}} </div>
+                                           <ng-template #accountNumbertemp>
+                                               <div *ngIf=" bankDetailsForm.get('accountNumber').errors?.minlength" class="validation-message "  translate> {{'WALLET.accountNumber' |  translate}} {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                           </ng-template>
+                                        </div>
+
+                                    </div>
+                                    <!-- confirmAccountNumber -->
+                                    <div class="form-group row">
+                                        <label for="confirmAccountNumber" class="col-sm-4 col-form-label">{{'WALLET.confirmAccountNumber' |  translate}}<span class="required-field">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control"
+                                                formControlName="confirmAccountNumber" minlength="3"  pattern="^[0-9]*[1-9][0-9]*$" required>
+                                                <div *ngIf="bankFormSubmitted  && bankDetailsForm.get('confirmAccountNumber').errors?.required" class="validation-message "  translate> {{'WALLET.pleaseenterConfirmAccountNumber' |  translate}}  </div>
+                                                <div *ngIf="bankDetailsForm.get('confirmAccountNumber').errors?.pattern;else accountNumbertemp" class="validation-message "  translate> {{'WALLET.confirmAccountNumberacceptonlynumbers' |  translate}} </div>
+                                               <ng-template #accountNumbertemp>
+                                                   <div *ngIf=" bankDetailsForm.get('confirmAccountNumber').errors?.minlength" class="validation-message "  translate> {{'WALLET.confirmAccountNumber' |  translate}} {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                               </ng-template>   
+                                        </div>
+                                    </div>
+                                    <!-- previous / next -->
+                                    <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right">
+                                            <button type="button" class="float-left btn btn-primary px-3"
+                                                (click)="navigateToStep2()">
+                                                <i class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' |  translate}}</button>
+                                            <button *ngIf="editMode" type="submit"
+                                                class="float-right btn btn-primary px-3">
+                                                <i class="fas fa-refresh"></i>&nbsp;{{'WALLET.update' |  translate}}</button>
+                                            <button *ngIf="!editMode" type="submit"   (click)="navigateToStep5()"
+                                                class="float-right btn btn-primary px-3">
+                                                {{'WALLET.next' |  translate}}&nbsp;<i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- STEP-4 Content: Documents -->
+                            <!-- <div class="tab-pane fade" id="step-4" role="tabpanel" aria-labelledby="step-4-tab">
+                                <div *ngIf="documentsErrorMessage" class="alert alert-danger">
+                                    {{ documentsErrorMessage }}</div>
+                                <div *ngIf="!walletOwnerUploadedDocuments && !documentsErrorMessage"
+                                    class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <form *ngIf="walletOwnerUploadedDocuments && uploadedDocumentsForm"
+                                    [formGroup]="uploadedDocumentsForm">
+                                    <div class="document-note">{{ docInfo }}</div>
+                                   
+                                    <div formArrayName="documents" class="form-group row">
+                                        <div *ngFor="let docControl of getDocControl; let i = index" [formGroupName]="i"
+                                            class="col-lg-12 col-xl-12 d-sm-flex upload-margin">
+                                            <div class="float-left col-sm-3">
+                                                <select class="custom-select" formControlName="documentType">
+                                                    <option *ngFor="let docType of documentsType"
+                                                        [value]="docType.code">
+                                                        {{ docType.type }}</option>
+                                                </select>
+                                            </div>
+                                            <div class="custom-file float-left file-width">
+                                                <input type="text" class="form-control" formControlName="fileName">
+                                            </div>
+                                            <div class="doc-icons-block">
+                                                <a class="custom-hyperlink placement" ngbTooltip="Download"
+                                                    target="_blank"
+                                                    [href]="onDownload(walletOwnerUploadedDocuments[i].fileName)">
+                                                    <i class="fas fa-download text-primary"></i></a>
+                                                <a *ngIf="editMode" class="custom-hyperlink placement"
+                                                    ngbTooltip="Delete">
+                                                    <i class="fas fa-trash-alt text-danger"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <div *ngIf="editMode || enrollMode" formArrayName="newDocuments"
+                                        class="form-group row">
+                                        <div *ngFor="let docControl of getNewDocControl; let i = index"
+                                            [formGroupName]="i" class="col-lg-12 col-xl-12 d-sm-flex upload-margin">
+                                            <div class="float-left col-sm-3">
+                                                <select class="custom-select" formControlName="documentType"
+                                                    (change)="docHandler($event, i)">
+                                                    <option *ngFor="let docType of documentsType"
+                                                        [value]="docType.code">
+                                                        {{ docType.type }}</option>
+                                                </select>
+                                            </div>
+                                            <div class="custom-file float-left">
+                                                <input type="file" class="custom-file-input" formControlName="file"
+                                                    (change)="onFileSelected($event, i)">
+                                                <label class="custom-file-label"
+                                                    for="file">{{ filesNInfo[i].fileName }}</label>
+                                            </div>
+                                            <div class="float-left col-sm-2">
+                                                <button *ngIf="showUpload(i)" type="button" class="btn btn-primary"
+                                                    (click)="onUpload(i)">
+                                                    <i class="fas fa-cloud-upload-alt"></i>&nbsp;Upload</button>
+                                            </div>
+                                            <div class="float-left file-upload-progress">
+                                                <div *ngIf="filesNInfo[i].uploadstart" class="progress">
+                                                    <div class="progress-bar progress-bar-info" role="progressbar"
+                                                        aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                                                        [ngStyle]="{width: filesNInfo[i].uploaded + '%'}">
+                                                    </div>
+                                                </div>
+                                                <span *ngIf="!filesNInfo[i].uploadstart"
+                                                    class="float-right custom-hyperlink">
+                                                    <a class="custom-hyperlink" title="delete"
+                                                        (click)="onRemoveDocument(i)">
+                                                        <i class="fas fa-trash-alt text-danger"></i></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <div *ngIf="editMode || enrollMode" class="form-group row text-right">
+                                        <div class="text-right full-width margin-r-1">
+                                            <a (click)="onAddDocument()"
+                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                <i class="fas fa-plus-circle"></i> Add Document</a>
+                                        </div>
+                                    </div>
+                                </form>
+                             
+                                <div class="form-group row">
+                                    <div class="full-width steps-bottom-button-alligned text-right">
+                                        <button type="button" class="float-left btn btn-primary px-3"
+                                            (click)="navigateToStep3()">
+                                            <i class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;Previous</button>
+                                        <button *ngIf="enrollMode" type="button"
+                                            class="float-right btn btn-primary px-3" (click)="done()"><i
+                                                class="fa fa-check-circle fa-lg"></i>&nbsp;Done</button>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div *ngIf="serviceBlockType !='serviceBlock'"  class="tab-pane fade" id="step-5" role="tabpanel" aria-labelledby="step-5-tab">
+                                 
+                                    <div *ngIf="walletErrorMessage" class="alert alert-danger"> {{ walletErrorMessage }}</div>
+                                    <div class="table-responsive">
+                                        <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                                            cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th> {{'WALLET.wallet.owner.name' | translate}}</th>
+                                                    <th>{{'WALLET.currency.name' | translate}}</th>
+                                                    <th> {{'WALLET.main.wallet' | translate}}</th>
+                                                    <th  *ngIf="walletOwner.walletOwnerCategoryCode != '100007'"> {{'WALLET.commision.wallet' | translate}}</th>
+                                                    <!-- <th>Min Value </th>
+                                                    <th>Max Value </th> -->
+                                                    <!-- <th>Value </th> -->
+                                                    <th> {{'WALLET.Action' | translate}}</th>
+                                                    
+                                                    
+                                                 </tr>
+                                            </thead>
+                                    
+                                            <tbody>
+                                    
+                                                <tr *ngFor="let user of walletWalletOwner">
+                                    
+                                                    <td>{{ user.walletOwnerName }}</td>
+                                                    <td>{{ user.currencyName }}</td>
+                                                    <td  *ngIf="user.mainWalletvalue!='0'">{{ user.mainWalletvalue==undefined  || null || 0?'0.00':(user.mainWalletvalue).toFixed(2)}}</td>
+                                                    <td  *ngIf="user.mainWalletvalue=='0'">{{ user.mainWalletvalue==undefined  || null || '0'|| 0?'0.00':(user.mainWalletvalue).toFixed(2)}}</td>
+                                                    <td  *ngIf="walletOwner.walletOwnerCategoryCode != '100007' && user.commisionWalletvalue !='0'">{{user.commisionWalletvalue==undefined || null ||0?'0.00': (user.commisionWalletvalue).toFixed(2) }}</td>
+                                                    <td  *ngIf="walletOwner.walletOwnerCategoryCode != '100007' && user.commisionWalletvalue =='0'">{{user.commisionWalletvalue==undefined || null ||0 ||'0' ?'0.00': (user.commisionWalletvalue).toFixed(2) }}</td>
+    
+                                                    <!-- <td>{{ user.walletTypeMainName }}</td>
+                                                    <td>{{ user.walletTypeCommiName }}</td> -->
+                                                    <!-- <td>{{ user.walletTypeName }}</td>
+                                                    <td>{{ user.walletTypeName }}</td> -->
+                                                    <!-- <td>{{ user.minValue }}</td>
+                                                    <td>{{ user.maxValue }}</td> -->
+                                                    <!-- <td>{{ user.value }}</td> -->
+                                                    <td>
+                                                        <a (click)="viewUser(user)" style="cursor:pointer" placement="bottom"  ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>
+                                                        <a *ngIf="editMode" (click)="editMainWallet(user)" style="cursor:pointer" placement="bottom"  ngbTooltip="{{'MASTER.editMainWallet' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+    
+                                                        <a *ngIf="editMode && walletOwner.walletOwnerCategoryCode != '100007' " (click)="editCommissionWallet(user)" style="cursor:pointer" placement="bottom"  ngbTooltip="{{'MASTER.editCommisionWallet' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+                                                   </td>
+                                                    
+                                                </tr>
+                                            </tbody>  
+                                          </table>
+                                    </div>
+                                </div>
+  
+                            <div   class="tab-pane fade" id="step-6" role="tabpanel" aria-labelledby="step-6-tab">
+                                <div class="card-body">
+                                    <div *ngIf="serviceErrorMessage" class="alert alert-danger">{{ serviceErrorMessage }}</div>
+                                    <div *ngIf="seriveSuccessmessage" class="alert alert-success">{{ seriveSuccessmessage }}</div>
+
+                                    <form [formGroup]="serviceProviderForm"> 
+                                        <div class="form-group row mt-2">
+                                            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_label' | translate}} <span
+                                                    class="required-field">*</span></label>
+                                            <div class="col-sm-5">
+                                                   
+                                                <select formControlName="serviceCode" class="custom-select" (change)="onchangeService($event)">
+                                                    <option  value=''  selected>{{'MASTER.select' | translate}}</option>
+                                                    <option *ngFor="let service of serviceList" value="{{service.code}}">
+                                                        {{ service.name }}  
+                                                    </option>
+                                                </select>
+                                                 <span *ngIf="submitted && fservice.serviceCode.errors" class="validation-message">
+                                                    <div *ngIf="fservice.serviceCode.errors.required" translate>{{'WALLETSERVICEPROVIDER.service_validation_required' | translate}}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mt-2">
+                                            <label class="col-sm-3 col-form-label text-right">{{'WALLETSERVICEPROVIDER.service_category_label' | translate}} <span
+                                                    class="required-field">*</span></label>
+                                            <div class="col-sm-5">
+                          
+                                                <select formControlName="serviceCategoryCode" class="custom-select">
+                                                    <option  value=''  selected>{{'MASTER.select' | translate}}</option>
+                                                    <option *ngFor="let service of serviceCategoryList" value="{{service.code}}">
+                                                        {{ service.name }} 
+                                                    </option>
+                                                </select>
+                                            
+                                                 <span *ngIf="submitted && fservice.serviceCategoryCode.errors" class="validation-message">
+                                                    <div *ngIf="fservice.serviceCategoryCode.errors.required" translate>{{'WALLETSERVICEPROVIDER.service_category_validation_required' | translate}}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mt-2">
+                                            <div class="col-sm-8 text-right">
+                     
+                                                    <button   (click)="onSaveService()" class="btn btn-primary px-3">
+                                                        <i class="fas fa-save"></i> {{'COMMON.button.save' | translate}}</button>
+                                              
+                                            </div>
+                                             
+                                        </div>
+                                    </form>
+                                    <div *ngIf="!displaytable" class="spinner-aligning">
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                                        </div>
+                                    </div>
+                                   <div class="table-responsive">
+                                    <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                                        cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'WALLETSERVICEPROVIDER.service_label' | translate}}</th>
+                                                <th>{{'WALLETSERVICEPROVIDER.service_category_label' | translate}}</th>
+                                                <th>{{'WALLETSERVICEPROVIDER.service_provider_label' | translate}}</th>
+                                                <th>{{'COMMON.status_label' | translate}}</th>
+                                                <th>{{'COMMON.action_label' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                    
+                                            <tr *ngFor="let data of serviceProviderList">
+                                        
+                                                <td> {{data.serviceName}}</td>
+                                                <td> {{data.serviceCategoryName}}</td>
+                                                <td> {{data.name}}</td>
+                                                <td> {{data.status}}</td>
+                                   
+                                                <td> 
+                                                    <a   (click)="viewService(data)"  style="cursor:pointer" placement="bottom"
+                                                    ngbTooltip="{{'COMMON.view_text' | translate}}"><i
+                                                        class="fas fa-eye text-primary"></i></a>&nbsp;&nbsp;
+                                                    <a (click)="editService(data)" style="cursor:pointer" placement="bottom"
+                                                        ngbTooltip="{{'COMMON.edit_text' | translate}}"><i
+                                                            class="fas fa-edit text-secondary"></i></a> 
+                                
+                                                  
+                                                 
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                 </div>
+                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

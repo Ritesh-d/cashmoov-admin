@@ -1,0 +1,5 @@
+@import '../wallet-owner.component.css';
+
+::ng-deep .fas{
+    display: inline ;
+}

@@ -1,0 +1,62 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{ 'GROUPS.groupTxt' | translate }}</h1>
+    <a *ngIf="setPermission.create" [routerLink]="['create']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{ 'GROUPS.addGroupTxt' | translate }}</a>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ 'GROUPS.groupTxt' | translate }}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div *ngIf="fetchingData" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{ 'GROUPS.loading' | translate }}</span>
+                        </div>
+                    </div>
+                    <table *ngIf="!fetchingData" class="table table-bordered table-striped"
+                        datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'GROUPS.nameTxt' | translate}}</th>
+                                 <!-- <th>{{ 'GROUPS.parentGroup' | translate}}</th> -->
+                                <th>{{ 'GROUPS.stateTxt' | translate}}</th>
+                                <th>{{ 'GROUPS.statusTxt' | translate}}</th>
+                                <!-- <th>{{ 'GROUPS.regionalAreaTxt' | translate}}</th>
+                                <th>{{ 'GROUPS.governorateTxt' | translate}}</th>
+                                <th>{{ 'GROUPS.regionTxt' | translate}}</th> -->
+                                <th>{{ 'GROUPS.createdOnTxt' | translate}}</th>
+                                <th>{{ 'GROUPS.actionTxt' | translate}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let group of groups; let i = index;">
+                                <td>{{ group.name }}</td>
+                                <!-- <td>{{ group.groupName }}</td> -->
+                                <td>{{ group.state }}</td>
+                                <td>{{ group.status }}</td>
+                                <!-- <td>{{ group.regionalAreaName }}</td>
+                                <td>{{ group.governorateName }}</td>
+                                <td>{{ group.regionName }}</td> -->
+                                <td>{{ group.creationDate }}</td>
+                                <td>
+                                    <a *ngIf="setPermission.view"class="custom-hyperlink" ngbTooltip="{{ 'GROUPS.viewgroup' | translate}}">
+                                        <i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                    <a *ngIf="setPermission.edit" class="custom-hyperlink" ngbTooltip="{{ 'GROUPS.editgroup' | translate}}">
+                                        <i class="fas fa-edit text-secondary"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

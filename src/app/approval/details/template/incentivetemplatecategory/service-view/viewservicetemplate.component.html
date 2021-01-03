@@ -1,0 +1,119 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">View Incentive Template</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Service</label>
+            <input *ngIf="this.oldValue.serviceName == this.data.serviceName" type="text" class="form-control unchanged-data " value="{{data.serviceName}}"
+                readonly>
+            <span *ngIf="this.oldValue.serviceName != this.data.serviceName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceName">
+                <input type="text" class="form-control " id="firstName" value="{{data.serviceName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Service Category</label>
+            <input *ngIf="this.oldValue.serviceCategoryName == this.data.serviceCategoryName" type="text" class="form-control unchanged-data "
+                value="{{data.serviceCategoryName}}" readonly>
+            <span *ngIf="this.oldValue.serviceCategoryName != this.data.serviceCategoryName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceCategoryName">
+                <input type="text" class="form-control " value="{{data.serviceCategoryName}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Service Provider</label>
+            <input *ngIf="this.oldValue.serviceProviderName == this.data.serviceProviderName" type="text" class="form-control unchanged-data "
+                value="{{data.serviceProviderName}}" readonly>
+            <span *ngIf="this.oldValue.serviceProviderName != this.data.serviceProviderName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceProviderName">
+                <input type="text" class="form-control " value="{{data.serviceProviderName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Channel Type</label>
+            <input *ngIf="this.oldValue.channelTypeName == this.data.channelTypeName" type="text" class="form-control unchanged-data "
+                value="{{data.channelTypeName}}" readonly>
+            <span *ngIf="this.oldValue.channelTypeName != this.data.channelTypeName" [ngbTooltip]="'earlier it was: '+ this.oldValue.channelTypeName">
+                <input type="text" class="form-control " value="{{data.channelTypeName}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Tax Type </label>
+            <ng-multiselect-dropdown #multiSelect *ngIf="istaxtype" [placeholder]="'Select Tax Type'" [data]="taxTypeList" [formControl]="f1.taxTypeCode"
+                [settings]="settings" [disabled]="true">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-sm-3">
+            <label for="name" class="custom-label">Range</label>
+            <input *ngIf="this.oldValue.minValue == this.data.minValue" type="text" class="form-control unchanged-data " value="{{data.minValue}}"
+                readonly>
+            <span *ngIf="this.oldValue.minValue != this.data.minValue" [ngbTooltip]="'earlier it was: '+ this.oldValue.minValue">
+                <input type="text" class="form-control " value="{{data.minValue}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3">
+            <label for="name" class="custom-label">&nbsp;</label>
+            <input *ngIf="this.oldValue.maxValue == this.data.maxValue" type="text" class="form-control unchanged-data " value="{{data.maxValue}}"
+                readonly>
+            <span *ngIf="this.oldValue.maxValue != this.data.maxValue" [ngbTooltip]="'earlier it was: '+ this.oldValue.maxValue">
+                <input type="text" class="form-control " value="{{data.maxValue}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Calculation Type</label>
+            <input *ngIf="this.oldValue.calculationTypeName == this.data.calculationTypeName" type="text" class="form-control unchanged-data "
+                value="{{data.calculationTypeName}}" readonly>
+            <span *ngIf="this.oldValue.calculationTypeName != this.data.calculationTypeName" [ngbTooltip]="'earlier it was: '+ this.oldValue.calculationTypeName">
+                <input type="text" class="form-control " value="{{data.calculationTypeName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3">
+            <label for="name" class="custom-label">Value [Fixed]</label>
+            <input *ngIf="this.oldValue.fixedIncentiveValue == this.data.fixedIncentiveValue" type="text" class="form-control unchanged-data "
+                value="{{data.fixedIncentiveValue}}" readonly>
+            <span *ngIf="this.oldValue.fixedIncentiveValue != this.data.fixedIncentiveValue" [ngbTooltip]="'earlier it was: '+ this.oldValue.fixedIncentiveValue">
+                <input type="text" class="form-control " value="{{data.fixedIncentiveValue}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3">
+            <label for="name" class="custom-label"> Value [%]</label>
+            <input *ngIf="this.oldValue.percentIncentiveValue == this.data.percentIncentiveValue" type="text" class="form-control unchanged-data "
+                value="{{data.Incentive}}" readonly>
+            <span *ngIf="this.oldValue.Incentive != this.data.Incentive" [ngbTooltip]="'earlier it was: '+ this.oldValue.Incentive">
+                <input type="text" class="form-control " value="{{data.Incentive}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">{{'TEMPLATE.template.fromdate' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.fromDate | date:'dd/MM/yyyy'}}" readonly>
+        </div>
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">{{'TEMPLATE.template.todate' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.toDate | date:'dd/MM/yyyy'}}" readonly>
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name" class="custom-label">Calculation Cycle Type</label>
+            <input *ngIf="this.oldValue.calculationCycleTypeName == this.data.calculationCycleTypeName" type="text" class="form-control unchanged-data "
+                value="{{data.calculationCycleTypeName}}" readonly>
+            <span *ngIf="this.oldValue.calculationCycleTypeName != this.data.calculationCycleTypeName" [ngbTooltip]="'earlier it was: '+ this.oldValue.calculationCycleTypeName">
+                <input type="text" class="form-control " value="{{data.calculationCycleTypeName}}" disabled>
+            </span>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3">
+            <i class="fas fa fa-times"></i> Close</button>
+    </div>

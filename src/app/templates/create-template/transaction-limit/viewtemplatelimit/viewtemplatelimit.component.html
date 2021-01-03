@@ -1,0 +1,241 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.transactionLimitTemplate' | translate}}</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body padding-custom">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div *ngIf="errorMessges" class="alert alert-danger">{{ errorMessges }}</div>
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <!-- templateName -->
+                    
+                   
+                    
+                    <div *ngIf="display != 'none'"> 
+                        
+             <form [formGroup]="serviceTemplateForm" >
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="serviceCode" class="custom-label" translate>{{'TEMPLATE.service' | translate}} 
+                                </label>
+                                <select  disabled formControlName="serviceCode" class="custom-select form-control ">
+                                        <option    value="{{datatemplate.serviceCode}}">{{datatemplate.serviceName  | titlecase }}</option>
+                                </select>
+                        </div>
+                        <div class="col-sm-6">
+                                <label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.serviceCategory' | translate}} 
+                                </label>
+                                <select    disabled formControlName="serviceCategoryCode" class="custom-select form-control ">
+                                    <option    value="{{datatemplate.code}}">{{datatemplate.name  | titlecase }}</option>
+                                </select>
+
+                         </div>
+                        
+                        
+                    </div>
+                 
+                     <hr>
+                    <div class="form-group row">
+                         
+                            <div class="col-sm-6">
+                                <label for="serviceProviderCode" class="custom-label" translate>{{'TEMPLATE.serviceProvider' | translate}}
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceProviderCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        {{'TEMPLATE.select' | translate}} </option>
+                                    <option *ngFor="let serviceProvider of serviceProviderList "
+                                        value="{{serviceProvider.code}}">
+                                        {{serviceProvider.name  | titlecase }}</option>
+                                 </select>
+                                <span *ngIf="submitted && f.serviceProviderCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceProviderCode.errors.required" translate>{{'TEMPLATE.pleaseselectserviceprovider' | translate}}
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="channelTypeCode" class="custom-label" translate>{{'TEMPLATE.channelType' | translate}}
+                                    <span class="required-field">*</span>    </label>
+                                <select formControlName="channelTypeCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        {{'TEMPLATE.select' | translate  | titlecase }} </option>
+                                    <option *ngFor="let channelType of channelTypeList " value="{{channelType.code}}"
+                                        selected>
+                                        {{channelType.type  | titlecase  }}</option>
+                                       
+                                </select>
+                                <span *ngIf="submitted && f.channelTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f.channelTypeCode.errors.required" translate>{{'TEMPLATE.pleaseselectchanneltype' | translate}}
+                                        
+                                    </div>
+                                </span>
+
+                           
+                            </div>
+                        </div>
+                        <div  class="form-group row">
+                           
+                                <div class="col-sm-6">
+                                    <label for="calculationCycleCode" class="custom-label" translate>{{'TEMPLATE.lbl_calculationCycle' | translate}}  
+                                       </label>
+                                    <select formControlName="calculationCycleCode"  class="custom-select form-control">
+                                        <option value='' selected>
+                                            {{'TEMPLATE.select' | translate}} </option>
+                                        <option *ngFor="let type of calculationCycleList " value="{{type.code}}">
+                                            {{type.type  | titlecase }}</option>
+                                 
+                                    </select>
+                                    <span *ngIf="submitted && f.calculationCycleCode.errors" class="validation-message">
+                                        <div *ngIf="f.calculationCycleCode.errors.required" translate>{{'TEMPLATE.pleaseselectcalculationcycletype' | translate}}
+                                        </div>
+                                    </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="calculationCycleTypeCode" class="custom-label" translate>{{'TEMPLATE.lbl_calculationCycleType' | translate}} 
+                                           </label>
+                                        <select formControlName="calculationCycleTypeCode"  class="custom-select form-control">
+                                            <option value='' selected>
+                                                {{'TEMPLATE.select' | translate}} </option>
+                                            <option *ngFor="let type of calculationCycleTypeList " value="{{type.code}}">
+                                                {{type.type  | titlecase }}</option>
+                                     
+                                        </select>
+                                        <span *ngIf="submitted && f.calculationCycleTypeCode.errors" class="validation-message">
+                                            <div *ngIf="f.calculationCycleTypeCode.errors.required" translate>{{'TEMPLATE.pleaseselectcalculationcycletype' | translate}}
+                                            </div>
+                                        </span>
+                                        </div>
+                                   
+                                    
+                        </div>
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="profileTypeCode" class="custom-label" translate>{{'TEMPLATE.profileType' | translate}}
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="profileTypeCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        {{'TEMPLATE.select' | translate}} </option>
+                                    <option *ngFor="let type of profileTypeList " value="{{type.code}}">
+                                        {{type.type  | titlecase }}</option>
+                             
+                                </select>
+                                <span *ngIf="submitted && f.profileTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f.profileTypeCode.errors.required" translate>{{'TEMPLATE.pleaseselectprofiletype' | translate}}
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="value" class="custom-label" translate>{{'TEMPLATE.value' | translate}} 
+                                    </label>
+                                <input formControlName="value" pattern= "^[0-9]\d*$" type="text" class="form-control">
+                                <span *ngIf="submitted && f.value.errors" class="validation-message">
+                                    <div *ngIf="f.value.errors?.required" translate>{{'TEMPLATE.pleaseentervalue' | translate}}
+                                    </div>
+                                    <div *ngIf="f.value.errors?.pattern" translate>{{'TEMPLATE.pleaseenternumericvalue' | translate}}
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+ 
+                    <div class="form-group row">
+                        <div  class="col-sm-6 text-left">
+                            <button id="btn-approval" *ngIf="serviceTemplateList " (click)="SaveTemplate()" class="btn btn-primary px-3">
+                                <i class="fas fas-save"></i> {{'TEMPLATE.template.save' | translate}}</button> 
+                                </div>
+                    <div  class="col-sm-6 text-right">
+                        <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                                class="fas fa-arrow-circle-left"></i>
+                                {{'TEMPLATE.template.back' | translate}}</button>&nbsp;
+                        <button   (click)="createTemplate()" type="button" class="btn btn-primary px-3">
+                            <i class="fas fa-plus-circle"></i> {{'TEMPLATE.addMore' | translate}} </button>&nbsp;
+                    </div>
+                
+                          </div>
+
+                    </div>
+                 
+                    <div *ngIf="!displaytable" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                        </div>
+                    </div>
+
+                    
+            </div>
+            </div>
+            <div  *ngIf="display == 'none' && displaytable" class="col-sm-12 text-right">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="tempname" class="custom-label" translate>{{'TEMPLATE.service' | translate}} 
+                            </label>
+                            <select   disabled   class="custom-select form-control ">
+                                    <option    value="{{datatemplate.serviceCode}}">{{datatemplate.serviceName}}</option>
+                            </select>
+                    </div>
+                    <div class="col-sm-6">
+                            <label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.serviceCategory' | translate}}
+                            </label>
+                            <select   disabled   class="custom-select form-control ">
+                                <option    value="{{datatemplate.code}}">{{datatemplate.name}}</option>
+                            </select>
+
+                     </div>
+                    
+                    
+                </div>
+                <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                        class="fas fa-arrow-circle-left"></i>
+                        {{'TEMPLATE.template.back' | translate}}</button> 
+            </div>
+            <br> 
+            <div class="table-responsive">
+                <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>{{'TEMPLATE.serviceCategory' | translate}}</th>
+                            <th>{{'TEMPLATE.serviceProvider' | translate}} </th>
+                            <th>{{'TEMPLATE.calculationCycle' | translate}} </th>
+                            <th>{{'TEMPLATE.calculationCycleType' | translate}} </th>
+                            <th>{{'TEMPLATE.profileType' | translate}} </th>
+                            <th>{{'TEMPLATE.value' | translate}}</th>
+                            <th>{{'TEMPLATE.template.status' | translate}}</th>
+                            <th>{{'TEMPLATE.template.state' | translate}}</th>
+                            <th>{{'TEMPLATE.template.action' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serviceTemplate of serviceTemplateList">
+                            <td>{{serviceTemplate.serviceCategoryName}}</td>
+                            <td>{{serviceTemplate.serviceProviderName }} </td>
+     
+                            <td>{{serviceTemplate.calculationCycleName}} </td>
+                            <td>{{serviceTemplate.calculationCycleTypeName}} </td>
+                            <td>{{serviceTemplate.profileTypeName}} </td>
+                            <td>{{serviceTemplate.value}} </td>
+                            <td>{{serviceTemplate.status}} </td>
+                            <td>{{serviceTemplate.state}} </td>
+                            <td>
+                                <a style="cursor:pointer" placement="bottom"  (click)="viewForm(serviceTemplate)"
+                                ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                <a  *ngIf="display != 'none' && serviceTemplate.state == 'Approved' "    (click)="editForm(serviceTemplate)"  style="cursor:pointer" placement="bottom"
+                                ngbTooltip="{{'MASTER.edit' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+                                <!--  -->
+                            </td>
+                            
+                            
+                        </tr>
+                    </tbody>
+            
+                </table>
+              
+            </div>
+   
+        </div>
+    </div>
+</div>

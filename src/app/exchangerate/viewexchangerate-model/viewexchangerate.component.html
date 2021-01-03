@@ -1,0 +1,120 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'EXCHANGERATE.viewScreenTitle'  | translate}}</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+        <label for="name"  class="custom-label" >{{'EXCHANGERATE.name_label'  | translate}}</label>
+       
+            <input type="text" class="form-control" value="{{data.name}}" readonly>
+
+        </div>
+      
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+        <label for="sending_currency" class="custom-label" translate>{{'EXCHANGERATE.sending_currency'  | translate}}</label>
+     
+            <input type="text" value="{{data.sendCurrencyName}}" class="form-control" readonly>
+
+        </div>
+        <div class="col-sm-6">
+        <label for="receiving_currency "  class="custom-label" translate>{{'EXCHANGERATE.receiving_currency'  | translate}}</label>
+      
+            <input type="text" value="{{data.receiveCurrencyName}}" class="form-control" readonly>
+        
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+        <label for="sending_country"  class="custom-label" translate>{{'EXCHANGERATE.sending_country'  | translate}}</label>
+        
+            <input type="text" value="{{data.sendCountryName}}" class="form-control" readonly>
+
+        </div>
+        <div class="col-sm-6">
+        <label for="receiving_country "  class="custom-label" translate>{{'EXCHANGERATE.receiving_country'  | translate}}</label>
+        
+            <input type="text" value="{{data.receiveCountryName}}" class="form-control" readonly>
+
+        </div>
+
+    </div>
+    <div *ngIf= "data.remitInstituteName" class="form-group row">
+        <div class="col-sm-6">
+        <label  class="custom-label"translate>{{'EXCHANGERATE.sending_institute'  | translate}}</label>
+       
+
+            <input type="text" value="{{data.remitInstituteName}}" class="form-control" readonly>
+
+
+        </div>
+        <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'EXCHANGERATE.receiving_institute'  | translate}}</label>
+      
+
+            <input type="text" value="{{data.payInstituteName}}" class="form-control" readonly>
+
+
+        </div>
+
+
+    </div>
+    <div *ngIf= "data.remitAgentName" class="form-group row">
+        <div class="col-sm-6">
+        <label  class="custom-label"translate>{{'EXCHANGERATE.sending_agent'  | translate}}</label>
+       
+
+            <input type="text" value="{{data.remitAgentName}}" class="form-control" readonly>
+
+
+        </div>
+        <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'EXCHANGERATE.receiving_agent'  | translate}}</label>
+      
+
+            <input type="text" value="{{data.payAgentName}}" class="form-control" readonly>
+
+
+        </div>
+
+
+    </div>
+    <div *ngIf=  "data.remitBranchName" class="form-group row">
+        <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'EXCHANGERATE.sending_branch'  | translate}}</label>
+    
+
+            <input type="text" value="{{data.remitBranchName}}" class="form-control" readonly>
+
+        </div>
+
+        <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'EXCHANGERATE.receiving_branch'  | translate}}</label>
+       
+
+            <input type="text" value="{{data.payBranchName}}" class="form-control" readonly>
+
+        </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'EXCHANGERATE.conversionrate_label'  | translate}}</label>
+        
+            <input type="number" class="form-control" value="{{data.value}}" readonly>
+    </div>
+    <div class="col-sm-6">
+        <label  class="custom-label" translate>{{'COMMON.status_label'  | translate}}</label>
+        
+            <input type="text" class="form-control" value="{{data.status}}" readonly>
+    </div>
+ 
+ 
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'COMMON.button.close'  | translate}}</button>
+ </div>

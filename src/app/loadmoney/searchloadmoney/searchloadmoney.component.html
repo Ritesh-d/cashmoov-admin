@@ -1,0 +1,161 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+<!-- 
+    <h1 class="h3 mb-0 text-gray-800">Load Money</h1>
+    <a [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i>Wallet Top Up</a> -->
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0"> <h6 class="m-0 font-weight-bold text-primary"> {{ 'EMONEY.eMoney' | translate }}</h6> </div>
+            
+            <div class="card-body">
+             
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                <form [formGroup]="createForm" (ngSubmit)="onSubmit()" *ngIf="!editMode">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div class="form-group ">
+                        <div class="row mt-2">
+                            <label for="walletOwnerCategoryCode" class="custom-label col-sm-3 col-form-label text-right">{{ 'EMONEY.accountType' | translate }} <span class="required-field">*</span> </label>
+                            <div class="col-sm-5">
+                                <select formControlName="walletOwnerCategoryCode" (change)="getWalletAccount($event)" class="custom-select form-control" id="walletOwnerCategoryCode">
+                                    <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                    <option *ngFor="let category of categories" value="{{category.code}}">{{category.name}}  </option>
+                                </select>
+                                <span *ngIf="submitted && f.walletOwnerCategoryCode.errors" class="validation-message">
+                                    <div *ngIf="f.walletOwnerCategoryCode.errors.required" translate> {{ 'EMONEY_ERR.selectAccount' | translate }}</div>
+                                </span> 
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <label for="walletOwnerCode" class="custom-label col-sm-3 col-form-label text-right"> {{ 'EMONEY.accountName' | translate }} <span class="required-field">*</span> </label>
+                            <div class="col-sm-5">
+                                <select formControlName="walletOwnerCode" (change)="getWalletOwnerCurrency($event)" class="custom-select form-control" id="walletOwnerCode">
+                                    <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                    <option *ngFor="let walletOwner of walletOwners" value="{{walletOwner.code}}"> {{walletOwner.ownerName}} ( {{walletOwner.code}}) </option>
+                                </select> 
+                                <span *ngIf="submitted && f.walletOwnerCode.errors" class="validation-message">
+                                   <div *ngIf="f.walletOwnerCode.errors.required" translate> {{ 'EMONEY_ERR.selectAccountName' | translate }} </div>
+                                </span> 
+                           </div>
+                        </div>
+                        <div class="row mt-2">
+                            <label for="currencyCode" class="custom-label col-sm-3 col-form-label text-right">{{ 'MASTER.currency' | translate }} <span class="required-field">*</span> </label>
+                            <div class="col-sm-5">
+                                <select formControlName="currencyCode" class="custom-select form-control" id="currencyCode">
+                                    <option value="" selected>{{ 'MASTER.select' | translate }}</option>
+                                    <option *ngFor="let data of currencies" value="{{data.currencyCode}}"> {{data.currencyName}} </option>
+                                </select> 
+                                <span *ngIf="submitted && f.currencyCode.errors" class="validation-message">
+                                   <div *ngIf="f.currencyCode.errors.required" translate>{{ 'EMONEY_ERR.selectCurrency' | translate }}  </div>
+                                </span> 
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <label for="amount" class="custom-label col-sm-3 col-form-label text-right">  {{ 'MASTER.amount' | translate }} <span class="required-field">*</span> </label>
+                            <div class="col-sm-5">
+                              <input type="number"  pattern="^\d*(\.\d{0,10})?$" formControlName="amount" class="form-control" id="amount">
+                              <!-- <span *ngIf="submitted && f.amount.errors" class="validation-message"> -->
+                                <div *ngIf=" submitted  && f.amount.errors && f.amount.errors.required" class="validation-message" translate> {{ 'EMONEY_ERR.selectAmount' | translate }} </div>
+                                <div *ngIf="f.amount.errors?.pattern" class="validation-message" translate> {{ 'EMONEY_ERR.selectValidAmount' | translate }}</div>
+                             <!-- </span> -->
+                           </div>
+                        </div>
+                        <div class="row mt-2">
+                            <label for="bankReferenceNo" class="custom-label col-sm-3 col-form-label text-right"> {{ 'EMONEY.bankReferenceNumber' | translate }}
+                                 
+                            </label>
+                            <div class="col-sm-5">
+                            <input type="text" formControlName="bankReferenceNo" class="form-control" id="bankReferenceNo">
+                           </div>
+                        </div>
+                        <div class="row mt-3">
+                            <label for="name" class="custom-label col-sm-3 col-form-label text-right">{{ 'MASTER.receipt' | translate }}
+                        
+                            </label>
+                            <div class="col-sm-5">
+                                <div class="custom-file float-left">
+                                    <input type="file" formControlName="receiptFile" class="custom-file-input"
+                                        (change)="onFileSelected($event)"> 
+                                    <label class="custom-file-label" for="customFile">{{fileName}}</label>
+                                    <div *ngIf= "fileErr" class="validation-message">{{ fileErr }}</div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-9">
+                            <div class="note">{{ info }}</div>
+                            </div>
+                          
+                        
+                        </div>
+                        <div class="row mt-2">
+                            <label for="comments" class="custom-label col-sm-3 col-form-label text-right"> {{ 'MASTER.comments' | translate }}
+                                
+                            </label>
+                            <div class="col-sm-5">
+                            <textarea  type="text" rows="2" cols="50" formControlName="comments" class="form-control"  ></textarea>
+                           </div>
+                        </div>
+                      
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8 text-right">
+                            <button type="button" (click)="onCancel()" class="btn btn-danger px-3"> <i class="fas fa-arrow-circle-left"></i> {{ 'MASTER.back' | translate }}</button>&nbsp;
+                            <button *ngIf="setPermission.create" class="btn btn-primary px-3"> <i class="fas fa-save"></i> {{ 'MASTER.save' | translate }}</button>
+                        </div>
+                    </div>
+                </form>
+           
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status"> <span class="sr-only">{{ 'MASTER.loading' | translate }} </span> </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- <th>Account Type</th> -->
+                                <th>{{ 'EMONEY.accountName' | translate }}</th>
+                                <th>{{ 'MASTER.currency' | translate }} </th>
+                                <th> {{ 'MASTER.amount' | translate }}</th>
+                                <th> {{ 'EMONEY.bankReferenceNumber' | translate }}</th>
+                                <th> {{ 'EMONEY.createdOn' | translate }}</th>
+                                <th> {{ 'MASTER.status' | translate }}</th>
+                                <!-- <th>State </th> -->
+                                <th>{{ 'MASTER.action' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of datagrid">
+                                <!-- <td>{{data.accountTypeName}}</td> -->
+                                <td>{{data.srcWalletOwnerName}}</td>
+                                <td>{{data.srcCurrencyName}}  </td>
+                                <td>{{data.amount |  number : '1.2-3' }}</td>
+                               
+                                <td>{{data.bankReferenceNo}}</td>
+                                <td> <span type="hidden" style="display: none;">{{data.creationDate | date: 'YYYYMMDD' }}</span>{{ data.creationDate  | date: 'dd/MM/yyyy hh:mm:SS a'}}</td> 
+
+                                <td>{{data.status}}</td>
+                                <!-- <td>{{data.state}}</td> -->
+                                <td> 
+                                    <a *ngIf="setPermission.view" (click)="viewUser(data)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.view' | translate}}"> 
+                                        <i class="fas fa-eye text-primary"></i> 
+                                    </a>&nbsp;
+                
+                                    <!-- <a   *ngIf="data.state == 'Approved' && setPermission.edit" (click)="editUser(data)"  style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Edit"><i
+                                            class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                    <a   *ngIf="data.state == 'Approved' && setPermission.delete" (click)="deleteUser(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Delete"><i
+                                            class="fas fa-trash-alt text-danger"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

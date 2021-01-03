@@ -1,0 +1,111 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.fee.commision' | translate}}</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body padding-custom">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div *ngIf="errorMessges" class="alert alert-danger">{{ errorMessges }}</div>
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <!-- templateName -->
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="tempname" class="custom-label" translate>{{'TEMPLATE.template.template.name' | translate}}
+                                 </label>
+                                 <input type='text' value="{{tempname}}" class="form-control" readonly>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.template.category' | translate}}
+                                </label>
+                        
+
+                                <input type='text' value="{{templateCategoryName}}" class="form-control" readonly>
+                            </div>
+                            <!-- <div class="col-sm-4">
+                                <label for="walletOwnerCategoryName" class="custom-label" translate>Wallet Owner Category
+                                </label>
+                        
+
+                                <input type='text' value="{{walletOwnerCategoryName}}" class="form-control" readonly>
+                            </div> -->
+                          
+                      </div>
+                    
+ 
+                    <div class="col-sm-12 text-right">
+                        <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                                class="fas fa-arrow-circle-left"></i>
+                                {{'TEMPLATE.template.back' | translate}} </button>&nbsp;
+                 
+                          
+
+                    </div>
+ 
+                    <div *ngIf="!displaytable" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                        </div>
+                    </div>
+
+                    
+            </div>
+            </div>
+         
+            <br> 
+            <div class="table-responsive">
+                <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption"
+                    width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <!-- <th> Code </th> -->
+                            <!-- <th> Template Name </th> -->
+
+                            <th> {{'TEMPLATE.template.service' | translate}}  </th>
+                            <th>{{'TEMPLATE.template.service.category' | translate}} </th>
+                            <!-- <th> Service Provider </th> -->
+                            <!-- <th> Channel Type</th> -->
+                            <!-- <th> Tax Type</th> -->
+
+                            <th> {{'TEMPLATE.template.status' | translate}}</th>
+                            <!-- <th> State</th>   -->
+
+                            <th>{{'TEMPLATE.template.action' | translate}} </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serviceTemplate of serviceTemplateList">
+                            <!-- <td>{{serviceTemplate.code}}</td> -->
+                            <!-- <td>{{serviceTemplate.templateName}}</td> -->
+
+                            <td>{{serviceTemplate.serviceName}} </td>
+                            <td>{{serviceTemplate.name}}</td>
+                            <!-- <td>{{serviceTemplate.serviceProviderName}} </td> -->
+                            <!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+                            <!-- <td>{{serviceTemplate.taxTypeName}} </td> -->
+
+                            <td>{{serviceTemplate.status}} </td>
+                            <!-- <td>{{serviceTemplate.state}} </td>  -->
+
+                            <td>
+                                <a *ngIf="display != 'none'" style="cursor:pointer" placement="bottom" (click)="viewFee(serviceTemplate)"
+                                    ngbTooltip="{{'TEMPLATE.configureFee' | translate}}  "><i   class="fas fa-cog text-primary"></i>  </a>
+                                <a *ngIf="display == 'none'" style="cursor:pointer" placement="bottom" (click)="viewFee(serviceTemplate)"
+                                    ngbTooltip="{{'TEMPLATE.viewFee' | translate}} "><i class="fas fa-eye text-primary"></i>  </a>
+                                
+
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

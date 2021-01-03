@@ -1,0 +1,135 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'TEMPLATE.headername' | translate}} </h1>
+    <a *ngIf="setPermission.create" [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'TEMPLATE.button.create' | translate}}</a>
+</div>
+
+ 
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.headername' | translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div *ngIf="fetchingData || !data" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                        </div>
+                    </div>
+                    <table *ngIf="!fetchingData && data" class="table table-bordered table-striped"
+                        datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'TEMPLATE.template.name' | translate}}</th>
+                                <th>{{'TEMPLATE.template.category' | translate}}</th>
+                                <th> {{'TEMPLATE.template.walletCategory' | translate}}   </th>
+                                <th>{{'TEMPLATE.template.isDefault' | translate}}</th>
+                                <th>{{'TEMPLATE.template.status' | translate}}</th>
+                                <th>{{'TEMPLATE.template.state' | translate}}</th>
+                                <th>{{'TEMPLATE.template.created' | translate}}</th>
+                                <th>{{'TEMPLATE.template.action' | translate}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let template of templates; let i = index;">
+                                <td>{{ template.name }}</td>
+                                <td>{{ template.templateCategoryName }}</td>
+                                <td>{{ template.walletOwnerCategoryName }} </td>
+                                <td *ngIf="template.isDefault">Y</td>
+                                <td *ngIf="!template.isDefault">N</td>
+                                <td>{{ template.status }}</td>
+                                <td>{{ template.state }}</td>
+                                <!-- <td>{{ template.creationDate | date : 'yyyy-MM-dd'}}</td> -->
+                                <td> <span type="hidden" style="display: none;">{{template.creationDate | date: 'YYYYMMDD' }}</span>{{ template.creationDate  | date: 'dd/MM/yyyy hh:mm:SS a'}}</td> 
+
+                                <td>
+                                    <!-- <div *ngIf="setPermission.view"> -->
+                                        <a   class="custom-hyperlink" ngbTooltip="{{'TEMPLATE.viewTemplate' | translate}}" (click)="openModal(content,template.templateCategoryName,template.code,template);"  *ngIf="setPermission.view && template.templateCategoryCode==100001">
+                                            <i class="fas fa-eye text-primary" placement="right"></i></a>&nbsp;
+                                                                                
+                                        <a  (click)="viewServiceTemplate(template)" *ngIf="template.templateCategoryCode==100000 || template.templateCategoryCode==100002 || template.templateCategoryCode==100010 || template.templateCategoryCode==100009||template.templateCategoryCode==100008" style="cursor:pointer" placement="bottom"  class="custom-hyperlink"
+                                        ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                    <!-- </div> -->
+                                    <!-- <div *ngIf=" "> -->
+                                        <a *ngIf=" ( setPermission.edit &&  template.state == 'Approved' ) && template.templateCategoryCode==100001" (click)="openTransTemplate(template.code,template.name,template.state,template);"class="custom-hyperlink" ngbTooltip="edit template">
+                                        <i class="fas fa-edit text-secondary" placement="left"></i></a>
+                                        <a  (click)="openTemplate(template)" *ngIf="( template.state == 'Approved' ) && setPermission.edit &&  (template.templateCategoryCode==100000 || template.templateCategoryCode==100002 || template.templateCategoryCode==100010 || template.templateCategoryCode==100009||template.templateCategoryCode==100008) && template.state != 'In Transit'" style="cursor:pointer" placement="bottom"  class="custom-hyperlink"
+                                        ngbTooltip="{{'TEMPLATE.editTemplate' | translate}}"><i class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                        <a  (click)="openServiceTemplate(template)" *ngIf="(setPermission.edit ) && ( template.state =='In Transit' || template.state == 'Approved' )&& (template.templateCategoryCode==100000 || template.templateCategoryCode==100002 || template.templateCategoryCode==100010 || template.templateCategoryCode==100009|| template.templateCategoryCode==100008)" style="cursor:pointer" placement="bottom"  class="custom-hyperlink"
+                                        ngbTooltip="{{'TEMPLATE.viewService' | translate}}"><i class="fab fa-tumblr-square text-secondary"></i></a>&nbsp;
+                                       
+                                    <!-- </div> -->
+
+                                  
+                                    <!--  -->
+                           
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title text-primary" id="modal-basic-title">{{'TEMPLATE.template.details' | translate}}</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div  class="modal-body">
+        <div class="form-group row">
+            <!-- status -->
+            <div class="col-sm-6">
+                <label for="status" class="custom-label">{{'TEMPLATE.template.name' | translate}}</label>
+                <input type="text" class="form-control" id="status" name="status" [value]="template.name"  readonly>
+            </div>
+            <!-- createdOn -->
+            <div class="col-sm-6">
+                <label for="createdOn" class="custom-label">{{'TEMPLATE.template.category' | translate}}</label>
+                <input type="text" class="form-control" id="createdOn" name="createdOn" [value]="template.templateCategoryName"
+                    readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <!-- status -->
+            <div class="col-sm-6">
+                <label for="status" class="custom-label">{{'TEMPLATE.template.status' | translate}}</label>
+                <input type="text" class="form-control" id="status" name="status" [value]="template.status"  readonly>
+            </div>
+            <!-- createdOn -->
+            <div class="col-sm-6">
+                <label for="createdOn" class="custom-label">{{'TEMPLATE.template.state' | translate}}</label>
+                <input type="text" class="form-control" id="createdOn" name="createdOn" [value]="template.state"
+                    readonly>
+            </div>
+        </div>
+
+        <div *ngIf="viewTranstemplate && viewTranstemplate.transTemplateList" class="form-group row">
+        
+            <!-- list -->
+            <div class="col-sm-12 parallel-col-margin">
+                <label class="custom-label">{{'TEMPLATE.template.transaction.list' | translate}}</label>
+                <div class="card " style="border: 1px solid #d1d3e2;    color: #6e707e;">
+                    <div class="row">     <div *ngFor="let transaction of viewTranstemplate.transTemplateList" class="mx-3 my-2" style="width: max-content;">{{transaction.transTypeName}} </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="modal-footer">
+        <button type="button" (click)="d('Cross click')" class="btn btn-danger px-3">
+            <i class="fas fa fa-times"></i> {{'TEMPLATE.template.close' | translate}}</button>
+    </div>
+  </ng-template>

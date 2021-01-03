@@ -1,0 +1,68 @@
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    <h1 class="h3 mb-0 text-gray-800">{{ 'TAXCONFIGURATION.taxConfiguration' | translate }}</h1>
+    <a *ngIf="setPermission.create" [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{ 'TAXCONFIGURATION.addTaxconfiguration' | translate }} </a>
+</div>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <h6 class="m-0 font-weight-bold text-primary">{{ 'TAXCONFIGURATION.searchTaxconfiguration' | translate }} </h6>
+              
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="!displaytable" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">{{ 'TAXCONFIGURATION.loading' | translate }}</span>
+                    </div>
+                </div>
+               <div class="table-responsive">
+                <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>{{'TAXCONFIGURATION.taxType'}}</th>
+                            <th>{{'TAXCONFIGURATION.calculationType' | translate }}</th>
+                            <th>{{'TAXCONFIGURATION.minimumValue' | translate }}</th>
+                            <th>{{'TAXCONFIGURATION.maximumValue' | translate}}</th>
+                            <th>{{'TAXCONFIGURATION.value' | translate}}</th>
+                            <th>{{'TAXCONFIGURATION.status' | translate}}</th>
+                            <th>{{'TAXCONFIGURATION.state' | translate}}</th>
+                            <th>{{'TAXCONFIGURATION.action' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let data of taxConfigurationList">
+                    
+                            <td> {{data.taxTypeName}}</td>
+                            <td> {{data.calculationTypeName}}  </td>
+                            <td> {{data.minValue}} </td>
+                            <td> {{data.maxValue}}</td>
+                            <td> {{data.value}}</td>
+                            <td> {{data.status}}</td>
+                            <td> {{data.state}}</td>
+                            <td> 
+                                <a *ngIf="setPermission.view" (click)="view(data)" style="cursor:pointer" placement="bottom"
+                                    ngbTooltip="{{'MASTER.view' | translate}}"><i
+                                        class="fas fa-eye text-primary"></i></a>&nbsp;
+            
+                                <a *ngIf="setPermission.edit"  (click)="edit(data)"  style="cursor:pointer" placement="bottom"
+                                    ngbTooltip="{{'MASTER.edit' | translate}}"><i
+                                        class="fas fa-edit text-secondary"></i></a>&nbsp;
+                             
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+
+            </div>
+        </div>
+    </div>
+</div>

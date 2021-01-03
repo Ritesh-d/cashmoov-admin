@@ -1,0 +1,10 @@
+@import '../details.component.css';
+
+.status-old-value {
+    margin-left: 110%;
+    width: 50%;
+    margin-top: -28.2%;
+}
+.margin-1 {
+    margin: 1rem;
+}

@@ -1,0 +1,44 @@
+
+.validation-message {
+  color: #e74a3b;
+  font-size: smaller;
+  border: solid 1px #e74a3b;
+  border-radius: 3px;
+  padding: 2px;
+  background-color: bisque;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  font-style: italic;
+}
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+.modal-body{
+  max-height: 600px !important;
+  overflow: auto !important;
+}
+
+.spinner-aligning {
+  text-align: center;
+  padding: 4rem;
+}
+
+.required-field {
+  color: #e74a3b;
+}
+.padding-custom{
+padding: 1.5rem;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+   
+  text-align:right;
+}

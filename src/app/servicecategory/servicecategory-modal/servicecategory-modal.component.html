@@ -1,0 +1,90 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'SERVICE.viewCategory' |  translate}}</h6>
+</div>
+
+<div class="modal-body">
+
+    <div *ngIf="fetchingData" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">{{'SERVICE.loading' |  translate}}</span>
+        </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="!fetchingData && !errorMessage">
+        <!-- country / code -->
+        <div class="form-group row">
+            <!-- country -->
+            <div class="col-sm-12 parallel-col-margin">
+                <label class="custom-label">{{'SERVICE.service' |  translate}}</label>
+                <input type="text" class="form-control" [value]="selectedService.name" disabled>
+            </div>
+            <!-- code -->
+            <!-- <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'SERVICE.code_label' |  translate}}</label>
+                <input type="text" class="form-control" [value]="country.isoCode" disabled>
+            </div> -->
+        </div>
+       
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h1 class="h3 mb-0 text-gray-800"></h1>
+            <a  id= "create001"  *ngIf="setPermission.create"  (click)="addCategory(selectedService.code)" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus-circle"></i> {{'SERVICE.addCategory' |  translate}}</a>
+        </div>
+        <hr>
+        <!-- region listing -->
+        <div class="table-responsive">
+            <table *ngIf="!fetchingData"  datatable class="table table-bordered table-striped" [dtOptions]="dtOption"
+                width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>{{'SERVICE.code_label' |  translate}}</th>
+                        <th>{{'SERVICE.category' |  translate}}</th>
+                        <th>{{'SERVICE.product_allowed' |  translate}}</th>
+                        <th>{{'SERVICE.status' |  translate}}</th>
+                        <th>{{'SERVICE.state' |  translate}}</th>
+                        <th>{{'SERVICE.creationDate' |  translate}}</th>
+                        <th>{{'COMMON.action_label' |  translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let serviceCategory of serviceCategoryList; let i = index;">
+                        <td> {{ serviceCategory.code }}  </td>
+                        <td> {{ serviceCategory.name }}  </td>
+                        <td >
+                            <span *ngIf="serviceCategory.productAllowed"  class="list-checkbox">Y</span>
+                            <span *ngIf="!serviceCategory.productAllowed" class="list-checkbox">N</span>
+                        </td>
+                       
+                            <!-- <input disabled="true"  [(ngModel)]="serviceCategory.productAllowed" class="list-checkbox  form-check-input  " type="checkbox"> -->
+                         
+                     
+                        <td>{{ serviceCategory.status }}</td>
+                        <td>{{ serviceCategory.state }}</td>
+                        <td><span type="hidden" style="display: none;">{{ serviceCategory.creationDate | date: 'YYYYMMDD'}} </span>{{ serviceCategory.creationDate | date: 'dd/MM/yyyy hh:mm:SS a' }}</td>
+
+                        <td>
+                            <div class="feature-name">
+                                <a id= "edit001" *ngIf="serviceCategory.state=='Approved' && setPermission.edit"(click)="editCategory(selectedService.code, serviceCategory.name, serviceCategory.code,serviceCategory.productAllowed,serviceCategory.serviceCountryList)" style="cursor:pointer"
+                                    placement="left" ngbTooltip="{{'SERVICE.editCategory'  |  translate }}">
+                                    <i class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                    <a id= "view001" *ngIf="setPermission.view" (click)="viewOperater(selectedService.code, serviceCategory.name, serviceCategory.code )" style="cursor:pointer" placement="bottom"
+                                    ngbTooltip="{{'SERVICE.viewOperator'  |  translate }}"><i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                    <a id= "create001"  *ngIf="serviceCategory.state=='Approved' &&  setPermission.create"  (click)="addOperater(selectedService.code, serviceCategory.name, serviceCategory.code )" style="cursor:pointer"
+                                    placement="left" ngbTooltip="{{'SERVICE.addOperator'  |  translate }}">
+                                    <i class="fas fa-plus-circle text-primary"></i></a>&nbsp;
+                                <!-- <a class="custom-hyperlink" ngbTooltip="Delete">
+                                    <i class="fas fa-trash-alt text-danger"></i></a> -->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'COMMON.button.close' |  translate}}</button>
+</div>

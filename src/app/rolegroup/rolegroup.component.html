@@ -1,0 +1,110 @@
+<!-- Page Heading -->
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{ 'ROLE.roleTxt' | translate}}</h1>
+    <a  *ngIf="setPermission.create" [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{ 'ROLE.addRoleTxt' | translate}}</a>
+</div>
+
+
+<!-- Content Row -->
+<div class="row">
+    <!-- main area -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ 'ROLE.searchRoleTxt' | translate}}</h6>
+            </div>
+      
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<!--                  
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i
+                                            class="fas fa-search"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="tableSearch"
+                                    placeholder="{{ 'ROLE.nameOrCodeTxt' | translate}}" aria-label="Search"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="custom-select" id="searchBy">
+                                <option selected>Status</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="custom-select" id="exact">
+                                <option selected>Stage</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div role="wrapper"
+                                class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                <input type="text" class="form-control" id="datepicker" placeholder="{{currentdate}}"
+                                    name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                 <span class="input-group-append" role="right-icon">
+                                    <button class="btn btn-outline-secondary border-left-0" type="button">
+                                        <i class="gj-icon" (click)="d.toggle()">event</i>
+                                    </button>
+                                </span> &nbsp;&nbsp;
+                                <button type="button" class="btn btn-primary">{{ 'ROLE.searchTxt' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                   -->
+
+                    <div *ngIf="fetchingData" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                        </div>
+                    </div>
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped"
+                        [dtOptions]="dtOptions"  width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'ROLE.codeTxt' | translate}}</th>
+                                <th>{{ 'ROLE.nameTxt' | translate}}</th>
+                                <th>{{ 'ROLE.statusTxt' | translate}}</th>
+                                <th *ngIf="approvalEnabled">{{ 'ROLE.stateTxt' | translate}}</th>
+                                <th>{{ 'ROLE.createdOnTxt' | translate}}</th>
+                                <th>{{ 'ROLE.actionTxt' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let role of roles; let i = index;">
+                                <td>{{ role.code }}</td>
+                                <td>{{ role.name }}</td>
+                                <td>{{ role.status }}</td>
+                                <td *ngIf="approvalEnabled">{{ role.state }}</td>
+                                <td><span type="hidden" style="display: none;">{{ role.creationDate | date: 'YYYYMMDD'}} </span>{{ role.creationDate | dateFormat: 'dateTime' }}</td>
+                                <td>
+                                    <a  *ngIf="setPermission.view" class="custom-hyperlink" (click)="viewRoleGroup(role.code)"
+                                        ngbTooltip="{{ 'ROLE.viewTxt' | translate}}">
+                                        <i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                    <a *ngIf="showActionButton(role)  && setPermission.edit" class="custom-hyperlink"
+                                        (click)="editRoleGroup(role.code)" ngbTooltip="{{ 'ROLE.editTxt' | translate}}">
+                                        <i class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                    <a *ngIf="showActionButton(role)  && setPermission.edit" class="custom-hyperlink"
+                                        (click)="addPermissionRoleGroup(role.code)"
+                                        ngbTooltip="{{ 'ROLE.permissionTxt' | translate}}"><i
+                                            class="fas fa-cog text-primary"></i></a>&nbsp;
+                                    <!-- <a *ngIf="showActionButton(role)  && setPermission.delete" class="custom-hyperlink"
+                                        ngbTooltip="{{ 'ROLE.deleteTxt' | translate}}">
+                                        <i class="fas fa-trash-alt text-danger"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

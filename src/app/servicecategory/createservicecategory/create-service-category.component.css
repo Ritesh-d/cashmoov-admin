@@ -1,0 +1,60 @@
+::ng-deep .page-titles {
+  margin-bottom: 5px;
+  padding: 0p
+}
+.spinner-aligning {
+  text-align: center;
+  padding: 4rem;
+}
+ .card-table-body{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding-left: 10.5rem;
+}
+
+.line{
+  width: 112px;
+  height: 47px;
+  border-bottom: 1px solid black;
+  position: absolute;
+  }
+ 
+
+.required-field {
+  color: #e74a3b;
+}
+
+.validation-message {
+  color: #e74a3b;
+  font-size: smaller;
+  /* border: solid 1px #e74a3b; */
+  border-radius: 3px;
+  padding: 2px;
+  /* background-color: bisque; */
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.color-white a {
+  color: white;
+}
+.float-right{
+  float: right;
+}
+.custom-hyperlink {
+  cursor: pointer;
+}
+.disable-option {
+  background-color: lightsteelblue;
+  cursor: not-allowed;
+}
+.custom-label{
+  margin-bottom: auto;
+  font-style: italic;
+}
+ 

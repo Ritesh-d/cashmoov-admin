@@ -1,0 +1,343 @@
+ <div class="d-sm-flex align-items-center justify-content-between mb-1">
+    <h1 class="h3 mb-0 text-gray-800">{{'ROLE.rolePermission' | translate}}</h1>
+</div> 
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">{{'ROLE.dashboard' | translate}}</a></li>
+        <li class="breadcrumb-item "><span (click)="navigateToSytemUserCreation()">{{'ROLE.rolePermission' | translate}}</span></li>
+        <li *ngIf="!editMode" class="breadcrumb-item active" aria-current="page">{{'ROLE.addTxt' | translate}}</li>
+        <li *ngIf="editMode"class="breadcrumb-item active" aria-current="page">{{'ROLE.editTxt' | translate}}</li>
+    </ol>
+</nav>
+
+
+<div *ngIf= "!editMode" class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">Add Role Permission</h6> -->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                     
+                        <ul class="nav  mb-3" id="pills-tab" role="tablist">
+                          
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                            <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                            <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <form [formGroup]="createRolePermissionForm" > 
+                                    <div class="form-group row">
+                                        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                        <div class="col-sm-9 text-right">
+                                            <a class="custom-hyperlink" (click)="onEditForm()"><i class="fas fa-edit text-primary"></i></a>&nbsp;
+                                         <!-- <a class="custom-hyperlink" (click)="onRemoveForm()"><i
+                                                    class="fas fa-trash-alt text-danger"></i></a>&nbsp;  -->
+                                            <a class="custom-hyperlink" (click)="onSaveForm()"><i class="fas fa-save text-primary"></i></a>
+                                        </div>
+                                        </div>
+                                        <div class="form-group row mt-2">
+                                            <label for="role" class="col-sm-3 col-form-label text-right">{{'ROLE.roleTxt' | translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            
+
+                                            <div class="col-sm-5">
+                                             <select  formControlName="role"  class="custom-select form-control" id="role">
+                                                <option value="" selected>{{'MASTER.seect' | translate}}</option>
+                                                <option *ngFor = "let role of roleList " value="{{role.code}}">{{role.name}}</option>
+                                         
+                                            </select>
+                                            <!-- <span class="validation-message" *ngIf="createRolePermissionForm.enabled
+                                            && createRolePermissionForm.get('role').touched
+                                            && !createRolePermissionForm.get('role').valid">Please select Role</span> -->
+                                            <span *ngIf="submitted && f.role.errors" class="validation-message">
+                                            <div *ngIf="f.role.errors.required" translate>{{'ROLE.pleaseselectRole' | translate}}</div>
+                                            </span>
+                                            <!-- <div *ngIf="f.role.errors.pattern" translate>err_role_pattern</div>
+                                            <div *ngIf="f.role.errors.minlength" translate>err_role_minlength</div> -->
+                                       
+                                            </div>
+                                            </div>
+                                            <div class="form-group row mt-2">
+                                                <label for="permission" class="col-sm-3 col-form-label text-right">{{'ROLE.permissionTxt' | translate}}
+                                                    <span class="required-field">*</span></label>
+                                                
+
+                                                <div class="col-sm-5">
+                                                <!-- <input  formControlName="permission"  type="text" class="form-control" id="permission" > -->
+                                                <input  formControlName="permission"  type="text" class="form-control" id="permission">
+                                           
+
+                                                <!-- <span class="validation-message" *ngIf="createRolePermissionForm.enabled
+                                                && createRolePermissionForm.get('permission').touched
+                                                && !createRolePermissionForm.get('permission').valid">Please select Permission</span> -->
+                                                <span *ngIf="submitted && f.permission.errors" class="validation-message">
+                                                    <div *ngIf="f.permission.errors.required" translate>{{'ROLE.pleaseselectPermission' | translate}}</div>
+                                                </span>
+                                                </div>
+                                                </div>
+                                                <!-- <div class="form-group row mt-2">
+                                                    <label for="status" class="col-sm-3 col-form-label text-right">Staus:</label>
+                                                    <span class="required-field">*</span>
+    
+                                                    <div class="col-sm-5">
+                                                     <select formControlName="status"  class="custom-select form-control" id="status">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                     <span *ngIf="submitted && f.status.errors" class="validation-message">
+                                                        <div *ngIf="f.status.errors.required" translate>Please select Status</div>  
+                                                    </span>
+                                                    </div>
+                                                    </div> -->
+                                        <div class="form-group row">
+                                            <label for="featureCode" class="col-sm-3 col-form-label text-right">{{'ROLE.feature' | translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            
+
+                                            <div class="col-sm-5">
+                                             <select  change="onChange($event)"formControlName="featureCode"  class="custom-select form-control" id="featureCode">
+                                                <option value="" selected>Select</option>
+                                                <option *ngFor="let feature of systemUserConfigurationService.sharedData" value="{{feature.code}}">{{feature.name}}</option>
+                                      
+                                            </select>
+                                            <!-- <span class="validation-message" *ngIf="createRolePermissionForm.enabled
+                                                && createRolePermissionForm.get('featureCode').touched
+                                                && !createRolePermissionForm.get('featureCode').valid">Please select Feature</span> -->
+                                                <span *ngIf="submitted && f.featureCode.errors" class="validation-message">
+                                                    <div *ngIf="f.featureCode.errors.required" translate>{{'ROLE.pleaseselectFeature' | translate}}</div>
+                                                </span>
+                                            </div>
+                                            </div>
+                                                <div class="form-group row">
+                                                    <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                                    <!-- <div class="col-sm-5"> -->
+                                                    
+                                                    <div class="custom-control">
+                                                     
+                                                    <input  formControlName="create"  type="checkbox"   id="create"> &nbsp;
+                                                    <label       for="create">{{'ROLE.create' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "view" type="checkbox"    id="view">  &nbsp;
+                                                    <label       for="view">{{'MASTER.view' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    
+                                                    <div class="custom-control">
+                                                    <input formControlName= "edit" type="checkbox"  id="edit"> &nbsp;  
+                                                    <label     for="edit">{{'MASTER.edit' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "approve" type="checkbox"  id="approve"> &nbsp;  
+                                                    <label     for="approve">{{'ROLE.approve' | translate}}</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control">
+                                                    <input formControlName= "delete" type="checkbox"  id="delete"> &nbsp;
+                                                    <label     for="delete">{{'MASTER.delete' | translate}}</label>
+                                                    </div>
+                                                    
+                                                    <!-- </div> -->
+                                                    </div>
+                                </form>
+
+                                <form [formGroup]="allRoles" (ngSubmit)="navgateToStep3()">
+                                    <!-- Addresses -->
+                                    <div formArrayName="permissions">
+                                <div *ngFor="let control of getFormControl; let i = index"   [formGroupName]="i">    
+                              <app-addroles    [formIndex]="i"   ></app-addroles>
+                    
+                            </div>
+                             </div>
+                             <div class="form-group row">
+                                <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                <div class="col-sm-9 text-right">
+                                    <a (click)="rolePermissionService.onAddForm()" class="d-none d-sm-inline-block btn btn-sm btn-primary">
+                                        <i class="fas fa-plus-circle"></i> {{'ROLE.pleaseselectFeature' | translate}}</a>  
+                                        
+ 
+                                </div>
+                                </div>
+                         
+                           </form>
+                         
+                        </div>
+ 
+         
+
+                            
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                            <div class="col-sm-9 text-right">
+                                <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i  class="fas fa-arrow-circle-left"></i> {{'MASTER.back' | translate}}</button>&nbsp;
+                                <button type="button" [disabled]= "createRolePermissionForm.invalid" (click)="onSubmit()" class="btn btn-primary px-3"><i class="fas"></i> {{'ROLE.submit' | translate}}</button> 
+                    
+                            </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf= "editMode" class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <!-- <h6 class="m-0 font-weight-bold text-primary">Edit Role Permission</h6> -->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                     
+                        <ul class="nav  mb-3" id="pills-tab" role="tablist">
+                          
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                            <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                            <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <form [formGroup]="createRolePermissionForm" >
+                            
+                                   
+                                        <div class="form-group row mt-2">
+                                            <label for="role" class="col-sm-3 col-form-label text-right">{{'ROLE.roleTxt' | translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            
+                                            <div class="col-sm-5">
+                                                <select  formControlName="role"  class="custom-select form-control" id="role">
+                                                    <!-- <option value="{{role}}" selected>{{role}}</option> -->
+                                                    <option value = "{{role}}" selected >{{role}}</option>
+
+                                                    <option *ngFor="let role of roleList" value="{{role.code}}">{{role.name}}</option>
+
+                                                </select>
+                                                <!-- <span class="validation-message" *ngIf="createRolePermissionForm.enabled
+                                                && createRolePermissionForm.get('role').touched
+                                                && !createRolePermissionForm.get('role').valid">Please select Role</span> -->
+                                                <span *ngIf="submitted && f.role.errors" class="validation-message">
+                                                <div *ngIf="f.role.errors.required" translate>{{'ROLE.pleaseselectRole' | translate}}</div>
+                                                </span>                                            </div>
+                                            </div>
+                                            <div class="form-group row mt-2">
+                                                <label for="permission" class="col-sm-3 col-form-label text-right">{{'ROLE.permission' | translate}}
+                                                    <span class="required-field">*</span>
+                                                </label>
+                                                
+                                                 <div class="col-sm-5">
+                                                    <input  formControlName="permission"  type="text" class="form-control"  id="permission">
+
+                                                      
+                                                        <!-- <span class="validation-message" *ngIf="createRolePermissionForm.enabled
+                                                        && createRolePermissionForm.get('permission').touched
+                                                        && !createRolePermissionForm.get('permission').valid">Please select Permission</span> -->
+                                                        <span *ngIf="submitted && f.permission.errors" class="validation-message">
+                                                            <div *ngIf="f.permission.errors.required" translate>{{'ROLE.pleaseselectPermission' | translate}}</div>
+                                                        </span>                                                </div>
+                                                </div>
+                                                <div class="form-group row mt-2">
+                                                    <label for="status" class="col-sm-3 col-form-label text-right">{{'ROLE.statusTxt' | translate}}
+                                                        <span class="required-field">*</span>
+                                                    </label>
+                                                    
+                                                    <div class="col-sm-5">
+                                                     <select formControlName="status" class="custom-select form-control" id="status">
+                                                     
+                                                        <option value="Active">{{'MASTER.active' | translate}}</option>
+                                                        <option value="Inactive">{{'ROLE.inactive' | translate}}</option>
+                                                    </select>
+                                                    </div>
+                                                    </div>
+                                        <div class="form-group row mt-2">
+                                            <label for="featureCode" class="col-sm-3 col-form-label text-right">{{'ROLE.feature' | translate}}
+                                                <span class="required-field">*</span>
+                                            </label>
+                                            
+                                            <div class="col-sm-5">
+                                             <select formControlName="featureCode" class="custom-select form-control" id="featureCode">
+                                                <option value = "{{featureCode}}" selected >{{featureCode}}</option>
+                                                <option *ngFor="let feature of featureList" value="{{feature.code}}">{{feature.name}}</option>
+
+                                            </select>
+                                            </div>
+                                            </div>
+                                            
+                            
+                                                <div class="form-group row">
+                                                    <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                                    <!-- <div class="col-sm-5"> -->
+                                                    
+                                                    <div class="custom-control  ">
+                                                    <input *ngIf= "create" formControlName= "create" type="checkbox"   id="create" checked> 
+                                                    <input *ngIf= "!create" formControlName= "create" type="checkbox"   id="create"> 
+                                                    &nbsp;<label   for="create">{{'ROLE.create' | translate}}  &nbsp; &nbsp;</label>  
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control ">
+                                                    <input *ngIf= "view" formControlName= "view"type="checkbox"   id="view" checked>
+                                                    <input *ngIf= "!view" formControlName= "view" type="checkbox"   id="view"  >  
+                                                    &nbsp;<label   for="view">{{'MASTER.view' | translate}}  &nbsp; &nbsp;</label>
+                                                    </div> &nbsp; &nbsp;
+                                                    
+                                                    <div class="custom-control ">
+                                                    <input *ngIf= "edit" formControlName= "edit" type="checkbox"   id="edit" checked>
+                                                    <input *ngIf= "!edit" formControlName= "edit" type="checkbox"   id="edit">
+                                                    &nbsp;<label   for="edit">{{'MASTER.edit' | translate}}  &nbsp; &nbsp;</label>  
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control ">
+                                                    <input *ngIf= "approve" formControlName= "approve"type="checkbox"   id="approve" checked>
+                                                    <input *ngIf= "!approve" formControlName= "approve" type="checkbox"   id="approve"  >
+                                                    &nbsp;<label   for="approve">{{'ROLE.approve' | translate}}  &nbsp; &nbsp;</label>  
+                                                    </div> &nbsp; &nbsp;
+                                                    <div class="custom-control ">
+                                                        <input *ngIf= "delete" formControlName= "delete" type="checkbox"   id="delete" checked>
+                                                        <input *ngIf= "!delete" formControlName= "delete" type="checkbox"   id="delete"  >
+                                                        &nbsp;<label   for="delete">{{'MASTER.delete' | translate}}</label>
+                                                        </div>
+                                                    
+                                                    <!-- </div> -->
+                                                    </div>
+                                            
+                                    <div class="form-group row">
+                                        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                                        <div class="col-sm-9 text-right">
+                                            <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i class="fas fa-times-circle"></i> {{'ROLE.cancel' | translate}}</button>&nbsp;
+                                            <!-- <button type="button" (click)="onSubmit()" class="btn btn-primary px-3"><i class="fas fa-plus-circle"></i> Submit</button> -->
+
+                                            <button type="button" (click)="onSubmit()" class="btn btn-primary px-3"><i class="fas"></i> {{'ROLE.submit' | translate}}</button>
+                                        </div>
+                                        </div>
+                            
+                                </form>
+
+
+                            </div>
+ 
+         
+
+                            
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

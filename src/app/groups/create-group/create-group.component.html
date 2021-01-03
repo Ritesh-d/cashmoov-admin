@@ -1,0 +1,134 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{ 'GROUPS.createGroup' | translate }}</h6>
+        </div>
+        <!-- Card Body -->
+ 
+        <div class="card-body">
+            <div class="row">
+             
+                    
+                <div class="col-lg-12">
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <form [formGroup]="groupForm" (ngSubmit)="submitGroup()">
+                        <!-- groupName / parent -->
+                        <div class="form-group row">
+                            <!-- groupName -->
+                            <div class="col-sm-6 ">
+                                <label for="groupName" class="custom-label">{{ 'GROUPS.groupName' | translate }}</label>
+                                <span class="required-field">*</span>
+                                <input required type="text" class="form-control" id="groupName" name="groupName"
+                                    formControlName="groupName" placeholder="{{ 'GROUPS.groupname' | translate }}">
+                                    <div class="validation-message" *ngIf="submitted && groupForm.get('groupName').errors?.required" translate>{{ 'GROUPS.pleaseentergroupname' | translate }} </div>
+
+                            </div>
+                        </div>
+                            <div class="form-group row">
+                            <!-- parent -->
+                            <div class="col-sm-6 ">
+                                <label for="parent" class="custom-label">{{ 'GROUPS.parentGroup' | translate }} </label>
+                                <select id="parent" name="parent" formControlName="parent" class="custom-select">
+                                    <option *ngFor="let group of groups" [value]="group.code">
+                                        {{ group.name }}
+                                    </option>
+                                </select>
+                            </div>
+                             </div>
+                        
+                        <!-- regional / governorate -->
+                        <!-- <div class="form-group row"> -->
+                            <!-- regional -->
+                            <!-- <div class="col-sm-6">
+                                <label for="regional" class="custom-label">{{ 'GROUPS.regionalArea' | translate }}</label>
+                                <select class="custom-select" id="regional" name="regional" formControlName="regional"
+                                    (change)="selectChangeHandler($event, 'regional')">
+                                    <option *ngFor="let rgnl of regionals" [value]="rgnl.code">
+                                        {{ rgnl.type }}
+                                    </option>
+                                </select>
+                            </div> -->
+                            <!-- governorate -->
+                            <!-- <div class="col-sm-6">
+                                <label for="governorate" class="custom-label">{{ 'GROUPS.governoRate' | translate }}</label>
+                                <select class="custom-select" id="governorate" name="governorate"
+                                    formControlName="governorate" (change)="selectChangeHandler($event, 'governorate')">
+                                    <option *ngFor="let gvrnrt of governorates" [value]="gvrnrt.code">
+                                        {{ gvrnrt.type }}
+                                    </option>
+                                </select>
+                            </div> -->
+                        <!-- </div> -->
+                        <!-- region / *** -->
+                        <!-- <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="region" class="custom-label">{{ 'GROUPS.region' | translate }}</label>
+                                <select class="custom-select" id="region" name="region" formControlName="region"
+                                    (change)="selectChangeHandler($event, 'region')">
+                                    <option *ngFor="let rgn of regions" [value]="rgn.code">
+                                        {{ rgn.type }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div> -->
+
+                        <!-- templateForm-nested  -->
+                        <!-- <div formArrayName="groupTemplates">
+                        
+                            <div class="form-group row" *ngFor="let template of getTemplatesControl; let i = index"
+                                [formGroupName]="i">
+                               
+                                <div class="col-sm-6">
+                                    <label for="templateCategory" class="custom-label">{{ 'GROUPS.templateCategory' | translate }}</label>
+                                    <select class="custom-select" id="templateCategory" name="templateCategory"
+                                        formControlName="templateCategory" (change)="templateNameOnCategory($event)">
+                                        <option *ngFor="let category of remaingCategories" [disabled]="category.disabled"
+                                        [ngClass]="{'disable-option': category.disabled}" [value]="category.code">
+                                            {{ category.type }}
+                                        </option>
+                                    </select>
+                                </div>
+                                 
+                                <div class="col-sm-6">
+                                    <label for="templateName" class="custom-label">{{ 'GROUPS.templateName' | translate }}</label>
+                                   
+                                    <span class="float-right custom-hyperlink"><a class="custom-hyperlink"
+                                            title="delete" (click)="onRemoveTemplate(i)">
+                                            <i class="fas fa-trash-alt text-danger"></i></a></span>
+                                    <select class="custom-select" [id]="i" [name]="templateName"
+                                        formControlName="templateName">
+                                        <option *ngFor="let template of templateNames[i]" [value]="template.code">
+                                            {{ template.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Add Template -->
+                        <!-- <div class="form-group row">
+                            <div class="col-sm-12 float-right">
+                                <div class="text-right full-width steps-bottom-button-alligned color-white">
+                                    <a (click)="onAddTemplate()"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                        <i class="fas fa-plus-circle"></i> {{ 'GROUPS.addTemplate' | translate }}</a>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Create / Cancel Button  -->
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-right">
+                                <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i class="fas fa-arrow-circle-left"></i>
+                                    {{ 'GROUPS.back' | translate }}</button>&nbsp;
+                                <button type="submit" class="btn btn-primary px-3"><i class="fas fa-plus-circle"></i>
+                                    {{ 'GROUPS.createGroup' | translate }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

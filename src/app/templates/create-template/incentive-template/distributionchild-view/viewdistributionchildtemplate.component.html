@@ -1,0 +1,94 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.view.slab' | translate}}</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.service.provider' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.serviceProviderName}}" readonly>
+        </div>
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.channel.type' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.channelTypeName}}" readonly>
+        </div>
+        
+        
+    </div>
+    <div class="form-group row">
+
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.wallet.owner.category' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.walletOwnerCategoryName}}" readonly>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.status' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.status}}" readonly>
+        </div>
+      
+        
+        <!-- <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.calculation.cycle.type' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.calculationCycleTypeName}}" readonly>
+        </div>
+          -->
+      <!--  <div class="col-sm-3">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.fee.range' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.minValue}}" readonly>
+        </div>
+        <div class="col-sm-3">
+            <label for="name"  class="custom-label" >&nbsp;</label>
+            <input type="text" class="form-control" value="{{data.maxValue}}" readonly>
+        </div>
+        -->
+     </div>
+     <div class="form-group row">
+       
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.state' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.state}}" readonly>
+        </div>
+        
+        
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.tax.type' | translate}}</label> 
+            <ng-multiselect-dropdown #multiSelect *ngIf="istaxtype" [placeholder]="'Select tax Type'" [data]="taxTypeList" [formControl]="f1.taxTypeCode"
+                [settings]="settings" [disabled]="true">
+            </ng-multiselect-dropdown>
+        </div>
+
+        
+         <!-- <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.calculation.type' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.calculationTypeName}}" readonly>
+        </div>
+        <div class="col-sm-3">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.fixed.value' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.fixedIncentiveValue}}" readonly>
+        </div>
+        -->
+        
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.distribution.percent' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.percentComiValue}}" readonly>
+        </div>
+        
+  <div class="col-sm-6">
+            <label for="name"  class="custom-label" >{{'TEMPLATE.template.tax.settlement.account' | translate}}</label>
+            <input type="text" class="form-control" value="{{data.taxAccountName ==undefined?'':data.taxAccountName}}" readonly>
+        </div>
+        
+        
+    </div>
+    
+    
+    
+ 
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'TEMPLATE.template.close' | translate}}</button>
+ </div>

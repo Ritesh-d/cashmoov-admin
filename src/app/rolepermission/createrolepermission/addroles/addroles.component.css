@@ -1,0 +1,14 @@
+@import '../../searchrolepermission/searchrolepermission.component.css';
+
+
+div.hover-form :hover .form-action-container{
+  visibility: visible;
+}
+.form-action-container {
+  visibility: hidden;
+}
+
+.disable-option {
+  background-color: lightsteelblue;
+  cursor: not-allowed;
+}

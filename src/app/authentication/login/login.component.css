@@ -1,0 +1,9 @@
+@import './../form.css';
+
+.language-select {
+    border-color: #858796;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 2px;
+    color: #858796;
+  }

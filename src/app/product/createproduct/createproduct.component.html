@@ -1,0 +1,157 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 *ngIf="!editMode" class="m-0 font-weight-bold text-primary">{{'PRODUCT.addProduct'  | translate}}</h6>
+            <h6 *ngIf="editMode" class="m-0 font-weight-bold text-primary">{{'PRODUCT.editProduct'  | translate}}</h6>
+        </div>
+        <div class="table-responsive">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        <form [formGroup]="productForm">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="name" class="custom-label">{{'PRODUCT.name_label'  | translate}}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input formControlName="name" type="text" class="form-control" id="name" maxlength="30">
+                                    <!-- <span *ngIf="submitted && f.name.errors" class="validation-message"> -->
+                                        <div *ngIf="submitted && f.name.errors && f.name.errors?.required ;else patterntemp" class="validation-message"  translate>{{'PRODUCT.pleaseentername'  | translate}} </div>
+                                        <ng-template #patterntemp>
+                                            <div *ngIf="f.name.errors?.pattern ;else minlengthtemp" class="validation-message"  translate>{{'PRODUCT.pleaseentervalidname'  | translate}} </div>
+
+                                        </ng-template>
+                                        <ng-template #minlengthtemp>
+                                            <div *ngIf="f.name.errors?.minlength" class="validation-message"  translate>{{'PRODUCT.namemustbeatleast3characters'  | translate}} </div>
+                                       </ng-template>
+                                        <!-- </span> -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="serviceCategoryCode" class="custom-label">{{'PRODUCT.serviceCategory'  | translate}}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <select formControlName="serviceCategoryCode" class="custom-select form-control" 
+                                        id="serviceCategoryCode"  (change)="onChangeGetServiceCategoryName($event)" >
+                                        <option value="" selected>{{'PRODUCT.select'  | translate}}</option>
+                                        <option *ngFor="let data of serviceCategoryList" value="{{data.code}}">
+                                            {{data.name}}
+                                        </option>
+
+                                    </select>
+                                    <div *ngIf="submitted && f.serviceCategoryCode.errors?.required"  class="validation-message" translate>{{'PRODUCT.pleaseenterservicecategory'  | translate}} </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group row" *ngIf="operatorList && operatorList.length > 0">
+                                <div class="col-sm-6">
+                                    <label for="operatorCode" class="custom-label">{{'PRODUCT.operator'  | translate}}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <select formControlName="operatorCode" class="custom-select form-control"
+                                        id="operatorCode"   (change)="onChangeGetOperatorName($event)" >
+                                        <option value="" selected>{{'PRODUCT.select'  | translate}}</option>
+
+                                        <option *ngFor="let data of operatorList" value="{{data.code}}">
+                                           {{data.name}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.operatorCode.errors?.required"  class="validation-message" translate>{{'PRODUCT.pleaseenteroperator'  | translate}} </div>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="productType" class="custom-label">{{'PRODUCT.productType'  | translate}}
+                                        <span class="required-field">*</span>
+                                     </label>
+                                     <select formControlName="productTypeCode" class="custom-select form-control"  id="productTypeCode"  (change)="onChangeGetProductTypeName($event)" >
+                                    <option value="" selected>Select</option>
+                                    <option *ngFor="let data of productTypeList" value="{{data.code}}">
+                                        {{data.name}}  
+                                    </option>
+
+                                    </select>
+                                    <div *ngIf="submitted && f.productTypeCode.errors?.required"  class="validation-message" translate>{{'PRODUCT.pleaseenterproducttype'  | translate}} </div>
+
+                                </div>
+                  
+                            </div>
+                            <!-- operatorList && operatorList.length > 0 -->
+                           
+              
+                            
+                               
+                            <div class="form-group row">
+                                <div class="col-sm-6" *ngIf="valueshow;else minmax">
+
+                                    <label for="value" class="custom-label" >{{'PRODUCT.value'  | translate}}
+                                        <span class="required-field">*</span>
+                                        </label>
+
+                                    <input formControlName="value" type="number" class="form-control"  id="value">
+                                    <span *ngIf="submitted && f.value.errors" class="validation-message"> 
+                                       <div *ngIf="f.value.errors.required" translate>{{'PRODUCT.pleaseentervalue'  | translate}} </div>
+                                       <div *ngIf="f.value.errors.pattern" translate>{{'PRODUCT.pleaseenternumericvalue'  | translate}} </div> 
+                                    </span>
+                                </div>
+                                <ng-template #minmax>
+                                <div class="col-sm-3"  *ngIf="minmaxshow">
+                                    <label for="minValue" class="custom-label" translate>{{'PRODUCT.min_value'  | translate}}
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input formControlName="minValue" type="number"   class="form-control"
+                                        id="minValue">
+                                      <div *ngIf="  submitted && f.minValue.errors && f.minValue.errors.required" class="validation-message"  translate>{{'PRODUCT.pleaseenterminvalue'  | translate}} </div>  
+                                       <div *ngIf="f.minValue.errors?.pattern" class="validation-message"  translate>{{'PRODUCT.pleaseentervalidminvalue'  | translate}}</div>  
+                                   
+                                </div>
+                                <div class="col-sm-3"  *ngIf="minmaxshow">
+                                <label for="maxValue" class="custom-label" translate>{{'PRODUCT.max_value'  | translate}}
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input formControlName="maxValue" type="number"   class="form-control"
+                                    id="maxValue">
+                                    <div *ngIf="  submitted && f.maxValue.errors && f.maxValue.errors.required" class="validation-message"  translate>{{'PRODUCT.pleaseentermaxvalue'  | translate}} </div>
+                                    <div *ngIf="f.maxValue.errors?.pattern" class="validation-message"  translate>{{'PRODUCT.pleaseentervalidmaxvalue'  | translate}}</div>
+                                </div>
+                                </ng-template>
+                                <div class="col-sm-6">
+                                    <label for="description" class="custom-label" translate>{{'PRODUCT.description'  | translate}}
+                                        <!-- <span class="required-field">*</span> -->
+                                    </label>
+                                    <input formControlName="description" type="text"  class="form-control"
+                                        id="description">
+                                        
+                                    </div>
+        
+                            </div>
+                            <div *ngIf="editMode" class="form-group row">
+                                <div  class="col-sm-6">
+                                    <label for="status" class="custom-label" translate translate>{{'COMMON.status_label'  | translate}} </label>
+
+                                    <select formControlName="status" class="custom-select form-control" id="status">
+                                        <!-- <option value="{{status}}" selected>{{status}}</option> -->
+                                        <option value="Y">{{'PRODUCT.active'  | translate}}</option>
+                                        <option value="N">{{'PRODUCT.inactive'  | translate}}</option>
+                                    </select>
+                                </div>
+                             
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10 text-right">
+                                    <button type="button" (click)="onCancel()" class="btn btn-danger px-3">
+                                        <i class="fas fa-arrow-circle-left"></i> {{'COMMON.button.back'  | translate}}</button>&nbsp;
+                                    <button *ngIf="!editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-save"></i> {{'COMMON.button.save'  | translate}}</button>
+                                    <button *ngIf="editMode" (click)="onSubmit()" class="btn btn-primary px-3">
+                                        <i class="fas fa-refresh"></i> {{'COMMON.button.update'  | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

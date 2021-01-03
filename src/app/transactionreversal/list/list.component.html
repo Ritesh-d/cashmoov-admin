@@ -1,0 +1,179 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">{{ 'REVERSAL.heading' | translate }}</h1> </div>
+ 
+<div class="row"> 
+	<div class="col-xl-12 col-lg-12">
+		<div class="card shadow mb-4">
+			<div class="card-header">
+				<h6 class="m-0 font-weight-bold text-primary">{{ 'REVERSAL.heading' | translate }}</h6> </div>
+			<!-- Card Body -->
+			<div class="card-body" id="head_wrap">
+
+         <div *ngIf="errorMessage" class="alert alert-danger">   {{ errorMessage }}  </div>
+
+
+         <form    class="form1" [formGroup]="reversalForm" (ngSubmit)="reversalSubmit(reversalForm.value)" method="post"   >   
+                <div class="row mb-4"> 
+                   
+       <div class="form-group col"  [class.has-danger]="!reversalForm.get('transtype').valid && (reversalForm.get('transtype').dirty || reversalForm.get('transtype').touched)"> 
+     
+   <select class="custom-select" id="feature" formControlName="transtype"> 
+                            <option *ngFor="let transType of transTypes" [value]="transType.code"> {{ transType.name }} </option>
+                        </select>
+
+     
+
+   <div *ngFor="let validation of errorMessages.v">
+   <div class="form-control-feedback" *ngIf="reversalForm.get('transtype').hasError(validation.type) && (reversalForm.get('transtype').dirty || reversalForm.get('transtype').touched)">{{validation.message}}</div>
+ </div>  
+</div>              
+                  
+<div class="form-group col"  [class.has-danger]="!reversalForm.get('fromdate').valid && (reversalForm.get('fromdate').dirty || reversalForm.get('fromdate').touched)"> 
+   
+ <div role="wrapper"    class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+ <input type="text" class="form-control"   formControlName="fromdate"  placeholder="{{ 'MASTER.fromdate' | translate }}" ngbDatepicker #dob2="ngbDatepicker" readonly=""  [minDate]="minDate" [maxDate]="maxDate"  >
+ <span class="input-group-append" role="right-icon">
+ <button class="btn btn-outline-secondary ngbDatepicker border-left-0" type="button"(click)="dob2.toggle()">
+ <i class="fa fa-calendar-alt" > </i>  </button>
+  </span>   </div>   <div *ngFor="let validation of errorMessages.fromdate">
+   <div class="form-control-feedback" *ngIf="reversalForm.get('fromdate').hasError(validation.type) && (reversalForm.get('fromdate').dirty || reversalForm.get('fromdate').touched)">{{validation.message}}</div>
+ </div>  
+</div>
+
+ <div class="form-group col"  [class.has-danger]="!reversalForm.get('todate').valid && (reversalForm.get('todate').dirty || reversalForm.get('todate').touched)"> 
+   
+ <div role="wrapper"    class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+ <input type="text" class="form-control"   formControlName="todate"  placeholder="{{ 'MASTER.todate' | translate }}" ngbDatepicker #dob3="ngbDatepicker" readonly=""  [minDate]="minDate" [maxDate]="maxDate"  >
+ <span class="input-group-append" role="right-icon">
+ <button class="btn btn-outline-secondary ngbDatepicker border-left-0" type="button"(click)="dob3.toggle()">
+ <i class="fa fa-calendar-alt" > </i>  </button>
+  </span>   </div>   <div *ngFor="let validation of errorMessages.todate">
+   <div class="form-control-feedback" *ngIf="reversalForm.get('todate').hasError(validation.type) && (reversalForm.get('todate').dirty || reversalForm.get('todate').touched)">{{validation.message}}</div>
+ </div>  
+</div>
+
+<div class="form-group col"  [class.has-danger]="!reversalForm.get('transid').valid && (reversalForm.get('transid').dirty || reversalForm.get('transid').touched)"> 
+    <input type="text" class="form-control"   formControlName="transid"  placeholder="{{ 'REVERSAL.transactionId' | translate }}"   >
+     <div *ngFor="let validation of errorMessages.transid">
+   <div class="form-control-feedback" *ngIf="reversalForm.get('transid').hasError(validation.type) && (reversalForm.get('transid').dirty || reversalForm.get('transid').touched)">{{validation.message}}</div>
+ </div>  
+</div>
+
+   <div class="form-group col "   >             
+
+ <div class="search-placement">
+             <button type="submit" class="btn btn-primary">{{'APPROVAL.search' | translate }}</button>
+                    </div>
+            
+</div>
+
+                </div>
+
+</form>
+
+
+
+
+
+ <div *ngIf="successMessage" class="alert alert-success">  {{ successMessage }}  </div>
+
+<div *ngIf="loaderTableData">
+<div *ngIf="loaderData" class="spinner-aligning text-center p-5 bg-light  ">
+                    <div class="spinner-border" role="status"> <span class="sr-only">{{ 'MASTER.loading' | translate }}</span> </div>
+                </div>
+
+
+
+<div *ngIf="!loaderData"> 
+  <button *ngIf="dataTable.length>0" type="button" class="btn btn-primary   mb-3" [disabled]="btnSubmit" (click)="submitReversal()">{{ 'MASTER.submit' | translate }}</button>  
+
+                <div class="table-responsive   ">             
+                    <table  *ngIf="dataTable.length>0" class="display table table-striped table-bordered    mtable " datatable [dtOptions]="dtOptions"  >
+                      <thead> 
+
+                        <tr>
+                         <th   width="60" class="text-center"  ><span class="d-block"> {{ 'MASTER.selectAll' | translate }}</span> <span class="checkbox-custom f12"><input id="selectAll"  type="checkbox" (click)="selectAllCheckbox()" [(ngModel)]="selectAllBtnIndividual"   > <label for="selectAll" class="m-0"><span></span></label> </span> </th> 
+                
+                         <th> {{ 'REVERSAL.transactionId' | translate }}</th>                   
+                          <th> {{ 'REVERSAL.srcWalletOwnerName' | translate }}</th>                            
+                          <th> {{ 'REVERSAL.desWalletOwnerName' | translate }}</th>                            
+                          <th> {{ 'REVERSAL.transTypename' | translate }}</th>                            
+                                                     
+                          <th> {{ 'REVERSAL.amount' | translate }}</th>                            
+                          <th> {{ 'MASTER.creationDate' | translate }}</th>     
+                          <th  width="50"> {{ 'REVERSAL.feeReversal' | translate }} </th>                                                            
+                          <th> {{ 'MASTER.status' | translate }}</th>                                                         
+                          <th class="text-center"> {{ 'MASTER.action' | translate }}</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                       <tr *ngFor="let row of dataTable; index as i;">
+                     <td  class="text-center"> 
+                <div class="checkbox-custom" *ngIf="!row.transactionReversed"><input id="i{{row.code}}"  [(ngModel)]="row.checked"  [value]="row.code"  name="checkbox" type="checkbox" [disabled]="row.status!='Enrolled'"   > <label for="i{{row.code}}"></label> </div>
+                   </td>
+
+                   <td>{{row.transactionId}}   </td>
+
+                   <td>{{row.srcWalletOwnerName}}   </td>
+                             <td>{{row.desWalletOwnerName}}   </td> 
+                             <td>{{row.transTypeName}}   </td>
+                            
+                            
+                             <td>{{row.desCurrencySymbol}}   {{row.transactionAmount |  number : '1.2-3'}}   </td>
+                             
+                              <td> <span type="hidden" style="display: none;">{{row.creationDate | date: 'YYYYMMDD' }}</span>
+                                {{ row.creationDate  | date: 'dd/MM/yyyy hh:mm:SS'}}</td>  
+                                <td  class="text-center"> 
+                                  <div class="checkbox-custom" *ngIf="!row.transactionReversed"><input id="i{{row.code}}"  [(ngModel)]="row.feeReverse"  [value]="row.code"  name="checkbox" type="checkbox" [disabled]="row.status!='Enrolled'"   > <label for="i{{row.code}}"></label> </div>
+                                     </td>
+                                <td>{{row.status}}   </td>                
+                             <td class="text-center"> <a href="javascript:void(0);" class="  btn btn-primary btn-sm" (click)="openPopup(content,row)" ><i   class="fas fa-eye  "></i> </a>  </td>   
+                             
+                         </tr>
+                      </tbody>
+                       
+                    </table>
+                    <div class='msg_data_wrap' *ngIf="dataTable.length<1"><div class='msg_data'>{{ 'MASTER.noRecordFound' | translate }}</div></div>
+                    </div>
+</div>
+</div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss" >
+          <div class="modal-header">
+            <h4 class="modal-title"><strong>{{ 'MASTER.viewDetails' | translate }}</strong></h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <div class="modal-lg">    <div class="modal-body p-3" *ngIf="openPopupData"> 
+                   
+
+<div  class=" row" >
+  <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'REVERSAL.transactionId' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.transactionId}}"></div>
+ 
+ <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'REVERSAL.transTypename' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.transTypeName}}"></div>
+</div><div  class=" row mt-2" >
+ <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'REVERSAL.srcWalletOwnerName' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.srcWalletOwnerName}}"></div>
+
+  <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'REVERSAL.desWalletOwnerName' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.desWalletOwnerName}}"></div>
+</div><div  class=" row mt-2 mb-4" >
+
+   <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'REVERSAL.amount' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.desCurrencySymbol}} {{openPopupData.transactionAmount |  number : '1.2-3'}}"></div>
+   <div  class="col-sm-6"><label  class="custom-label" for="code" translate="">{{ 'MASTER.creationDate' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{ openPopupData.creationDate  | date: 'dd/MM/yyyy hh:mm:SS'}}"></div>
+</div>
+ 
+
+  
+
+
+                  
+   </div></div>           
+        </ng-template>

@@ -1,0 +1,20 @@
+
+::ng-deep .page-titles {
+    margin-bottom: 5px;
+    padding: 0p
+  }
+  .table thead th, .table th {
+    font-weight: bold;
+  }
+.spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+.custom-hyperlink{
+  cursor: pointer;
+}
+.custom-label{
+  margin-bottom: auto;
+  font-style: italic;
+}
+

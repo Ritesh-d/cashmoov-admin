@@ -1,0 +1,58 @@
+
+<div *ngIf="!walletOperation" class="spinner-aligning">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">{{'APPROVAL.loading' | translate }}</span>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="walletOperation">
+    <div class="form-group row">
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.trustaccount' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data" [value]="walletOperation.srcWalletOwnerName" disabled>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.institution' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data"   [value]="walletOperation.desWalletOwnerName" disabled>
+        </div>
+    </div>
+  
+   <div class="form-group row">
+         
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.sendingcurrency' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data"   value="{{walletOperation.srcCurrencyName}} " disabled>
+        </div>
+
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.receivercurrency' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data"   value="{{walletOperation.desCurrencyName}}  " disabled>
+        </div>
+
+
+    </div>
+<div class="form-group row">
+         
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.amount' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data"  value="{{walletOperation.srcCurrencySymbol}} {{walletOperation.value}}" disabled>
+        </div>
+
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate> {{'APPROVAL.amountpaid' | translate }} </label>
+            <input  type="text" class="form-control unchanged-data"   value="{{walletOperation.desCurrencySymbol}} {{walletOperation.finalAmount}}" disabled>
+        </div>
+
+
+    </div>
+    <div class="form-group row">
+       <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label" translate>{{'APPROVAL.status' | translate }}</label>
+            <input *ngIf="this.unchanged.status" type="text" class="form-control unchanged-data" id="status"
+                [value]="walletOperation.status" disabled>
+            <span *ngIf="!this.unchanged.status" [ngbTooltip]="'earlier it was: '+ walletOperation.status">
+                <input type="text" class="form-control " id="status" [value]="statusName" disabled>
+            </span>
+        </div>
+    </div>
+ </div>

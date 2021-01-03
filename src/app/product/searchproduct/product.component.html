@@ -1,0 +1,143 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    <h1 class="h3 mb-0 text-gray-800">{{'PRODUCT.productTitle'  | translate}}</h1>
+    <a *ngIf= "setPermission.create" [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'PRODUCT.addProduct'  | translate}}</a>
+</div>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <h6 class="m-0 font-weight-bold text-primary">{{'PRODUCT.searchScreenTitle'  | translate}}</h6>
+                <!-- <span><i (click)="advanceSearchOption($event)" placement="bottom" ngbTooltip="Advance search"
+                    class="fa fa-plus-circle toggle-i" aria-hidden="true"></i>
+                    {{'COMMON.option.advancesearch'  | translate}}</span> -->
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <!-- <form id="advSearchOpt" style="display:none" [formGroup]="searchForm">
+                    <div class="row mb-4">
+                      
+                      
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="sending_currency" class="form-control custom-select" id="sending_currency">
+                                    <option value="-1" translate>{{'PRODUCT.code_label'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of currencies" value="{{data.code}}">{{data.currencyCode}} - {{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="receiving_currency" class="form-control custom-select" id="receiving_currency">
+                                    <option value="-1" translate>{{'PRODUCT.name_label'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of currencies" value="{{data.code}}">{{data.currencyCode}} - {{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="sending_country" class="form-control custom-select" id="sending_country">
+                                    <option value="-1" translate>{{'PRODUCT.serviceCategory'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="receiving_country" class="form-control custom-select" id="receiving_country">
+                                    <option value="-1" translate>{{'PRODUCT.operatorName'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <div>
+                      
+                    </div>
+                    <div class="row mb-4">
+                     
+                        <div class="col-lg-3">
+                            <input formControlName="name" type="text" autocomplete="off" class="form-control"
+                                id="name" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <button type="button" (click)="searchData()"
+                                class="btn btn-primary">{{'COMMON.button.search'  | translate}}</button>
+                        </div>
+                    </div>
+                </form> -->
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">{{'PRODUCT.loading'  | translate}}</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                        cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- <th>Code</th> -->
+                                <!-- <th>Code</th> -->
+                                <th>{{'PRODUCT.name_label'  | translate}}</th>
+                                <th>{{'PRODUCT.serviceCategory'  | translate}}</th>
+                                <th>{{'PRODUCT.operator'  | translate}}</th>
+                                <th>{{'PRODUCT.productType'  | translate}}</th>
+                   
+                                 <th>{{'COMMON.status_label'  | translate}}</th>
+                                <th>{{'COMMON.state_label'  | translate}}</th>
+                                <th>{{'PRODUCT.creationDate'  | translate}}</th>
+                                
+                                <th>{{'COMMON.action_label'  | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let data of datagrid">
+                                <!-- <td>{{data.code}}</td> -->
+                                <td>{{data.name}}</td>
+                                <td> {{data.serviceCategoryName}}  </td>
+                                <td> {{data.operatorName}} </td>
+                                <td> {{data.productTypeName}}</td>
+                                
+                                <td>{{data.status}}</td>
+                                <td>{{data.state}}</td>
+                                <!-- <td>{{data.creationDate}}</td> -->
+                                <td> <span type="hidden" style="display: none;">{{data.creationDate | date: 'YYYYMMDD' }}</span>{{ data.creationDate  | date: 'dd/MM/yyyy hh:mm:SS a'}}</td> 
+
+                                <td> 
+                                    <a *ngIf= "setPermission.view" (click)="viewUser(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{'MASTER.view' | translate}}"><i
+                                            class="fas fa-eye text-primary"></i></a>&nbsp;
+                
+                                    <a   *ngIf="data.state == 'Approved' &&  setPermission.edit" (click)="editUser(data)"  style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{'MASTER.edit' | translate}}"><i
+                                            class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                    <!-- <a   *ngIf="data.state == 'Approved'" (click)="deleteUser(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Delete"><i
+                                            class="fas fa-trash-alt text-danger"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                      <!-- <pagination-controls  (pageChange)="pageChange($event)"></pagination-controls> -->
+                </div>
+                               
+
+            </div>
+        </div>
+    </div>
+</div>

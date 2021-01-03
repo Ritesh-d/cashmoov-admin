@@ -1,0 +1,237 @@
+<!-- Card Body -->
+
+<div class="col-lg-12">
+    <form *ngIf="bankDetailsForm" [formGroup]="bankDetailsForm">
+        <div *ngFor="let formElem of bankDetailsFormFields; let i = index;">
+            <div [ngSwitch]="formElem.fieldType">
+                <!-- TextBox for all -->
+                <!-- <div *ngIf="formElem.kycInstituteType === ''">
+                    <div *ngSwitchCase="input_text">
+                        <div class="form-group row mt-5">
+                            <label for="formElem.fieldType"
+                                class="col-sm-4 col-form-label text-right">{{ formElem.kycMetaDataFieldName }}
+                                <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                    [name]="formElem.kycMetaDataField"
+                                    formControlName="{{ formElem.kycMetaDataField }}">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- RadioButton -->
+                <!-- <div *ngSwitchCase="input_radio">
+                    <div *ngIf="formElem.kycMetaDataField === settlement_account">
+                        <div class="form-group row">
+                            <label for="formElem.fieldType"
+                                class="col-sm-4 col-form-label text-right">{{ formElem.kycMetaDataFieldName }}
+                                <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                            </label>
+                            <div class="col-sm-6">
+                                <span *ngFor="let settOption of settlementOptions; let i = index"
+                                    class="form-check-radio" [ngClass]="{'radio-margin-left': i !== 0}">
+                                    <input type="hidden" formControlName="{{ formElem.kycMetaDataField }}">
+                                    <input class="form-check-input" type="radio" name="accountSettlement"
+                                        [value]="settOption.code" [id]="settOption.code" [(ngModel)]="accountOption"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (click)="settlementOption(settOption.code)">
+                                    <label class="form-check-label"
+                                        [for]="settOption.code">{{ settOption.type }}</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- bank section  -->
+                <section *ngIf="accountOption === bankDetailsBankCode">
+                    <div *ngIf="formElem.kycInstituteType === _bank">
+                        <!-- bank DropDown -->
+                        <div *ngSwitchCase="input_select">
+                            <div *ngIf="formElem.kycMetaDataField === fin_institution">
+                                <div class="form-group row">
+                                    <label for="formElem.fieldType"
+                                        class="col-sm-4 col-form-label">{{ formElem.kycMetaDataFieldName }}
+                                        <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select [id]="formElem.kycMetaDataField"  required [name]="formElem.kycMetaDataField"
+                                            formControlName="{{ formElem.kycMetaDataField }}" class="custom-select">
+                                            <option *ngFor="let bankName of bankNames" [value]="bankName.code">
+                                                {{ bankName.type }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}}  </div>     
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="formElem.kycMetaDataField === account_type">
+                                <div class="form-group row">
+                                    <label for="formElem.fieldType"
+                                        class="col-sm-4 col-form-label">{{ formElem.kycMetaDataFieldName }}
+                                        <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select [id]="formElem.kycMetaDataField" required [name]="formElem.kycMetaDataField"
+                                            formControlName="{{ formElem.kycMetaDataField }}" class="custom-select">
+                                            
+                                            <option *ngFor="let accountType of accountTypes" [value]="accountType.code">
+                                                {{ accountType.type }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}}  </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- bank TextBox -->
+                        <div *ngSwitchCase="input_text">
+                            <div class="form-group row">
+                                <label for="formElem.fieldType"
+                                    class="col-sm-4 col-form-label">{{ formElem.kycMetaDataFieldName }}
+                                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                     <!-- accountName-->
+                                     <div *ngIf="formElem.kycMetaDataField=='accountName'">
+                                        <input type="text" required class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField" minlength="3"  pattern="^[a-zA-Z-àâçéèêëîïôûùüÿñæœ\/\',]+(\s{0,1}[a-zA-Z-àâçéèêëîïôûùüÿñæœ\/\', ])*$" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                        <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                      <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.pattern;else accountNametemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyAlphabets' |  translate}} </div>
+                                        <ng-template #accountNametemp>
+                                            <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                        </ng-template>
+                                        
+                                    </div>
+                                    <!-- routing No.-->
+                                    <div *ngIf="formElem.kycMetaDataField=='routingNo'">
+                                        <input type="text" required class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField" minlength="3" maxlength="30"  pattern="^[a-zA-Z0-9-àâçéèêëîïôûùüÿñæœ\/\',]+(\s{0,1}[a-zA-Z-àâçéèêëîïôûùüÿñæœ\/\', ])*$" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                      <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                      <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.pattern;else routingNotemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div>
+                                      <ng-template #routingNotemp>
+                                          <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                      </ng-template>
+                                    </div>
+
+                                     <!-- accountNumber-->
+                                  <!--     <div *ngIf="formElem.kycMetaDataField=='accountNumber'">
+                                        <input type="password"  class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField" minlength="3"  pattern="^[0-9]*[1-9][0-9]*$" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                        formControlName="{{ formElem.kycMetaDataField }}" required>
+                                     
+                                    </div>
+                                    -->
+                                <!-- confirmAccountNumber-->
+                                <div *ngIf="formElem.kycMetaDataField=='confirmAccountNumber'">
+                                     <input type="text" required class="form-control" [id]="formElem.kycMetaDataField"
+                                     [name]="formElem.kycMetaDataField" minlength="18" maxlength="30" pattern="^[0-9]*[1-9][0-9]*$" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                     formControlName="{{ formElem.kycMetaDataField }}">
+                                    <div *ngIf=" bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                    <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.pattern;else confirmAccountNumbertemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumber' |  translate}} </div>
+                                    <ng-template #confirmAccountNumbertemp>
+                                        <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.bankerr.msg' | translate}} </div>
+                                    </ng-template>
+                                </div>
+
+                                   <!-- branchName-->
+                                 <div *ngIf="formElem.kycMetaDataField=='branchName'">
+                                        <input type="text" required class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField" minlength="3"  pattern="^[a-zA-Z0-9-àâçéèêëîïôûùüÿñæœ\/\',]+(\s{0,1}[a-zA-Z0-9-àâçéèêëîïôûùüÿñæœ\/\', ])*$" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                       <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                       <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.pattern;else branchNametemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div>
+                                       <ng-template #branchNametemp>
+                                           <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                       </ng-template>
+                                    </div>
+
+                                    <div *ngIf=" formElem.kycMetaDataField!='branchName' && formElem.kycMetaDataField!='confirmAccountNumber' && formElem.kycMetaDataField!='accountNumber'&& formElem.kycMetaDataField !='accountName' && formElem.kycMetaDataField!='routingNo'">
+
+                                       <input type="text" required class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField" onselectstart="return false" onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete="off"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+
+                                     </div>    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- bank Password -->
+                        <div *ngSwitchCase="input_password">
+                            <div class="form-group row">
+                                <label for="formElem.fieldType"
+                                    class="col-sm-4 col-form-label">{{ formElem.kycMetaDataFieldName }}
+                                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" maxlength="30" minlength="18" required [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField"
+                                        formControlName="{{ formElem.kycMetaDataField }}" >
+                                        <div *ngIf="bankFormSubmitted  && bankDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                     <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.pattern;else accountNumbertemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumber' |  translate}} </div>
+                                     <ng-template #accountNumbertemp>
+                                         <div *ngIf=" bankDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.bankerr.msg' | translate}} </div>
+                                     </ng-template>
+                                </div>
+                                <!-- <span class="validation-message">
+                                    <div *ngIf="formElem.kycMetaDataField == 'accountNumber'
+                                     && bankDetailsForm.controls.accountNumber.errors?.pattern"
+                                       translate>
+                                       Account number should be numeric
+                                    </div>
+                                </span>
+                                <span class="validation-message">
+                                    <div *ngIf="formElem.kycMetaDataField == 'confirmAccountNumber'
+                                     && bankDetailsForm.controls.confirmAccountNumber.errors?.pattern"
+                                       translate>
+                                       Account number should be numeric
+                                    </div>
+                                </span> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- MMO section  -->
+                <section *ngIf="accountOption === bankDetailsMMOCode">
+                    <div *ngIf="formElem.kycInstituteType === _mmo">
+                        <!-- MMO DropDown -->
+                        <!-- <div *ngSwitchCase="input_select">
+                            <div *ngIf="formElem.kycMetaDataField === mobile_subscriber">
+                                <div class="form-group row">
+                                    <label for="formElem.fieldType"
+                                        class="col-sm-4 col-form-label text-right">{{ formElem.kycMetaDataFieldName }}
+                                        <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                            formControlName="{{ formElem.kycMetaDataField }}" class="custom-select">
+                                            <option *ngFor="let subsriber of mobileOperators" [value]="subsriber.code">
+                                                {{ subsriber.type }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- MMO TextBox -->
+                        <!-- <div *ngSwitchCase="input_text">
+                            <div class="form-group row">
+                                <label for="formElem.fieldType"
+                                    class="col-sm-4 col-form-label text-right">{{ formElem.kycMetaDataFieldName }}
+                                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                        [name]="formElem.kycMetaDataField"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
+</div>

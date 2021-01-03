@@ -1,0 +1,137 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">  {{'WALLET.viewCurrency' | translate }} </h6>
+</div>
+
+<div class="modal-body">
+
+    <div *ngIf="fetchingData" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">{{'WALLET.loading' | translate }} </span>
+        </div>
+    </div>
+    <div id="errmsg">
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+</div>
+    <div *ngIf="!fetchingData && !errorMessage && country">
+        <!-- country / code -->
+        <div class="form-group row">
+            <!-- country -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">  {{'WALLET.country' | translate }} </label>
+                <input type="text" class="form-control" [value]="country.name" disabled>
+            </div>
+            <!-- code -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">  {{'WALLET.code' | translate }} </label>
+                <input type="text" class="form-control" [value]="country.isoCode" disabled>
+            </div>
+        </div>
+        <!-- currencyCode / currencySymbol -->
+        <div class="form-group row">
+            <!-- currencyCode -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'WALLET.basecurrency' | translate }} </label>
+                <input type="text" class="form-control" [value]="country.currencyCode" disabled>
+            </div>
+            <!-- currencySymbol -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label"> {{'WALLET.currencysymbol' | translate }} </label>
+                <input type="text" class="form-control" [value]="country.currencySymbol" disabled>
+            </div>
+        </div>
+        <hr>
+        <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+        <!-- currency form -->
+        <form [formGroup]="currencyForm" *ngIf="!errorMsg" >
+            <div formArrayName="countryCurrency">
+                <div class="form-group row">
+                    <div class="col-sm-3 header">{{'WALLET.currency' | translate }} </div>
+                    <div class="col-sm-2 text-center header">{{'WALLET.sendingCurrency' | translate }} </div>
+                    <div class="col-sm-2 text-center header"> {{'WALLET.receivingCurrency' | translate }} </div>
+                    <div class="col-sm-2 text-center header"> {{'WALLET.inboundCurrency' | translate }} </div>
+                    <div class="col-sm-2 text-center header">{{'WALLET.outboundCurrency' | translate }} </div>
+                    <!-- <div class="col-sm-2 text-center header">Remove</div> -->
+                </div>
+                <div class="form-group row" *ngFor="let currency of getCurrencyControl; let i = index"
+                    [formGroupName]="i">
+                    <input type="hidden" formControlName="code"   >
+                    <div class="col-sm-3">
+                  
+                   
+                        <select class="custom-control  custom-select unchanged-data" formControlName="currency"   disabled>
+                            <option *ngFor="let curency of currencies" [value]="curency.code">
+                                {{ curency.currencyCode }} - {{ curency.symbol }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <div class="custom-control custom-switch" >
+                           
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_send"
+                            formControlName="sendingCurrency" disabled >
+                            <label class="custom-control-label" for="{{i}}_send"></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <div class="custom-control custom-switch">
+                             
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_rece"
+                            formControlName="receivingCurrency" disabled>
+                            <label class="custom-control-label" for="{{i}}_rece"></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <!-- <div class="custom-control custom-switch" >
+                      
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_in"
+                            formControlName="inbound"    >
+                            <label class="custom-control-label" for="{{i}}_in"></label>
+                        </div> -->
+                        <input type="checkbox"   formControlName="inbound" id="{{i}}_in">
+                        <label  for="{{i}}_in"> </label>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <!-- <div class="custom-control custom-switch" >
+            
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_out"
+                            formControlName="outbound"      >
+                            <label class="custom-control-label" for="{{i}}_out"></label>
+                        </div> -->
+                        <input type="checkbox"   formControlName="outbound" id="{{i}}_out">
+                        <label  for="{{i}}_out"> </label>
+                    </div>
+                  
+                   
+                    <!-- <div class="col-sm-2 text-center">
+                        <input type="checkbox" [disabled]="false" formControlName="sendingCurrency" >
+                        <label> </label>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <input type="checkbox" [disabled]="false" formControlName="receivingCurrency" >
+                        <label> </label>
+                    </div> -->
+                    <!-- <div class="col-sm-2 text-center">
+                       
+                        <span class="custom-hyperlink">
+                            <a class="custom-hyperlink" title="delete" (click)="onRemoveCurrency(i)">
+                                <i class="fas fa-trash-alt text-danger"></i></a></span>
+                    </div> -->
+                </div>
+            </div>
+        </form>
+        <!-- Add currency button -->
+        <!-- <div class="text-right full-width steps-bottom-button-alligned color-white">
+            <a (click)="onAddCurrency()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-plus-circle"></i> Add Currency</a>
+        </div> -->
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button *ngIf="!fetchingData && !errorMessage && country" (click)="submitCurrency()" class="btn btn-primary px-3">
+        <i class="fas fa-save"></i> {{'WALLET.save' | translate }} </button>
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3">
+        <i class="fas fa fa-times"></i> {{'WALLET.close' | translate }} </button>
+</div>

@@ -1,0 +1,204 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    <h1 class="h3 mb-0 text-gray-800">{{'EXCHANGERATE.Title'  | translate}}</h1>
+    <a *ngIf="setPermission.create" [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'EXCHANGERATE.addButtonName'  | translate}}</a>
+</div>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <h6 class="m-0 font-weight-bold text-primary">{{'EXCHANGERATE.searchScreenTitle'  | translate}}</h6>
+                <span><i (click)="advanceSearchOption($event)" placement="bottom" ngbTooltip="{{'MASTER.advanceSearch' | translate}}"
+                    class="fa fa-plus-circle toggle-i" aria-hidden="true"></i>
+                    {{'COMMON.option.advancesearch'  | translate}}</span>
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <form id="advSearchOpt" style="display:none" [formGroup]="searchForm">
+                    <div class="row mb-4">
+                        <!-- <div class="col-lg-3">
+                            <input formControlName="code" type="text" autocomplete="off" class="form-control" id="code"
+                                placeholder="code">
+                        </div> -->
+                      
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="sending_currency" class="form-control custom-select" id="sending_currency">
+                                    <option value="-1" translate>{{'EXCHANGERATE.sending_currency'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of currencies" value="{{data.code}}">{{data.currencyCode}} - {{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="receiving_currency" class="form-control custom-select" id="receiving_currency">
+                                    <option value="-1" translate>{{'EXCHANGERATE.receiving_currency'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of currencies" value="{{data.code}}">{{data.currencyCode}} - {{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="sending_country" class="form-control custom-select" id="sending_country">
+                                    <option value="-1" translate>{{'EXCHANGERATE.sending_country'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="receiving_country" class="form-control custom-select" id="receiving_country">
+                                    <option value="-1" translate>{{'EXCHANGERATE.receiving_country'  | translate}}
+                                    </option>
+                                    <option *ngFor="let data of countries" value="{{data.code}}">{{data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <div>
+                        <!-- <div class="row mb-4"> -->
+                            
+                            <!-- <div class="col-lg-3">
+                                <div role="wrapper" class=" input-group">
+                                    <select formControlName="remit_agent" class="form-control custom-select" id="remit_agent">
+                                        <option value="-1" translate>Sending Agent
+                                        </option>
+                                        <option *ngFor="let data of agents" value="{{data.code}}">{{data.ownerName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-lg-3">
+                                <div role="wrapper" class=" input-group">
+                                    <select formControlName="paying_agent" class="form-control custom-select" id="paying_agent">
+                                        <option value="-1" translate>Receiving Agent
+                                        </option>
+                                        <option *ngFor="let data of agents" value="{{data.code}}">{{data.ownerName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-lg-3">
+                                <div role="wrapper" class=" input-group">
+                                    <select formControlName="remit_branch" class="form-control custom-select" id="remit_branch">
+                                        <option value="-1" translate>Sending Branch
+                                        </option>
+                                        <option *ngFor="let data of sendingbranch" value="{{data.code}}">
+                                            {{data.ownerName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-lg-3">
+                                <div role="wrapper" class=" input-group">
+                                    <select placeholder="Receiving Branch" formControlName="paying_branch" class="form-control custom-select" id="paying_branch">
+                                        <option value="-1" translate>Receiving Branch
+                                        </option>
+                                        <option *ngFor="let data of sendingbranch" value="{{data.code}}">
+                                            {{data.ownerName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div> -->
+                          
+                        <!-- </div> -->
+                    </div>
+                    <div class="row mb-4">
+                        
+                        <!-- <div class="col-lg-3">
+                            <input formControlName="exchange_rate" type="text" autocomplete="off" class="form-control"
+                                id="exchange_rate" placeholder="Conversion Rate">
+                        </div> -->
+                        <div class="col-lg-3">
+                            <input formControlName="name" type="text" autocomplete="off" class="form-control"
+                                id="name" placeholder="{{'EXCHANGERATE.name_label'  | translate}}">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <button type="button" (click)="searchData()"
+                                class="btn btn-primary">{{'COMMON.button.search'  | translate}}</button>
+                        </div>
+                    </div>
+                </form>
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%"
+                        cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- <th>Code</th> -->
+                                <!-- <th>Code</th> -->
+                                <th>{{'EXCHANGERATE.name_label'  | translate}}</th>
+                                <th>{{'EXCHANGERATE.sending_currency'  | translate}}</th>
+                                <th>{{'EXCHANGERATE.receiving_currency'  | translate}}</th>
+                                <th>{{'EXCHANGERATE.sending_country'  | translate}}</th>
+                                <th>{{'EXCHANGERATE.receiving_country'  | translate}}</th>
+                                <!-- <th>Sending Agent</th>
+                                <th>Receiving Agent</th>
+                                <th>Sending Branch</th>
+                                <th>Receiving Branch</th> -->
+                                <th>{{'EXCHANGERATE.conversionrate_label'  | translate}}</th>
+                                <th>{{'COMMON.status_label'  | translate}}</th>
+                                <th>{{'COMMON.state_label'  | translate}}</th>
+                                <th>{{'COMMON.action_label'  | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let data of datagrid">
+                                <!-- <td>{{data.code}}</td> -->
+                                <td>{{data.name}}</td>
+                                <td> {{data.sendCurrencyName}}  </td>
+                                <td> {{data.receiveCurrencyName}} </td>
+                                <td> {{data.sendCountryName}}</td>
+                                <td> {{data.receiveCountryName}}</td>
+                                <!-- <td *ngIf="data.remitAgentName">{{data.remitAgentName}}</td>  
+                                <td *ngIf="!data.remitAgentName">Any</td>
+                                <td *ngIf="data.payAgentName">{{data.payAgentName}}</td>
+                                <td *ngIf="!data.payAgentName">Any</td>
+                                <td *ngIf="data.remitBranchName">{{data.remitBranchName}}</td>
+                                <td *ngIf="!data.remitBranchName">Any</td>
+                                <td *ngIf="data.payBranchName">{{data.payBranchName}}</td>
+                                <td *ngIf="!data.payBranchName">Any</td> -->
+                                <td>{{data.value}}</td>
+                                <td>{{data.status}}</td>
+                                <td>{{data.state}}</td>
+                                <td> 
+                                    <a *ngIf="setPermission.view" (click)="viewUser(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{'MASTER.view' | translate}}"><i
+                                            class="fas fa-eye text-primary"></i></a>&nbsp;
+                
+                                    <a   *ngIf="data.state == 'Approved' &&  setPermission.edit" (click)="editUser(data)"  style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{'MASTER.edit' | translate}}"><i
+                                            class="fas fa-edit text-secondary"></i></a>&nbsp;
+                                    <!-- <a   *ngIf="data.state == 'Approved' &&  setPermission.delete" (click)="deleteUser(data)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="Delete"><i
+                                            class="fas fa-trash-alt text-danger"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                      <!-- <pagination-controls  (pageChange)="pageChange($event)"></pagination-controls> -->
+                </div>
+                               
+
+            </div>
+        </div>
+    </div>
+</div>

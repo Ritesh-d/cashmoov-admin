@@ -1,0 +1,259 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.transactionLimitTemplate' | translate}}</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body padding-custom">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div *ngIf="errorMessges" class="alert alert-danger">{{ errorMessges }}</div>
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <!-- templateName -->
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="tempname" class="custom-label" translate>{{'TEMPLATE.templateName' | translate}}
+                            </label>
+                            <input type='text' value="{{tempname}}" class="form-control" readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.templateCategory' | translate}}
+                            </label>
+
+
+                            <input type='text' value="{{templateCategoryName}}" class="form-control" readonly>
+                        </div>
+                        <!-- <div class="col-sm-4">
+                            <label for="walletOwnerCategoryName" class="custom-label" translate>Wallet Owner Category
+                            </label>
+
+
+                            <input type='text' value="{{walletOwnerCategoryName}}" class="form-control" readonly>
+                        </div> -->
+
+                    </div>
+
+                    <!-- <div *ngIf="display != 'none'"> -->
+                    <!-- <hr> -->
+                    <!-- <form [formGroup]="serviceTemplateForm" >
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="serviceCode" class="custom-label" translate>Service
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceCode" class="custom-select form-control"
+                                    (change)="onChangeService($event)">
+                                    <option value='' selected>Select </option>
+                                    <option *ngFor="let eWalletService of eWalletServiceList "
+                                        value="{{eWalletService.code}}">
+                                        {{eWalletService.name}}</option>
+                                </select>
+                                <span *ngIf="submitted && f.serviceCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceCode.errors.required" translate>please select service
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="serviceCategoryCode" class="custom-label" translate>Service Category
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceCategoryCode" class="custom-select form-control"
+                                    (change)="onChangeServiceCategory($event)">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let serviceCategory of serviceCategoryList "
+                                        value="{{serviceCategory.code}}">
+                                        {{serviceCategory.name}}</option>
+                                </select>
+                                <span *ngIf="submitted && f.serviceCategoryCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceCategoryCode.errors.required" translate>please select service
+                                        category
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                         
+                            <div class="col-sm-6">
+                                <label for="serviceProviderCode" class="custom-label" translate>Service Provider
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="serviceProviderCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let serviceProvider of serviceProviderList "
+                                        value="{{serviceProvider.code}}">
+                                        {{serviceProvider.name}}</option>
+                                 </select>
+                                <span *ngIf="submitted && f.serviceProviderCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceProviderCode.errors.required" translate>please select service
+                                        provider
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="channelTypeCode" class="custom-label" translate>Channel Type
+                                   </label>
+                                <select formControlName="channelTypeCode" class="custom-select form-control">
+                                    <option *ngFor="let channelType of channelTypeList " value="{{channelType.code}}"
+                                        selected>
+                                        {{channelType.type}}</option>
+                                   
+                                </select>
+
+                           
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="taxTypeCode" class="custom-label" translate>Tax Type 
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="taxTypeCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let type of taxTypeList " value="{{type.code}}">
+                                        {{type.typeEn}}</option>
+                             
+                                </select>
+                                <span *ngIf="submitted && f.taxTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f.taxTypeCode.errors.required" translate>please select tax type
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                      
+                        <div  style= "display:none" id= "addslab">
+                            <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label for="minValue" class="custom-label" translate>Minimum Value
+                                    </label>
+                                <input formControlName="minValue" type="text" class="form-control">
+                            
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="maxValue" class="custom-label" translate>Maximum Value
+                                  </label>
+                                <input formControlName="maxValue" type="text" class="form-control">
+                           
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            
+                            <div class="col-sm-6">
+                                <label for="channel_type" class="custom-label" translate>Calculation Type 
+                                    <span class="required-field">*</span></label>
+                                <select formControlName="calculationTypeCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let type of calculationTypeList " value="{{type.code}}">
+                                        {{type.type}}</option>
+                             
+                                </select>
+                                <span *ngIf="submitted && f.calculationTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f.calculationTypeCode.errors.required" translate>please select calculation type
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="fixedFeeValue" class="custom-label" translate>Fixed Fee Value
+                                    </label>
+                                <input formControlName="fixedFeeValue" type="text" class="form-control">
+                            
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="percentFeeValue" class="custom-label" translate>Percent Fee Value  
+                                  </label>
+                                <input formControlName="percentFeeValue" type="text" class="form-control">
+                           
+                            </div>
+                        </div>
+                    </div>
+                    </form> -->
+
+
+                    <div class="col-sm-12 text-right">
+                        <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                                class="fas fa-arrow-circle-left"></i>
+                                {{'TEMPLATE.template.back' | translate}}</button>&nbsp;
+                        <!-- <button  (click)="createTemplate()" type="button" class="btn btn-primary px-3">
+                            <i class="fas fa-plus-circle"></i> Create Fee</button>&nbsp;
+
+                            <button  *ngIf="serviceTemplateList " (click)="SaveTemplate()" class="btn btn-primary px-3">
+                                <i class="fas fas-save"></i> Save</button>  -->
+
+
+                    </div>
+                    <!-- </div> -->
+                    <div *ngIf="!displaytable" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- <div *ngIf="display == 'none'" class="col-sm-12 text-right">
+                <button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i
+                        class="fas fa-arrow-circle-left"></i>
+                    Back</button>
+            </div> -->
+            <br>
+            <div class="table-responsive">
+                <table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption"
+                    width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <!-- <th> Code </th> -->
+                            <!-- <th> Template Name </th> -->
+
+                            <th> {{'TEMPLATE.service' | translate}} </th>
+                            <th> {{'TEMPLATE.serviceCategory' | translate}}</th>
+                            <!-- <th> Service Provider </th> -->
+                            <!-- <th> Channel Type</th> -->
+                            <!-- <th> Tax Type</th> -->
+
+                            <th> {{'TEMPLATE.template.status' | translate}}</th>
+                            <!-- <th> State</th>   -->
+
+                            <th> {{'TEMPLATE.template.action' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serviceTemplate of serviceTemplateList">
+                            <!-- <td>{{serviceTemplate.code}}</td> -->
+                            <!-- <td>{{serviceTemplate.templateName}}</td> -->
+
+                            <td>{{serviceTemplate.serviceName}} </td>
+                            <td>{{serviceTemplate.name}}</td>
+                            <!-- <td>{{serviceTemplate.serviceProviderName}} </td> -->
+                            <!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+                            <!-- <td>{{serviceTemplate.taxTypeName}} </td> -->
+
+                            <td>{{serviceTemplate.status}} </td>
+                            <!-- <td>{{serviceTemplate.state}} </td>  -->
+
+                            <td>
+                                <a *ngIf="display != 'none'" style="cursor:pointer" placement="bottom" (click)="viewFee(serviceTemplate)"
+                                    ngbTooltip="{{'TEMPLATE.configure' | translate}}  "><i   class="fas fa-cog text-primary"></i>  </a>
+                                <a *ngIf="display == 'none'" style="cursor:pointer" placement="bottom" (click)="viewFee(serviceTemplate)"
+                                    ngbTooltip="{{'MASTER.view' | translate}} "><i class="fas fa-eye text-primary"></i>  </a>
+                                <!-- <a style="cursor:pointer" placement="bottom"  (click)="viewForm(serviceTemplate)"
+                                ngbTooltip="View"><i class="fas fa-eye text-primary"></i></a>&nbsp; -->
+                                <!-- <a   *ngIf="display != 'none' && serviceTemplate.state == 'Approved'"  (click)="editForm(serviceTemplate)"  style="cursor:pointer" placement="bottom"
+                                ngbTooltip="Edit"><i class="fas fa-edit text-secondary"></i></a> -->
+
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>

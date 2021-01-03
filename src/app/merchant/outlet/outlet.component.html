@@ -1,0 +1,114 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'OUTLET.header' | translate }}</h1>
+ 
+   
+        <div>
+        
+        <a  *ngIf="setPermission.create" (click)="navigateToAdd('Outlet')"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle"></i> {{'OUTLET.add.outlet' | translate }}</a>
+        </div>
+</div>
+ 
+
+<!-- Content Row -->
+<div class="row">
+    <!-- main area -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+             
+                <h6   class="m-0 font-weight-bold text-primary">{{'OUTLET.header' | translate }}</h6> 
+
+                <!-- <span class="custom-hyperlink" (click)="advanceSearchOption($event)">
+                    <i placement="bottom" ngbTooltip="Advance Search" class="fa fa-plus-circle toggle-i"
+                        aria-hidden="true"></i>{{'MERCHANT.advsearch' | translate }}</span> -->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <!-- advance search form -->
+                <!-- <form id="advSearchOpt" style="display:none" [formGroup]="walletOwnerSearchForm">
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <input formControlName="code" type="text" autocomplete="off" class="form-control"
+                                placeholder="code">
+                        </div>
+                        <div class="col-lg-4">
+                            <input formControlName="name" type="text" autocomplete="off" class="form-control"
+                                placeholder="name">
+                        </div>
+                        <div class="col-lg-4">
+                            <input formControlName="mobileNumber" type="text" autocomplete="off" class="form-control"
+                                placeholder="mobile number">
+                        </div>
+                  
+                    </div>
+                    <div class="row mb-4">
+                       
+                        <div class="col-lg-3">
+                            <button type="button" (click)="searchData()" class="btn btn-primary"><i
+                                    class="fas fa-search"></i>{{'MERCHANT.search' | translate }} </button>
+                        </div>
+                    </div>
+                </form> -->
+         
+                <div class="table-responsive">
+                    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <div *ngIf="!walletOwners && !errorMessage" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'OUTLET.loading' | translate }}</span> 
+                        </div>
+                    </div>
+               
+                    <table *ngIf="walletOwners" class="table table-bordered table-striped" datatable
+                        [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'OUTLET.code' | translate }}</th>
+                                <th>{{'OUTLET.name' | translate }}</th>
+                                <th>{{'OUTLET.mobileNo' | translate }}</th>
+                                <th>{{'OUTLET.type' | translate }}</th>
+                                <th>{{'OUTLET.country' | translate }}</th>
+                                <th>{{'OUTLET.status' | translate }}</th>
+                                <th>{{'OUTLET.createdOn' | translate }}</th>
+                                <th>{{'OUTLET.state' | translate }}</th>
+                                <th>{{'OUTLET.action' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let walletOwner of walletOwners; let i = index;">
+                                <td>{{ walletOwner.code }}</td>
+                                <td>{{ walletOwner.ownerName }}</td>
+                                <td>{{ walletOwner.mobileNumber }}</td>
+                                <td> {{ categoryName }}</td>
+                                <td>{{ walletOwner.registerCountryName }}</td>
+                                <td>{{ walletOwner.status }}</td>
+                                <td > <span type="hidden" style="display: none;">{{walletOwner.creationDate | date: 'YYYYMMDD' }}</span>{{ walletOwner.creationDate | dateFormat: 'dateTime'  }}</td>
+                                <td>{{ walletOwner.state }}</td>
+                                <td>
+                        
+                                    <a  *ngIf="setPermission.view" class="custom-hyperlink" ngbTooltip="View"
+                                        (click)="viewWalletOwner(walletOwner.code)">
+                                        <i class="fas fa-eye text-primary"></i></a>
+                                        <!-- *ngIf="walletOwner.state === 'Approved'" -->
+                                    <a class="custom-hyperlink" *ngIf="walletOwner.state === 'Approved' && setPermission.edit"
+                                        ngbTooltip="Edit" (click)="editWalletOwner(walletOwner.code)">
+                                        <i class="fas fa-edit text-primary"></i></a>
+                                        <!-- <a *ngIf="walletOwner.walletOwnerCategoryCode === category_B" class="custom-hyperlink"
+                                        ngbTooltip="Services" (click)="viewWalletOwner(walletOwner.code,'serviceBlock')">
+                                        <i class="fas fa-cogs text-primary"></i></a> -->
+                                  
+                                        <!-- <a   class="custom-hyperlink"
+                                        ngbTooltip="View Outlets" (click)="viewUsers(walletOwner.code)">
+                                        <i class="fas fa-users text-primary"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

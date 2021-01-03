@@ -1,0 +1,116 @@
+<div class="hover-form">
+    <div *ngIf="!addressForm" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">	{{'MASTER.loading' | translate}}</span>
+        </div>
+    </div>
+    <form *ngIf="addressForm" [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+
+        <!-- save/edit delete -->
+        <div class="form-group row">
+            <!-- form error message -->
+            <div class="full-width">
+                <span class="validation-message" *ngIf="addressForm.enabled && !addressForm.valid && formSaved">
+                    {{'SUBSCRIBER.please.provide.all.the.required.fields' | translate}}</span>
+            </div>
+            <!-- Edit/ Remove / Save -->
+            <div class="full-width steps-bottom-button-alligned text-right color-white  ">
+                <a *ngIf="!showSave" class="custom-hyperlink" ngbTooltip="{{ 'MASTER.edit' | translate }}" (click)="onEditAddressForm()"><i
+                        class="fas fa-edit text-primary"></i></a>
+                <a *ngIf="showSave" class="custom-hyperlink" ngbTooltip="{{ 'MASTER.save' | translate }}" (click)="submitAddress()"><i
+                        class="fas fa-save text-primary"></i></a>&nbsp;
+                <a class="custom-hyperlink" ngbTooltip="{{ 'MASTER.delete' | translate }}" (click)="onRemoveAddressForm()"><i
+                        class="fas fa-trash-alt text-danger"></i></a>
+            </div>
+        </div>
+
+        <!-- parallel data -->
+        <div class="form-group row">
+            <div *ngFor="let formElem of addressFormFields; let i = index;" class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                </label>
+               
+              
+                <div [ngSwitch]="formElem.fieldType">
+                    <!-- text box -->
+
+                    <div *ngSwitchCase="input_text">
+                        <div *ngIf="formElem.kycMetaDataField=='addressLine1'">
+                            <input type="text" minlength="3"  pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9, ])*$" class="form-control" required [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                            <div *ngIf=" addressForm.get(formElem.kycMetaDataField).errors?.pattern;else addressLine1temp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumberAlphabets' | translate}} </div>
+                            <ng-template #addressLine1temp>
+                                <div *ngIf="addressForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="formElem.kycMetaDataField=='location'">
+                            <input type="text" minlength="3"  class="form-control"  pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9, ])*$" required [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                            <div *ngIf=" addressForm.get(formElem.kycMetaDataField).errors?.pattern;else locationtemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumberAlphabets' | translate}} </div>
+                            <ng-template #locationtemp>
+                                <div *ngIf="addressForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                            </ng-template>
+                        </div>
+                        
+                        <div *ngIf="formElem.kycMetaDataField!='location'  && formElem.kycMetaDataField!='addressLine1'" >
+                          <input type="text" minlength="3"  class="form-control" [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}"  pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9, ])*$">
+                            <div *ngIf=" addressForm.get(formElem.kycMetaDataField).errors?.pattern;else addressLine2temp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.acceptOnlyNumberAlphabets' | translate}} </div>
+                            <ng-template #addressLine2temp>
+                                <div *ngIf="addressForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                            </ng-template>
+                        </div>    
+                    </div>
+                   
+                    <!-- select -->
+                    <div *ngSwitchCase="input_select">
+                        <div *ngIf="formElem.kycMetaDataField === address_type">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                (change)="selectChangeHandler($event, 'addressType')" class="custom-select"
+                                formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let addressType of addressTypes" [value]="addressType.code">
+                                    {{ addressType.type }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="formElem.kycMetaDataField === country_name">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                (change)="selectChangeHandler($event, 'country')" class="custom-select"
+                                formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let country of countries" [value]="country.code">
+                                    {{ country.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="formElem.kycMetaDataField === region_name">
+                            <select [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                class="custom-select" formControlName="{{ formElem.kycMetaDataField }}" required>
+                                <option *ngFor="let region of regions" [value]="region.code">
+                                    {{ region.name }}
+                                </option>
+                            </select>
+                        </div>
+                        
+                        <div *ngIf="formElem.kycMetaDataField === city">
+                            <input type="text" pattern="^[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z0-9, ])*$" minlength="3" class="form-control" [id]="formElem.kycMetaDataField"
+                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                            <div *ngIf=" addressForm.get(formElem.kycMetaDataField).errors?.pattern;else citytemp" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  accept only [e.g. alphabets,numbers)] </div>
+                            <ng-template #citytemp>
+                                <div *ngIf="addressForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                            </ng-template>
+                        </div>
+
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="display: none;" id="addressform_{{formIndex}}"><button type="submit"></button></div>
+    </form>
+</div>
+<hr>

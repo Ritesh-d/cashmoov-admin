@@ -1,0 +1,217 @@
+<div class="row"><div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+ <div   class="card-header d-sm-flex align-items-center justify-content-between mb-0"><h6   class="m-0 font-weight-bold text-primary"> {{ 'WALLETTRANSFER.heading' | translate }}  </h6></div>
+     <div class="card-body" id="transfer_wrap"> 
+ <div *ngIf="errorMessage" class="alert alert-danger">   {{ errorMessage }}  </div>
+  
+
+  
+ 
+ <div *ngIf="successMessage" class="alert alert-success">  {{ successMessage }}  </div>
+
+
+   <form    class="form1" [formGroup]="wallettransferForm" (ngSubmit)="wallettransferSubmit(wallettransferForm.value)" method="post"  *ngIf="setPermission.create"  >     
+<div class="p-2"> 
+
+  <div class="row "> 
+  	<div class="form-group col-md-4 "     [class.has-danger]="!wallettransferForm.get('trustaccount').valid && (wallettransferForm.get('trustaccount').dirty || wallettransferForm.get('trustaccount').touched)" > 
+<label for="amount">  {{ 'WALLETTRANSFER.trustaccount' | translate }}<span class="red">*</span></label>
+  <select   formControlName="trustaccount"   class="form-control custom-select"      id="trustaccount"   (change)="onChangeSelect($event,'trustaccount')"  >
+  <option *ngFor="let trustaccount of trustaccountArr" [value]="trustaccount.code"  [attr.registerCountryCode]="trustaccount.registerCountryCode">   {{ trustaccount.ownerName }}  <span *ngIf="trustaccount.code"> ({{trustaccount.code }})</span>  </option>
+    </select> 
+    <div *ngFor="let validation of errorMessages.trustaccount">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('trustaccount').hasError(validation.type) && (wallettransferForm.get('trustaccount').dirty || wallettransferForm.get('trustaccount').touched)">{{validation.message}}</div>
+ </div> 
+</div>
+<div class="form-group col-md-4 "    > 
+
+<label for="walletOwnerCategoryCode" > {{'WALLET.accountType' | translate }}  <span class="red">*</span>
+   <!-- <span class="required-field">*</span>  -->
+  </label>
+                          
+                                <select  (change)="getWalletAccount($event)" class="custom-select form-control" id="walletOwnerCategoryCode">
+                                   
+                                    <option *ngFor="let category of categories" value="{{category.code}}">{{category.name}}  </option>
+                                </select>
+                                <!-- <select   (change)="getWalletAccount($event)"   class="form-control custom-select"     id="category"    (change)="onChangeSelect($event,'institution')"  >
+                                  <option *ngFor="let category of categories" [value]="category.code"  [attr.registerCountryCode]="category.code" [attr.ownerName]="category.ownerName">   {{ category.ownerName }} <span *ngIf="category.code"> ({{category.code }})</span> </option>
+                                    </select>  -->
+
+                                <!-- <span *ngIf="submitted && f.walletOwnerCategoryCode.errors" class="validation-message">
+                                    <div *ngIf="f.walletOwnerCategoryCode.errors.required" translate>please select account type </div>
+                                </span> -->
+                          
+</div>
+    <div class="form-group col-md-4 "     [class.has-danger]="!wallettransferForm.get('institutions').valid && (wallettransferForm.get('institutions').dirty || wallettransferForm.get('institutions').touched)" > 
+<label for="walletowner">  {{ 'WALLETTRANSFER.walletowner' | translate }}<span class="red">*</span></label>
+  <select   formControlName="institutions"   class="form-control custom-select"     id="institutions"    (change)="onChangeSelect($event,'institution')"  >
+ 
+    <option *ngFor="let institution of institutionArr" [value]="institution.code"  [attr.registerCountryCode]="institution.registerCountryCode" [attr.ownerName]="institution.ownerName">   {{ institution.ownerName }} <span *ngIf="institution.code"> ({{institution.code }})</span> </option>
+    </select> 
+    <div *ngFor="let validation of errorMessages.institutions">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('institutions').hasError(validation.type) && (wallettransferForm.get('institutions').dirty || wallettransferForm.get('institutions').touched)">{{validation.message}}</div>
+ </div> 
+</div> 
+ 
+</div>
+  <div class="row"> 
+
+<div class="form-group col-md-4" [class.has-danger]="!wallettransferForm.get('sendingcurrency').valid && (wallettransferForm.get('sendingcurrency').dirty || wallettransferForm.get('sendingcurrency').touched)" > 
+  <label for="currency">  {{ 'WALLETTRANSFER.sendingcurrency' | translate }}<span class="red">*</span></label> 
+  <select    formControlName="sendingcurrency"  class="form-control custom-select"    (change)="onSearchChange($event,'sendingcurrency')"     >
+  <option *ngFor="let sendingCurrency of sendingCurrencys" [value]="sendingCurrency.currencyCode"  [attr.countryCode]="sendingCurrency.countryCurrencyCode"  [attr.currencySymbol]="sendingCurrency.currencySymbol"  >   {{ sendingCurrency.currencyName }}  </option>
+    </select> 
+     <div *ngFor="let validation of errorMessages.sendingcurrency">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('sendingcurrency').hasError(validation.type) && (wallettransferForm.get('sendingcurrency').dirty || wallettransferForm.get('sendingcurrency').touched)">{{validation.message}}</div>
+ </div>
+</div>
+ 
+
+
+ <div class="form-group col-md-4"  [class.has-danger]="!wallettransferForm.get('receivercurrency').valid && (wallettransferForm.get('receivercurrency').dirty || wallettransferForm.get('receivercurrency').touched)"  > 
+  <label for="currency"> {{ 'WALLETTRANSFER.receivercurrency' | translate }}<span class="red">*</span></label> 
+  <select    formControlName="receivercurrency"   class="form-control custom-select"      (change)="onSearchChange($event,'receivercurrency')"    >
+  <option *ngFor="let receiverCurrency of receiverCurrencys" [value]="receiverCurrency.currencyCode" [attr.countryCode]="receiverCurrency.countryCurrencyCode" [attr.currencySymbol]="receiverCurrency.currencySymbol"  >   {{ receiverCurrency.currencyName }}  </option> 
+    </select> 
+     <div *ngFor="let validation of errorMessages.receivercurrency">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('receivercurrency').hasError(validation.type) && (wallettransferForm.get('receivercurrency').dirty || wallettransferForm.get('receivercurrency').touched)">{{validation.message}}</div>
+ </div>
+</div> 
+ 
+ <div class="form-group col-md"  [class.has-danger]="!wallettransferForm.get('amount').valid && (wallettransferForm.get('amount').dirty || wallettransferForm.get('amount').touched)" > 
+<label for="amount">  {{ 'WALLETTRANSFER.amount' | translate }} <span class="red">*</span></label>
+<div class="input-group "><div class="input-group-prepend" *ngIf="sendingcurrencySymbol">
+             <div class="input-group-text"  >{{sendingcurrencySymbol}}</div>
+             
+           </div> 
+ <input type="number" class="form-control   " formControlName="amount"   (input)="onSearchChange($event,'amount')" > </div>
+  <div *ngFor="let validation of errorMessages.amount">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('amount').hasError(validation.type) && (wallettransferForm.get('amount').dirty || wallettransferForm.get('amount').touched)">{{validation.message}}</div>
+ </div> 
+     
+</div>
+   
+
+<div class="form-group col-md-4"  [class.has-danger]="!wallettransferForm.get('rate').valid && (wallettransferForm.get('rate').dirty || wallettransferForm.get('rate').touched)"> 
+<label for="rate">{{ 'WALLETTRANSFER.conversionrate' | translate }} </label>
+ <input type="number" class="form-control   " formControlName="rate" readonly=""    > 
+  <div *ngFor="let validation of errorMessages.rate">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('rate').hasError(validation.type) && (wallettransferForm.get('rate').dirty || wallettransferForm.get('rate').touched)">{{validation.message}}</div>
+ </div>  
+</div>
+
+
+ <div class="form-group col-md-4"  [class.has-danger]="!wallettransferForm.get('amounttoPaid').valid && (wallettransferForm.get('amounttoPaid').dirty || wallettransferForm.get('amounttoPaid').touched)"> 
+<label for="amounttoPaid">{{ 'WALLETTRANSFER.amountpaid' | translate }}  </label>
+<div class="input-group "><div class="input-group-prepend" *ngIf="receivercurrencySymbol">
+             <div class="input-group-text"  >{{receivercurrencySymbol}}</div>
+             
+           </div>
+
+
+ <input type="number" class="form-control   " formControlName="amounttoPaid" readonly=""    > 
+</div>
+  <div *ngFor="let validation of errorMessages.amounttoPaid">
+   <div class="form-control-feedback" *ngIf="wallettransferForm.get('amounttoPaid').hasError(validation.type) && (wallettransferForm.get('amounttoPaid').dirty || wallettransferForm.get('amounttoPaid').touched)">{{validation.message}}</div>
+ </div>  
+</div>
+ 
+ 
+ <div class="form-group col-md-4" *ngIf="setPermission.create"  > 
+
+    <button type="submit"  class="btn btn-primary float-right mt-3 " [disabled]="transactionBtn"   >{{ 'WALLETTRANSFER.submit' | translate }} <i class="fa fa-arrow-right ml-1"></i> </button>   
+  </div>
+
+</div>
+
+</div>
+ 
+
+  </form>
+                           
+   
+
+     <div *ngIf="loaderData" class="spinner-aligning text-center p-5 bg-light mt-5">
+                    <div class="spinner-border" role="status"> <span class="sr-only">{{'WALLET.loading' | translate }} </span> </div>
+                </div>
+
+                <div class="table-responsive mt-5">
+                    <table *ngIf="fetchingData" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'WALLETTRANSFER.trustaccount' | translate }}  </th>
+                                <th>{{ 'WALLETTRANSFER.institution' | translate }}</th>
+                                <th>{{ 'WALLETTRANSFER.receivercurrency' | translate }} </th>
+                                <th>{{ 'WALLETTRANSFER.amountpaid' | translate }} </th>
+                                <th>{{ 'WALLETTRANSFER.status' | translate }}  </th> 
+                                <th>{{ 'WALLETTRANSFER.creationDate' | translate }}  </th> 
+                                <th>{{ 'WALLETTRANSFER.action' | translate }}</th>
+                            </tr> 
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of datagrid">
+                                <td>{{data.srcWalletOwnerName}}</td>
+                                <td>{{data.desWalletOwnerName}}</td>
+                                <td>{{data.desCurrencyName}}  </td>
+                                <td>{{data.desCurrencySymbol}} {{data.finalAmount}}</td>
+                                  <td>{{data.status}}</td> 
+                                <!-- <td>{{data.creationDate | dateFormat: 'dateTime'}}</td> -->
+                                <td> <span type="hidden" style="display: none;">{{data.creationDate | date: 'YYYYMMDD' }}</span>
+                                {{ data.creationDate  | date: 'dd/MM/yyyy hh:mm:SS'}}</td> 
+
+                              
+                                <td> 
+                                    <a *ngIf="setPermission.view" (click)="viewUser(content,data)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.view' | translate}}"> 
+                                        <i class="fas fa-eye text-primary"></i> 
+                                    </a>  
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+ 
+ 
+  <ng-template #content let-c="close" let-d="dismiss" >
+          <div class="modal-header">
+            <h4 class="modal-title"> {{'WALLET.viewWalletTransfer' | translate }}  </h4>
+           
+          </div>
+      <div class="modal-lg">    <div class="modal-body p-3" *ngIf="openPopupData"> 
+                   
+<div  class=" row" >
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.trustaccount' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.srcWalletOwnerName}}"></div></div>
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.institution' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.desWalletOwnerName}}"></div></div>
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.sendingcurrency' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.srcCurrencyName}} "></div></div>
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.receivercurrency' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.desCurrencyName}} "></div></div>
+
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.amount' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.srcCurrencySymbol}} {{openPopupData.value}} "></div></div>
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.amountpaid' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.desCurrencySymbol}} {{openPopupData.finalAmount}}"></div></div>
+
+
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.creationDate' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.creationDate | dateFormat: 'dateTime'}}"></div></div>
+  <div  class="col-sm-6"><div class="form-group"><label  class="custom-label" for="code" translate="">{{ 'WALLETTRANSFER.status' | translate }} </label><input  class="form-control"   readonly="" type="text" value="{{openPopupData.status}}"></div></div>
+
+
+</div>
+ 
+
+  
+
+ 
+                  
+   </div>
+
+<div   class="modal-footer"><button  class="colse btn btn-danger px-3" type="button"  aria-label="Close" (click)="d('Cross click')" ><i   class="fas fa fa-times"></i> {{'WALLET.close' | translate }} </button></div>
+ </div>           
+        </ng-template>
+
+
+
+
+
+ 
+    </div>
+    </div>
+</div></div>

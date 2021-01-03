@@ -1,0 +1,123 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-1"></div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header d-sm-flex align-items-center justify-content-between mb-0"> <h6 class="m-0 font-weight-bold text-primary">Agent Balance Report</h6> </div>
+                <div class="card-body">
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+                        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                        <div class="form-group ">
+
+                            <div class="row mt-2">
+                                <label for="fromDate" class="custom-label col-sm-3 col-form-label text-right" translate >Start Date </label>
+                                <div  class="col-sm-4">
+                                    <div role="wrapper" class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                       <input  formControlName="fromDate" type="text"  class="form-control datapicker-input" id="datepicker" name="datepicker"   ngbDatepicker #d="ngbDatepicker" readonly>
+                                        <span class="input-group-append" role="right-icon">
+                                           <button class="btn btn-outline-secondary border-left-0" type="button"><i class="gj-icon" (click)="d.toggle()">event</i> </button>
+                                        </span>
+                                    </div>
+                                    <!-- <div *ngIf=" submitted  && f.fromDate.errors && f.toDate.errors.required" class="validation-message" translate>please select Start Date </div>
+                                    <div *ngIf="f.fromDate.errors?.pattern" class="validation-message" translate>please enter Start  Date only.</div> -->
+                                </div> 
+                            </div>  
+                           
+                            <div class="row mt-2" >
+                                <label for="toDate" class="custom-label col-sm-3 col-form-label text-right" translate >End Date </label>
+                                <div  class="col-sm-4">
+                                    <div role="wrapper"  class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                        <input  formControlName="toDate" type="text"  class="form-control datapicker-input" id="datepicker1" name="datepicker1" ngbDatepicker #d1="ngbDatepicker" readonly>
+                                        <span class="input-group-append" role="right-icon">
+                                            <button class="btn btn-outline-secondary border-left-0" type="button"><i class="gj-icon" (click)="d1.toggle()">event</i> </button>
+                                        </span>
+                                    </div>
+                                    <!-- <div *ngIf=" submitted  && f.toDate.errors && f.toDate.errors.required" class="validation-message" translate>please select End Date </div>
+                                    <div *ngIf="f.toDate.errors?.pattern" class="validation-message" translate>please enter End  Date only.</div> -->
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <label for="code" class="custom-label col-sm-3 col-form-label text-right">  Wallet Owner Code<span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="code"  class="custom-select form-control" id="code">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <label for="distributor" class="custom-label col-sm-3 col-form-label text-right">  Distributor <span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="distributor"  class="custom-select form-control" id="distributor">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>     
+                            
+                            <!-- <div class="row mt-2">
+                                <label for="agent" class="custom-label col-sm-3 col-form-label text-right"> By Agent <span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="agent"  class="custom-select form-control" id="agent">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>     -->
+                            
+                            <!-- <div class="row mt-2">
+                                <label for="profileType" class="custom-label col-sm-3 col-form-label text-right">  Profile <span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="profileType"  class="custom-select form-control" id="profileType">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>      -->
+                            
+                            <div class="row mt-2">
+                                <label for="status" class="custom-label col-sm-3 col-form-label text-right">  Status <span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="status"  class="custom-select form-control" id="status">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>   
+                            
+                            <div class="row mt-2">
+                                <label for="currency" class="custom-label col-sm-3 col-form-label text-right">  Currency <span class="required-field">*</span> </label>
+                                <div class="col-sm-4">
+                                    <select formControlName="status"  class="custom-select form-control" id="currency">
+                                        <option value="#" selected>Select</option>
+                                        <option  *ngFor="let walletOwner of walletOwners"  value="{{walletOwner.code}}">{{walletOwner.ownerName}}</option>
+                                    </select>
+                                </div>
+                            </div>  
+
+                            <div class="row mt-2" >
+                                <label for="activityDate" class="custom-label col-sm-3 col-form-label text-right" translate >Last Activity <span class="required-field">*</span></label>
+                                <div  class="col-sm-4">
+                                    <div role="wrapper" class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                       <input  formControlName="activityDate" type="text"  class="form-control datapicker-input"   id="datepicker" name="datepicker"    ngbDatepicker #d="ngbDatepicker" readonly>
+                                        <span class="input-group-append" role="right-icon">
+                                           <button class="btn btn-outline-secondary border-left-0" type="button"><i class="gj-icon" (click)="d.toggle()">event</i> </button>
+                                        </span>
+                                    </div>
+                                    <span *ngIf="submitted && f.activityDate.errors" class="validation-message">
+                                        <div *ngIf="f.activityDate.errors.required" translate>please select Last Activity Date </div>
+                                    </span>
+                                </div> 
+                                
+                            </div>  
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                               <button class="btn btn-primary"> <i class="fas fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </form>
+                   

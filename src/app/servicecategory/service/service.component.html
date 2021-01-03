@@ -1,0 +1,53 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'SERVICE.serviceTitle' |  translate}} </h1>
+    <a id= "create001"  *ngIf= "setPermission.create" (click)="navigateToAdd()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'SERVICE.addCategory' |  translate}}</a>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header ">
+                <h6 class="m-0 font-weight-bold text-primary">{{'SERVICE.serviceTitle' |  translate}}</h6>
+            </div>
+            <div class="card-body">
+                <div id="errmsg">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+               </div>
+                <!-- <div>All regions : <a [routerLink]="['region']">click</a></div> -->
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">{{'SERVICE.loading' |  translate}}</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!fetchingData" datatable class="table table-bordered table-striped"
+                        [dtOptions]="dtOption" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>{{'SERVICE.name_label' |  translate}}</th>
+                                <th>{{'SERVICE.status' |  translate}}</th>
+                                <th>{{'SERVICE.creationDate' |  translate}}</th>
+                                <th>{{'COMMON.action_label' |  translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let SERVICE of eWalletServiceList">
+                                <td> {{ SERVICE.name }} </td>
+                                <td>{{ SERVICE.status }}</td>
+                                <td><span type="hidden" style="display: none;">{{ SERVICE.creationDate | date: 'YYYYMMDD'}} </span>{{ SERVICE.creationDate | date: 'dd/MM/yyyy hh:mm:SS a' }}</td>
+
+                                <td>
+                                    <a id= "view001"  *ngIf= "setPermission.view" (click)="viewCategory(SERVICE.code)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{'SERVICE.viewCategory'  |  translate }}"><i class="fas fa-eye text-primary"></i></a>&nbsp;
+                                    <a id= "create001" *ngIf= "setPermission.create"  (click)="addCategory(SERVICE.code)" style="cursor:pointer" placement="bottom"
+                                        ngbTooltip="{{ 'SERVICE.addCategory'  |  translate }}"><i class="fas fa-plus-circle text-primary"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

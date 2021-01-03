@@ -1,0 +1,66 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">View Service Template</h6>
+
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Service</label>
+            <input *ngIf="this.oldValue.serviceName == this.data.serviceName" type="text" class="form-control unchanged-data" value="{{data.serviceName}}" readonly>
+            <span *ngIf="this.oldValue.serviceName != this.data.serviceName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceName">
+                <input type="text" class="form-control " id="firstName" value="{{data.serviceName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Service Category</label>
+            <input *ngIf="this.oldValue.serviceCategoryName == this.data.serviceCategoryName" type="text" class="form-control unchanged-data" value="{{data.serviceCategoryName}}" readonly>
+            <span *ngIf="this.oldValue.serviceCategoryName != this.data.serviceCategoryName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceCategoryName">
+                <input type="text" class="form-control "   value="{{data.serviceCategoryName}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Service Provider</label>
+            <input *ngIf="this.oldValue.serviceProviderName == this.data.serviceProviderName"type="text" class="form-control unchanged-data" value="{{data.serviceProviderName}}" readonly>
+            <span *ngIf="this.oldValue.serviceProviderName != this.data.serviceProviderName" [ngbTooltip]="'earlier it was: '+ this.oldValue.serviceProviderName">
+                <input type="text" class="form-control "   value="{{data.serviceProviderName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Channel Type</label>
+            <input *ngIf="this.oldValue.channelTypeName == this.data.channelTypeName" type="text" class="form-control unchanged-data" value="{{data.channelTypeName}}" readonly>
+              <span *ngIf="this.oldValue.channelTypeName != this.data.channelTypeName" [ngbTooltip]="'earlier it was: '+ this.oldValue.channelTypeName">
+                <input type="text" class="form-control "   value="{{data.channelTypeName}}" disabled>
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="name"  class="custom-label" >Trans Type</label>
+            <input  *ngIf="this.oldValue.transTypeName == this.data.transTypeName" type="text" class="form-control unchanged-data" value="{{data.transTypeName}}" readonly>
+              <span *ngIf="this.oldValue.transTypeName != this.data.transTypeName" [ngbTooltip]="'earlier it was: '+ this.oldValue.transTypeName">
+                <input type="text" class="form-control "   value="{{data.transTypeName}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3">
+            <label for="name"  class="custom-label" >Minimum Trans Value</label>
+            <input  *ngIf="this.oldValue.minTransValue == this.data.minTransValue"type="text" class="form-control unchanged-data" value="{{data.minTransValue}}" readonly>
+            <span *ngIf="this.oldValue.minTransValue != this.data.minTransValue" [ngbTooltip]="'earlier it was: '+ this.oldValue.minTransValue">
+                <input type="text" class="form-control "   value="{{data.minTransValue}}" disabled>
+            </span>
+        </div>
+        <div class="col-sm-3">
+            <label for="name"  class="custom-label" >Maximun Trans Value</label>
+            <input  *ngIf="this.oldValue.maxTransValue == this.data.maxTransValue"type="text" class="form-control unchanged-data" value="{{data.maxTransValue}}" readonly>
+            <span *ngIf="this.oldValue.maxTransValue != this.data.maxTransValue" [ngbTooltip]="'earlier it was: '+ this.oldValue.maxTransValue">
+                <input type="text" class="form-control "   value="{{data.maxTransValue}}" disabled>
+            </span>
+        </div>
+    </div>
+ 
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> Close</button>
+ </div>

@@ -1,0 +1,182 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'ROLE.rolePermission' | translate}}</h1>
+    <a [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'ROLE.addRolePermission' | translate}}</a>
+</div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">{{'ROLE.dashboard' | translate}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{'ROLE.rolePermissionSearch' | translate}}</li>
+    </ol>
+</nav>
+
+
+
+<!-- <div id="wrapper"> -->
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{'ROLE.searchRolePermission' | translate}}</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+                        <form [formGroup]="searchRolePermissionForm">
+                            <div class="row mb-8">
+
+                                <!-- <div class="col-lg-2">
+                        <select formControlName="role" class="custom-select" id="role">
+                        <option value="-1" selected>Role</option>
+                        <option   *ngFor="let user of systemusers;" value="{{user.roleCode}}">{{user.roleName}}</option>
+                      
+                        </select>	
+                        </div> -->
+                                <!-- <div class="col-lg-2">
+                            
+                            <input type="text"  formControlName="rolesearch" class="form-control"  width="100%" 
+                            placeholder="Search for role..."
+                            
+                            matInput
+                           
+                            [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let filterOption of filterOptions" [value]="filterOption.role">
+                                  {{filterOption.role}}
+                                </mat-option>
+                              </mat-autocomplete>
+                           
+                             </div> -->
+
+                                <div class="col-lg-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fas fa-search"></i></span>
+                                        </div>
+                                        <!-- <input type="text" autocomplete="off" formControlName="rolesearch"
+                                            class="form-control" class="form-control" id="tableSearch"
+                                            placeholder="{{'ROLE.searchforrole' | translate}}" list="dynmicUserIds" aria-label="{{'ROLE.search' | translate}}"
+                                            aria-describedby="basic-addon1" /> -->
+                                        <datalist id="dynmicUserIds">
+                                            <option *ngFor="let filterOption of filterOptions" class="form-control"
+                                                [value]="filterOption.roleName"> {{filterOption.roleName}}</option>
+                                        </datalist>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-lg-2">
+                    <select class="custom-select" id="feature">
+                    <option   selected>Feature</option>
+                    <option value="Active">Wallet Owner</option>
+                    <option value="Inactive">Address</option>
+                    <option value="Inactive">Top up</option>
+                    </select>
+                </div>
+                 -->
+
+
+                                <!-- <div class="col-lg-2">
+                <select class="custom-select" id="exact">
+                <option selected>Search Criteria</option>
+                <option value="Excat">Excat</option>
+                <option value="Partial">Partial</option>
+                </select>	
+                </div> -->
+
+                                <!-- <div class="col-lg-4">
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control" id="tableSearch" placeholder="Search or criteria" aria-label="Search" aria-describedby="basic-addon1">
+                </div>
+                </div> -->
+                                <div class="col-lg-2">
+                                    <button type="button" (click)="searchUsers('rolesearch')"
+                                        class="btn btn-primary">{{'ROLE.search' | translate}}</button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <div *ngIf="true">
+                            <!-- <app-rolepermission (talk)="getMessage($event)" ></app-rolepermission> -->
+                            <!-- <app-rolepermission (talk)="getMessage($event)" [dataList]="dataList" [languageCode]="languageCode"
+                      ></app-rolepermission> -->
+                            <div *ngIf="fetchingData" class="spinner-aligning">
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+                                </div>
+                            </div>
+                            <table *ngIf="displaytable" datatable id="dataTable"
+                                class="table table-bordered table-striped" [dtOptions]="dtOptions"
+                                [dtTrigger]="dtTrigger" width="100%" cellspacing="0">
+
+
+                                <thead>
+                                    <tr>
+                                        <!-- <th>Id</th> -->
+                                        <th>{{'ROLE.roleTxt' | translate}}</th>
+                                        <th>{{'ROLE.permissionTxt' | translate}}</th>
+                                        <!-- <th>Feature</th> -->
+                                        <!-- <th>Create</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Approve</th>
+                                <th>Delete</th> -->
+                                        <th>{{'ROLE.creationDate' | translate}} </th>
+                                        <th>{{'ROLE.statusTxt' | translate}}</th>
+                                        <th>{{'ROLE.actionTxt' | translate}}</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr *ngFor="let user of users; let i = index;">
+                                        <!-- <td>{{ user.id }}</td> -->
+                                        <td>{{ user.roleName }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <!-- <td>{{ user.featureCode }}</td> -->
+                                        <!-- <td>{{ user.create }}</td>
+                                <td>{{ user.view }}</td>
+                                <td>{{ user.edit }}</td>
+                                <td>{{ user.approve }}</td>
+                                <td>{{ user.delete }}</td> -->
+                                        <td>{{ user.creationDate | date: 'short'}}</td>
+                                        <td>{{ user.status }}</td>
+
+                                        <td>
+                                            <a><i class="fas fa-eye text-primary" ngbTooltip="{{'MASTER.view' | translate}}"
+                                                    placement="right"></i></a>&nbsp;
+                                            <a><i class="fas fa-edit text-secondary" ngbTooltip="{{'MASTER.edit' | translate}}"
+                                                    placement="left"></i></a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div *ngIf="showList">
+                <app-rolepermission (talk)="getMessage($event)" ></app-rolepermission>
+                
+              </div>  -->
+    </div>
+
+    <!-- </div> -->
+
+    <!-- <app-createrolepermission (talk)="getMessage($event)" ></app-createrolepermission> -->

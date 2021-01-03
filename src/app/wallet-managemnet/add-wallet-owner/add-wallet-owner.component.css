@@ -1,0 +1,56 @@
+@import '../wallet-owner.component.css';
+
+.full-width{
+    width: 100%;
+}
+.float-right{
+    float: right;
+}
+.float-left{
+    float: left;
+}
+.steps-bottom-button-alligned{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.color-white a {
+    color: white;
+}
+ /* 
+.validation-message {
+    color: #e74a3b;
+    font-size: smaller;
+    border: solid 1px #e74a3b;
+    border-radius: 3px;
+    padding: 2px;
+    background-color: bisque;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: lowercase;
+    font-style: italic;
+}*/
+.validation-message {
+    color: #e74a3b;
+    font-size: smaller;
+    /* border: solid 1px #e74a3b; */
+    border-radius: 3px;
+    padding: 2px;
+    /* background-color: bisque; */
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: lowercase;
+    font-style: italic;
+  }
+.nav .nav-item a {
+    margin-bottom: 0.5rem;;
+}
+.error-conatiner-address-message{
+    margin-bottom: 1rem;;
+}
+.parallel-col-margin{
+    margin-bottom: 1rem;
+}

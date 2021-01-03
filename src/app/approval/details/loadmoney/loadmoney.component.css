@@ -1,0 +1,10 @@
+@import '../details.component.css';
+
+.parallel-col-margin{
+    margin-bottom: 1rem;
+}
+
+.tooltip-inner{
+    width: 400px;
+    background-color : #282c3f;
+  }

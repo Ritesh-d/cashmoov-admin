@@ -1,0 +1,84 @@
+.unchanged-data {
+    background-color: #fff;
+}
+
+::ng-deep .page-titles {
+    margin-bottom: 5px;
+    padding: 0p
+  }
+  .modal-body{
+    max-height: 450px !important;
+    overflow: auto !important;
+  }
+
+  .custom-label{
+    margin-bottom: auto;
+    font-style: italic;
+  }
+
+  ::ng-deep .modal-dialog {
+  max-width: 625px;
+
+  }
+
+  .header {
+    font-weight: bold;
+  }
+
+  ::ng-deep .page-titles {
+    margin-bottom: 2px;
+    padding: 0p
+  }
+
+  .table thead th, .table th {
+    font-weight: bold;
+  }
+  .spinner-aligning {
+    text-align: center;
+    padding: 4rem;
+}
+p-calendar.calendar-control  {
+  opacity: 1;
+  color: black;
+  background: red;
+}
+.toggle-i{
+  margin-top: 10px;
+  font-size:20px;
+  color:#1cc88a;
+  
+}
+
+.mb-4, .my-4 {
+  margin-bottom: 0.5rem !important;
+}
+
+.country-img {
+  height: 15px;
+  width: 22px;
+  margin-top: -3px;
+}
+
+.region-currency-icon {
+  font-size: 8rem;
+  padding: 2rem;
+}
+
+.region-currency-icon :hover {
+  text-decoration: none;
+  color: #4e73df;
+}
+
+.region-currency-icon p {
+  font-size: 20px;
+  padding: 0;
+  color: #858796;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none; /* If you want to remove the border as well */
+  background: none;
+  }

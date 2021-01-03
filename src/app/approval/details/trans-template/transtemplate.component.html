@@ -1,0 +1,119 @@
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="!transTemp" class="spinner-aligning">
+    <div class="spinner-border" transTemp="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div *ngIf="transTemp">
+    <!-- name / code -->
+    <div class="form-group row">
+        <!-- name -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">Code</label>
+            <input type="text" class="form-control unchanged-data" [value]="transTemp.entityCode" disabled>
+        </div>
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">Name</label>
+            <input *ngIf="unchanged.name" type="text" class="form-control unchanged-data" [value]="transTemp.entityName" disabled>
+            <a *ngIf="!unchanged.name" [ngbTooltip]="'earlier it was: '+oldname">
+                <input type="text" class="form-control" [value]="transTemp.entityName" disabled>
+            </a>
+        </div>
+        <!-- code -->
+        
+    </div>
+    <!-- status / createdOn -->
+    <div class="form-group row">
+        <!-- status -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">Status</label>
+            <input *ngIf="unchanged.status" type="text" class="form-control unchanged-data" [value]="transTemp.status" disabled>
+            <a *ngIf="!unchanged.status" [ngbTooltip]="'earlier it was: '+oldstatus">
+                <input type="text" class="form-control" [value]="transTemp.status" disabled>
+            </a>
+        </div>
+        <!-- createdOn -->
+        <div class="col-sm-6 parallel-col-margin">
+            <label class="custom-label">Created On</label>
+            <input type="text" class="form-control unchanged-data" [value]="transTemp.creationDate | date: 'short'" disabled>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        
+        <!-- list -->
+        <div class="col-sm-12 parallel-col-margin">
+            <label class="custom-label">Transaction Template List</label>
+            <div class="card " style="border: 1px solid #d1d3e2;    color: #6e707e;">
+                <div class="row">     <div *ngFor="let transaction of transtemplatelist" class="mx-3 my-2" style="width: max-content;">{{transaction.transTypeName}} </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- features -->
+    <!-- <div class="form-group row" *ngIf="isPermission">
+        <table *ngIf="featuresList.length" class="table table-bordered table-striped premission-table margin-1"
+            cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <label class="form-check-label">{{ 'transTemp.featureTxt' | translate}}</label>
+                        </div>
+                    </th>
+                    <th class="text-center">{{ 'transTemp.approveTxt' | translate}}</th>
+                    <th class="text-center">{{ 'transTemp.viewTxt' | translate}}</th>
+                    <th class="text-center">{{ 'transTemp.addTxt' | translate}}</th>
+                    <th class="text-center">{{ 'transTemp.editTxt' | translate}}</th>
+                    <th class="text-center">{{ 'transTemp.deleteTxt' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feature of featuresList; let i = index;">
+                    <td>
+                        
+                        <div class="feature-name">
+                            <label class="form-check-label">
+                                {{ feature.name }}
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                
+                        <div class="text-center" ngbTooltip="{{ 'transTemp.approveTxt' | translate}}">
+                            <div class="custom-control custom-switch">
+                                <input class="custom-control-input" type="checkbox" [checked]="feature.approve"
+                                    id="{{i}}_ap" disabled>
+                                <label class="custom-control-label" for="{{i}}_ap"></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                   
+                        <div class="text-center" ngbTooltip="{{ 'transTemp.viewTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.view" disabled>
+                        </div>
+                    </td>
+                    <td>
+                
+                        <div class="text-center" ngbTooltip="{{ 'transTemp.addTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.create" disabled>
+                        </div>
+                    </td>
+                    <td>
+          
+                        <div class="text-center" ngbTooltip="{{ 'transTemp.editTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.edit" disabled>
+                        </div>
+                    </td>
+                    <td>
+                 
+                        <div class="text-center" ngbTooltip="{{ 'transTemp.deleteTxt' | translate}}">
+                            <input type="checkbox" [checked]="feature.delete" disabled>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>

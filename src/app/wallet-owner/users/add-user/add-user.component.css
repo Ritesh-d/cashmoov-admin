@@ -1,0 +1,35 @@
+@import '../../add-wallet-owner/add-wallet-owner.component.css';
+
+.form-check-radio{
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.radio-margin-left{
+    margin-left: 10%;
+}
+
+.toggle-i{
+    margin-top: 10px;
+    font-size:20px;
+    color:#1cc88a;
+    
+  }
+  .spinner-aligning {
+    text-align: center;
+    padding: 2rem;
+  }
+  .form-custom-padding{
+    padding-top: 1.5rem;
+  
+  }
+  .fa-circle {
+    color: #008db8;  
+  }
+  ::ng-deep .btn {
+    font-size:.9rem;
+  }
+
+  .datapicker-input{
+    background-color: #fff;
+    }

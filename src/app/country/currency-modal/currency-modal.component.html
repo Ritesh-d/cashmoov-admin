@@ -1,0 +1,104 @@
+<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'COUNTRY.viewCurrency' | translate}}</h6>
+</div>
+
+<div   class="modal-body">
+
+    <div *ngIf="fetchingData" class="spinner-aligning">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div id="errormsg">
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="successMessage"  class="alert alert-success">{{ successMessage }}</div>
+    </div>
+    <div *ngIf="!fetchingData  && country">
+        <!-- country / code -->
+        <div class="form-group row">
+            <!-- country -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.country_label' | translate}}</label>
+                <input type="text" class="form-control" [value]="country.name" disabled>
+            </div>
+            <!-- code -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.code_label' | translate}}</label>
+                <input type="text" class="form-control" [value]="country.isoCode" disabled>
+            </div>
+        </div>
+        <!-- currencyCode / currencySymbol -->
+        <div class="form-group row">
+            <!-- currencyCode -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.base_currency_label' | translate}}</label>
+                <input type="text" class="form-control" [value]="country.currencyCode" disabled>
+            </div>
+            <!-- currencySymbol -->
+            <div class="col-sm-6 parallel-col-margin">
+                <label class="custom-label">{{'COUNTRY.currency_symbol_label' | translate}}</label>
+                <input type="text" class="form-control" [value]="country.currencySymbol" disabled>
+            </div>
+        </div>
+        <hr>
+        <!-- currency form -->
+        <form [formGroup]="currencyForm">
+            <div formArrayName="countryCurrency">
+                <div class="form-group row">
+                    <div class="col-sm-4 header">{{'COUNTRY.currencyTitle' | translate}}</div>
+                    <div class="col-sm-4 text-center header">{{'COUNTRY.inbound_label' | translate}}</div>
+                    <div class="col-sm-4 text-center header">{{'COUNTRY.outbound_label' | translate}}</div>
+                    <!-- <div class="col-sm-3 text-center header">{{'COUNTRY.remove_label' | translate}}</div> -->
+                </div>
+                <div class="form-group row" *ngFor="let currency of getCurrencyControl; let i = index"
+                    [formGroupName]="i">
+                    <input type="hidden" formControlName="code">
+                    <div class="col-sm-4">
+                        <select class="custom-select" formControlName="currency">
+                            <option *ngFor="let curency of currencies" [value]="curency.code">
+                                {{ curency.currencyCode }} - {{ curency.symbol }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <div class="custom-control custom-switch">
+                            <!-- <input type="checkbox" class="custom-control-input" id="{{i}}_out"
+                            formControlName="outbound" (click)="outboundEnable(i)"> -->
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_out"
+                            formControlName="inbound">
+                            <label class="custom-control-label" for="{{i}}_out"></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <div class="custom-control custom-switch">
+                            <!-- <input type="checkbox" class="custom-control-input" id="{{i}}_in"
+                            formControlName="inbound" (click)="inboundEnable(i)"> -->
+                            <input type="checkbox" class="custom-control-input" id="{{i}}_in"
+                            formControlName="outbound">
+                            <label class="custom-control-label" for="{{i}}_in"></label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-3 text-center">
+                        
+                        <span class="custom-hyperlink">
+                            <a class="custom-hyperlink" title="delete" (click)="onRemoveCurrency(i)">
+                                <i class="fas fa-trash-alt text-danger"></i></a></span>
+                    </div> -->
+                </div>
+            </div>
+        </form>
+        <!-- Add currency button -->
+        <div class="text-right full-width steps-bottom-button-alligned color-white">
+            <a  *ngIf="setPermission.create" (click)="onAddCurrency()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-plus-circle"></i>{{'COUNTRY.addCurrency_button' | translate}}</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button *ngIf="!fetchingData  && country" (click)="submitCurrency()" class="btn btn-primary px-3">
+        <i class="fas fa-save"></i> Save</button>
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3">
+        <i class="fas fa fa-times"></i> {{'COMMON.button.close' | translate}}</button>
+</div>

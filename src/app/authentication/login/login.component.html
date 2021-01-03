@@ -1,0 +1,134 @@
+<!-- <div class="limiter">
+  <div class="container-login100" style="background-image: url('./assets/images/bg-01.jpg');">
+    <div class="wrap-login100">
+      <form class="login100-form" [formGroup]="loginForm">
+        <span class="login100-form-logo">
+           
+          <img src="./assets/images/icon.png" style = "width : 70%; height: 70%;" alt="logo" class="img-responsive" />
+
+        </span>
+        
+
+        <span class="login100-form-title p-b-34 p-t-27">Log in</span>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <div class="wrap-input100 validate-input form-group" data-validate = "Enter Login Id">
+          <input class="input100" type="text" name="loginid" placeholder="Login Id" formControlName="loginId" maxlength="15" (keypress) = "errorMessage=''">
+          <span class="focus-input100" data-placeholder="&#xf207;"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input form-group" data-validate="Enter password">
+          <input class="input100" type="password" name="pass" placeholder="Password" formControlName="password" maxlength="15" (keypress) = "errorMessage=''">
+          <span class="focus-input100" data-placeholder="&#xf191;"></span>
+        </div>
+        
+          <div class="form-group" style = "font-family: Poppins-Regular;">
+            <select style = "width : 100%;height: 37px !important" class="form-control" formControlName="language" id="language" (change) = "switchLanguage($event.target.value)">
+             <option   value = "1" translate>language_english</option>
+            </select>
+          </div>
+
+          <div class = "text-center">
+            <div class="tooltip1">
+                    <i class="fa fa-info-circle" style="font-size:30px;"></i>
+                       <span class="tooltiptext" translate>LABEL_TOOLTIP_MESSAGE</span>
+            </div>
+         </div>
+
+        <div class="container-login100-form-btn form-group  p-t-30">
+          <button class="login100-form-btn" (click)="login()">Login</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+ -->
+<div class="bg-gradient-primary login-align-center">
+  <div class="container ">
+
+    <!-- Outer Row -->
+    <div class="row">
+
+      <div class="col-xl-10 col-lg-12 col-md-9 mx-auto">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <div class="text-right">
+                      <!-- select language-->
+                      <select #langSelect (change)="changeLang(langSelect.value)" class="language-select">
+                      <option *ngFor="let lang of languageArrCode" [value]="lang" [selected]="lang === getcurrentLang">{{languageArr[lang]}}</option>
+                    </select>
+
+
+                       
+                    </div>
+                    <img class="mb-4 img-fluid" src="assets/images/logo.png" alt="logo">
+                    <h1 class="h4 text-gray-900">{{ 'LOGIN.welcomeBackTxt' | translate }}!</h1>
+                    <p>{{ 'LOGIN.welcomeMessageTxt' | translate }}</p>
+                  </div>
+                  <form class="user" [formGroup]="loginForm" (keydown.enter)="onSubmit($event)"  >
+                  
+                    <div class="form-group">
+                      <input type="email" formControlName="loginId"  class="form-control form-control-user"
+                        id="exampleInputEmail" aria-describedby="emailHelp"
+                        placeholder="{{ 'LOGIN.usernameTxt' | translate }}">
+                    </div>
+                    <div class="form-group">
+                      <input type="password"  formControlName="password"  class="form-control form-control-user"
+                        id="exampleInputPassword" placeholder="{{ 'LOGIN.passwordTxt' | translate }}">
+                    </div> 
+                    <div *ngIf="errorMessage" class="row text-center mb-3">
+                      <div style="margin: auto;"><span class="ml-3 mb-2" style="color: red;font-weight: bold;height:24px;">{{errorMessage}}</span></div>
+                    </div>
+                    <div *ngIf="successMessage" class="row text-center">
+                      <div style="margin: auto;"><span class="ml-3 mb-2" style="color: green;font-weight: bold;height:24px;">{{successMessage}}</span></div>
+                    </div>
+                    <div *ngIf="!errorMessage" class="row text-center">
+                      <div style="margin: auto;"><span class="ml-3 mb-2" style="color: green;font-weight: bold;height:24px;"></span></div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                      <input type="checkbox" class="custom-control-input" id="customCheck">
+                      <label class="custom-control-label" for="customCheck">Remember Me</label>
+                    </div>
+                  </div> -->
+      
+                    <a (click)="login()"  tabIndex="-1" class="btn btn-primary btn-user btn-block" >
+                      {{ 'LOGIN.loginTxt' | translate }}
+                    </a>
+                   
+
+
+                  </form>
+                  
+                  <hr>
+                  <div class="text-center" tabIndex="-1">
+                    <a class="small"  tabIndex="-1" routerLink="/authentication/forgot-password">
+                      {{ 'LOGIN.forgotPasswordTxt' | translate }}?</a>
+                  </div>
+                  <!-- <div class="text-center">
+                  <a class="small" href="register.html">Create an Account!</a>
+                </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

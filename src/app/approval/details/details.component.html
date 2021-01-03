@@ -1,0 +1,70 @@
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{ feature }} Approval</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                    <div *ngIf="!approval" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div *ngIf="approval" [ngSwitch]="feature">
+                        <app-role [approvalData]="approval" *ngSwitchCase="'Role'"></app-role>
+                        <app-role [approvalData]="approval" *ngSwitchCase="'Permission'"></app-role>
+                        <app-transTemplate [approvalData]="approval" *ngSwitchCase="'Trans Template'"></app-transTemplate>
+                        <!-- <app-fee [approvalData]="approval" *ngSwitchCase="'Fee'"></app-fee> -->
+                        <app-commision [approvalData]="approval" *ngSwitchCase="'Commision'"></app-commision>
+                        <app-wallet-owner [approvalData]="approval" *ngSwitchCase="'Wallet Owner'"></app-wallet-owner>
+                        <app-wallet-owner [approvalData]="approval" *ngSwitchCase="'Wallet Owner Address'"></app-wallet-owner>
+                        <app-wallet-owner [approvalData]="approval" *ngSwitchCase="'Wallet Owner Bank'"></app-wallet-owner>
+                        <app-system-user *ngSwitchCase="'System User'" [approvalData]="approval"  [entityCode] = "entityCode"></app-system-user>
+                        <app-exchangerate *ngSwitchCase="'Exchange Rate'" [approvalData]="approval"  [entityCode] = "entityCode"></app-exchangerate>
+                        <app-wallet-owner-user *ngSwitchCase="'Wallet Owner User'" [approvalData]="approval" ></app-wallet-owner-user>
+                        <app-servicetemplate *ngSwitchCase="'Service Template'" [approvalData]="approval" ></app-servicetemplate>
+                        <app-template *ngSwitchCase="'Template'" [approvalData]="approval" ></app-template>
+                        <app-feetemplate *ngSwitchCase="'Fee Template'" [approvalData]="approval" ></app-feetemplate>
+                        <app-loadmoney *ngSwitchCase="'E-Money Creation'" [approvalData]="approval"  [entityCode] = "entityCode"></app-loadmoney>
+                         <app-wallettransfer *ngSwitchCase="'Wallet Transfer'" [approvalData]="approval"  [entityCode] = "entityCode"></app-wallettransfer> 
+                        <app-feecommisiontemplate *ngSwitchCase="'FeeCommission Template'" [approvalData]="approval" ></app-feecommisiontemplate>
+                        <app-transactionlimittemplate *ngSwitchCase="'Trans Limit'" [approvalData]="approval" ></app-transactionlimittemplate>
+                        <app-incentivetemplate *ngSwitchCase="'Incentive Template'" [approvalData]="approval" ></app-incentivetemplate>
+                        <app-service *ngSwitchCase="'Service'" [approvalData]="approval" ></app-service>
+                        <app-product *ngSwitchCase="'Product'" [approvalData]="approval" ></app-product>
+                        <app-operator *ngSwitchCase="'Operator'" [approvalData]="approval" ></app-operator>
+                        <app-taxtype *ngSwitchCase="'Tax Type'" [approvalData]="approval" [entityCode] = "entityCode"></app-taxtype>
+                        <app-wallet *ngSwitchCase="'Wallet'" [approvalData]="approval" ></app-wallet>
+                        <app-ownertemplate *ngSwitchCase="'Wallet Owner Template'" [approvalData]="approval" ></app-ownertemplate>
+                        <app-reversal *ngSwitchCase="'Reversal'" [approvalData]="approval" ></app-reversal>
+                        
+
+                    </div>                    
+                       
+
+                    <div class="form-group row">
+                        <label for="usrname" class="col-sm-3 col-form-label text-right"></label>
+                        <div class="col-sm-12 text-right">
+                            <button type="button" (click)="onCancel()" class="btn btn-danger px-3"><i
+                                    class="fas fa-arrow-circle-left"></i> {{'MASTER.back' | translate }}</button>&nbsp;
+                            <button *ngIf="showClaimed" type="button" (click)="onClaim()"
+                                class="btn btn-primary px-3"><i class="fas fa-box-open"></i> {{'MASTER.claim' | translate }}</button>
+                            <button *ngIf="showApproved" type="button" (click)="onApprove()"
+                                class="btn btn-success px-3"><i class="fas fa-check-circle"></i>
+                                {{'MASTER.approve' | translate }}</button>&nbsp;
+                            <button *ngIf="showReject" type="button" (click)="onReject()" class="btn btn-reject px-3"><i
+                                    class="fas fa-times-circle"></i>
+                                    {{'MASTER.reject' | translate }}</button>&nbsp;
+                            <button *ngIf="showDisclaimed" type="button" (click)="onDisclaim()"
+                                class="btn btn-disclaim px-3"><i class="fas fa-ban"></i> {{'MASTER.disclaim' | translate }}</button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

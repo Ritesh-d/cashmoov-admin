@@ -1,0 +1,547 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'WALLET.user' |  translate}}</h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 *ngIf="userView === 'add'" class="m-0 font-weight-bold text-primary">{{'WALLET.addUser' |  translate}}</h6>
+                <h6 *ngIf="userView === 'view'" class="m-0 font-weight-bold text-primary">{{'WALLET.viewUser' |  translate}}</h6>
+                <h6 *ngIf="userView === 'edit'" class="m-0 font-weight-bold text-primary">{{'WALLET.updateUser' |  translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="errmsg">
+                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                        <div *ngIf="!userTypes && !errorMessage" class="spinner-aligning">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                            </div>
+                        </div>
+                        <!-- User Type -->
+                        <div *ngIf="userTypes" class="form-group row">
+                            <!-- <label class="col-sm-4 col-form-label text-left">User Type<span
+                                    class="required-field">*</span></label> -->
+                            <div class="col-sm-6">
+                                <label class=" custom-label ">{{'WALLET.userType' |  translate}}<span
+                                    class="required-field">*</span></label>
+                                <select *ngIf="userView === 'add'" class="custom-select" (change)="onCategoryChange($event.target.value)"
+                                    [(ngModel)]="userTypeCode">
+                                  
+                                    <option *ngFor="let userType of userTypes" [value]="userType.code">
+                                        {{ userType.type }}  
+                                    </option>
+                                </select>
+                                <select *ngIf="userView != 'add'" class="custom-select"
+                                    [(ngModel)]="userTypeCode" disabled>
+                                    <option *ngFor="let userType of userTypes" [value]="userType.code">
+                                        {{ userType.type }}
+                                    </option>
+                                </select>
+                            </div>
+            <div  class="col-sm-1"></div>
+                            <div class="col-sm-3 form-custom-padding">
+                               
+                                <button *ngIf="userView !='add'" (click)="resetPassword()"
+                                class="float-right btn btn-primary px-2">
+                                    <!-- <span class="fa-stack">
+                                        <i class="fa fa-circle "></i>
+                                        <i class="fa fa-undo fa-stack-1x fa-inverse"></i>
+                                      </span>  -->
+                                        <i class="fa fa-undo "></i>
+                                        {{'WALLET.resetPassword' |  translate}}</button>  
+                            </div>
+                            <div class="col-sm-2 form-custom-padding">
+                                <button *ngIf="userView != 'add'" (click)="resetPin()"
+                                class="float-right btn btn-primary px-2">
+                                <i class="fa fa-key"></i> {{'WALLET.resetPin' |  translate}}</button>
+                        
+                                </div>
+                        </div>
+                        <!-- <div *ngIf="userTypes && !userDetailsForm && !errorMessage" class="spinner-aligning"> -->
+                        <div *ngIf="userTypes && !userDetailsForm && !errorMessage" class="spinner-aligning">
+
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">{{'WALLET.loading' |  translate}}</span>
+                            </div>
+                        </div>
+
+                        <!-- <form *ngIf="userDetailsForm && !errorMessage" [formGroup]="userDetailsForm"
+                            (ngSubmit)="addUserSubmit()"> -->
+                            <form *ngIf="userDetailsForm " [formGroup]="userDetailsForm">
+                            <hr *ngIf="basicInfoFormFields">
+                            <!-- Basic Info -->
+                            <div class="form-group row">
+                                <div *ngFor="let formElem of basicInfoFormFields; let i = index;"
+                                    class="col-sm-6 parallel-col-margin">
+                                    <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                                        <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                    </label>
+
+                                    <div [ngSwitch]="formElem.fieldType">
+                                        <!-- text box -->
+                                        <div *ngIf="formElem.kycMetaDataField != 'idExpiryDate' && formElem.kycMetaDataField != 'dateOfBirth'">
+                                             
+                                        <div *ngSwitchCase="input_text">
+                                                <!--  userName -->
+                                            <div *ngIf="formElem.kycMetaDataField=='userName'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" required
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                   <ng-template #templatename>
+                                                        <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                    </ng-template>
+
+                                             </div>
+                                             <!--  Cashier -->
+                                            <div *ngIf="formElem.kycMetaDataField=='Cashier'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" required
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate>{{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                               <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename> 
+                                                    <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                               </ng-template>
+                                            </div>
+                                            <!--code -->
+                                            <div *ngIf="formElem.kycMetaDataField=='code'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" required
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                   <ng-template #templatename>
+                                                        <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                    </ng-template> 
+                                            </div>
+                                            <!--email-->
+                                            <div *ngIf="formElem.kycMetaDataField =='email' ">
+                                                    <input type="email" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField" minlength="3" required email formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required ; else templatename" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                                <ng-template #templatename>
+                                                <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.email" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'MASTER.shouldValidFormat' |  translate}} </div>
+                                                 </ng-template>     
+                                            </div>
+                                            <!--idProofNumber--->
+                                            <div *ngIf="formElem.kycMetaDataField=='idProofNumber'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" required
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}</div>
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                   <ng-template #templatename>
+                                                        <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                    </ng-template>     
+                                            </div>
+                                            <!--firstName-->
+                                            <div *ngIf="formElem.kycMetaDataField=='firstName'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" required
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                   <ng-template #templatename>
+                                                        <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                    </ng-template>    
+                                            </div>
+                                            <!--lastName-->
+                                           <div *ngIf="formElem.kycMetaDataField=='lastName'">
+                                                    <input type="text" class="form-control" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" [id]="formElem.kycMetaDataField" minlength="3"
+                                                [name]="formElem.kycMetaDataField" 
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename>
+                                                     <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                 </ng-template>  
+                                            </div>
+                                            <!--mobileNumber-->
+                                            <div *ngIf="formElem.kycMetaDataField == 'mobileNumber'">
+                                                    <input type="text" class="form-control" pattern="^[0-9]*[1-9][0-9]*$" [id]="formElem.kycMetaDataField"
+                                                     autocomplete="off" minlength="10" required  [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}">
+                                                     <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                                     <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumber' |  translate}} </div> 
+                                                     <ng-template #templatename>
+                                                          <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.mobilenumber.err.msg' | translate}} </div>
+                                                      </ng-template>  
+                                             </div>
+
+                                             <div *ngIf=" formElem.kycMetaDataField!='lastName' && formElem.kycMetaDataField!='firstName'&& formElem.kycMetaDataField!='userName' && formElem.kycMetaDataField!='idProofNumber'&& formElem.kycMetaDataField != 'mobileNumber' && formElem.kycMetaDataField!='Cashier' && formElem.kycMetaDataField!='code' && formElem.kycMetaDataField !='email'">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField" 
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                            
+                                        </div>
+                                        </div>
+                                        
+                                        <div *ngIf="formElem.kycMetaDataField == 'idExpiryDate' && userView ==='view'">
+                                            <div *ngSwitchCase="input_text">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                            </div>
+                                            <div *ngSwitchCase="input_date">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                            </div>
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField == 'dateOfBirth' && userView === 'view'">
+                                                <div *ngSwitchCase="input_text">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                                <div *ngSwitchCase="input_date">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField == 'idExpiryDate' && userView === 'edit' ">
+                                                <div *ngSwitchCase="input_text">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                                <div *ngSwitchCase="input_date">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField == 'dateOfBirth' && userView === 'edit'">
+                                                <div *ngSwitchCase="input_text">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                                <div *ngSwitchCase="input_date">
+                                                    <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                        [name]="formElem.kycMetaDataField"
+                                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                                </div>
+                                            </div>
+                                        <div *ngIf="formElem.kycMetaDataField == 'idExpiryDate' && userView === 'add' && userTypeCode=='100001'">
+                                            <div role="wrapper"  
+                                            class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                            <input   [minDate]="minDateIdExp" readonly [markDisabled]="markDisabled"   class="form-control" 
+                                                formControlName="{{ formElem.kycMetaDataField }}"
+                                                  ngbDatepicker
+                                                #expiryDate="ngbDatepicker">
+                                            <span class="input-group-append" role="right-icon">
+                                                <button class="btn btn-outline-secondary border-left-0"
+                                                    type="button">
+                                                    <i class="gj-icon" (click)="expiryDate.toggle()">{{'WALLET.event' |  translate}}</i>
+                                                </button>
+                                            </span>
+                                             </div>
+                                       
+                                        </div>
+                                        <div *ngIf="formElem.kycMetaDataField == 'idExpiryDate' && userView === 'add' && userTypeCode == '100000'">
+                                            <div role="wrapper"  
+                                            class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group" >
+                                            <input   [minDate]="minDateIdExp" required  readonly [markDisabled]="markDisabled"   class="form-control" 
+                                                formControlName="{{ formElem.kycMetaDataField }}"
+                                                  ngbDatepicker
+                                                #expiryDate="ngbDatepicker">
+                                            <span class="input-group-append" role="right-icon">
+                                                <button class="btn btn-outline-secondary border-left-0"
+                                                    type="button">
+                                                    <i class="gj-icon" (click)="expiryDate.toggle()">{{'WALLET.event' |  translate}}</i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate>Please select {{formElem.kycMetaDataFieldName}}  </div>
+                                        </div>
+                                        <div *ngIf="formElem.kycMetaDataField == 'dateOfBirth' && userView === 'add'">
+                                            <div role="wrapper"  
+                                            class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group" >
+                                            <input type="text" class="form-control"
+                                                formControlName="{{ formElem.kycMetaDataField }}"
+                                                  ngbDatepicker required
+                                                #expiryDate="ngbDatepicker"     [minDate]="minDateDOB" readonly [maxDate]="maxDateDOB">
+                                            <span class="input-group-append" role="right-icon">
+                                                <button class="btn btn-outline-secondary border-left-0"
+                                                    type="button">
+                                                    <i class="gj-icon" (click)="expiryDate.toggle();expiryDate.navigateTo({year: 1960, month: 1})">{{'WALLET.event' |  translate}}</i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                        </div>
+                                        <!-- date -->
+                                        <div *ngSwitchCase="input_date">
+                                            <!-- <input type="text" class="form-control" placeholder="yyyy-mm-dd"
+                                            [name]="formElem.kycMetaDataField" formControlName="{{ formElem.kycMetaDataField }}"> -->
+                                          <!--   <div role="wrapper" *ngIf="formElem.kycMetaDataField === id_expiry_date"
+                                                class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                                <input type="text" class="form-control"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    placeholder="id expiry date" ngbDatepicker
+                                                    #expiryDate="ngbDatepicker">
+                                                <span class="input-group-append" role="right-icon">
+                                                    <button class="btn btn-outline-secondary border-left-0"
+                                                        type="button">
+                                                        <i class="gj-icon" (click)="expiryDate.toggle()">event</i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <div role="wrapper" *ngIf="formElem.kycMetaDataField === date_of_birth"
+                                                class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                                <input type="text" class="form-control"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    placeholder="date of birth" ngbDatepicker #dob="ngbDatepicker">
+                                                <span class="input-group-append" role="right-icon">
+                                                    <button class="btn btn-outline-secondary border-left-0"
+                                                        type="button">
+                                                        <i class="gj-icon" (click)="dob.toggle()">event</i>
+                                                    </button>
+                                                </span>
+                                            </div> -->
+                                        </div>
+                                        <!-- RadioButton -->
+                                        <div *ngSwitchCase="input_radio">
+                                            <div *ngIf="formElem.kycMetaDataField === _gender">
+                                                <span *ngFor="let gender of genders; let i = index"
+                                                    class="form-check-radio" [ngClass]="{'radio-margin-left': i !== 0}">
+                                                    <input class="form-check-input" type="radio" required
+                                                        formControlName="{{ formElem.kycMetaDataField }}"
+                                                        [value]="gender.code" [id]="gender.code">
+                                                    <label class="form-check-label"
+                                                        [for]="gender.code">{{ gender.type }}</label>
+                                                </span>
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}}  </div>
+                                            </div>
+                                        </div>
+                                        <!-- select -->
+                                        <div *ngSwitchCase="input_select">
+                                            <div *ngIf="formElem.kycMetaDataField === issuing_country && userTypeCode == '100001'">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select">
+                                                    <option *ngFor="let country of countries" [value]="country.code">
+                                                        {{ country.name }}
+                                                    </option>
+                                                </select>
+                                               
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField === issuing_country && userTypeCode == '100000'">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select" required>
+                                                    <option *ngFor="let country of countries" [value]="country.code">
+                                                        {{ country.name }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}}  </div>  
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField === id_proof_type">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select" required>
+                                                    <option *ngFor="let idProofType of idProofTypes"
+                                                        [value]="idProofType.code">
+                                                        {{ idProofType.type }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}}  </div>  
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField === wallet_owner">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select">
+                                                    <option *ngFor="let parentOwner of parentWalletOwners"
+                                                        [value]="parentOwner.code">
+                                                        {{ parentOwner.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr *ngIf="addressFormFields">
+                            <!-- Address -->
+                            <div class="form-group row">
+                                <div *ngFor="let formElem of addressFormFields; let i = index;"
+                                    class="col-sm-6 parallel-col-margin">
+                                    <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                                        <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                    </label>
+
+                                    <div [ngSwitch]="formElem.fieldType">
+                                        <!-- text box -->
+                                        <div *ngSwitchCase="input_text">
+
+                                             <div *ngIf="formElem.kycMetaDataField=='addressLine1'">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}" required minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$">
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename>
+                                                     <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                 </ng-template>  
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField=='addressLine2'">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}"  minlength="3" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$">
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename>
+                                                     <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                 </ng-template>  
+                                            </div>
+                                             <div *ngIf="formElem.kycMetaDataField=='location'">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" minlength="3">
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename>
+                                                     <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                 </ng-template>   
+                                             </div>
+                                             <div *ngIf="formElem.kycMetaDataField=='city'">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}" pattern="[a-zA-Z0-9-,]+(\s{0,1}[a-zA-Z-, ])*$" minlength="3">
+                                                <div *ngIf=" userDetailsForm.get(formElem.kycMetaDataField).errors?.pattern ; else templatename" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}} {{'MASTER.acceptOnlyNumberAlphabets' |  translate}} </div> 
+                                                <ng-template #templatename>
+                                                     <div *ngIf="userDetailsForm.get(formElem.kycMetaDataField).errors?.minlength" class="validation-message "  translate> {{formElem.kycMetaDataFieldName}}  {{'WALLET.minimunlenght.err.msg' | translate}} </div>
+                                                 </ng-template>   
+                                             </div>
+
+                                            <div *ngIf="formElem.kycMetaDataField!='addressLine1' && formElem.kycMetaDataField!='city' && formElem.kycMetaDataField!='addressLine2'&& formElem.kycMetaDataField!='location'">
+                                            <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                            </div>
+                                        </div>
+                                        <!-- select -->
+                                        <div *ngSwitchCase="input_select">
+                                            <div *ngIf="formElem.kycMetaDataField === address_type">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select" required>
+                                                    <option *ngFor="let addressType of addressTypes"
+                                                        [value]="addressType.code">
+                                                        {{ addressType.type }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseenter' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField === _country">
+                                                <select [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    (change)="selectChangeHandler($event, 'country')"
+                                                    formControlName="{{ formElem.kycMetaDataField }}"
+                                                    class="custom-select" required>
+                                                    <option *ngFor="let country of countries" [value]="country.code">
+                                                        {{ country.name }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                            </div>
+                                            <div *ngIf="formElem.kycMetaDataField === region_name">
+                                                <select [id]="formElem.kycMetaDataField" class="custom-select"
+                                                   required formControlName="{{ formElem.kycMetaDataField }}">
+                                                    <option *ngFor="let region of regions" [value]="region.code" >
+                                                        {{ region.name }}
+                                                    </option>
+                                                </select>
+                                               <div *ngIf="submitted && userDetailsForm.get(formElem.kycMetaDataField).errors?.required" class="validation-message "  translate> {{'MERCHANT.pleaseselect' | translate }} {{formElem.kycMetaDataFieldName}} </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                            <div *ngIf="editMode"  class="form-group row">
+                          
+ 
+                                <div class="col-sm-6">
+                                    <label class="custom-label" translate translate>{{'WALLET.status' |  translate}}
+                                    </label>
+    
+                                    <select   (change)="onChange($event)" class="custom-select form-control" id="status">
+                                        <option value="Y">{{'WALLET.active' |  translate}}</option>
+                                        <option value="N">{{'WALLET.inactive' |  translate}}</option>
+                                        <option value="B">{{'WALLET.block' |  translate}}</option>
+                                        <option value="S">{{'WALLET.suspended' |  translate}}</option>
+                                        <option value="T">{{'WALLET.terminated' |  translate}}</option>
+                                    </select>
+                                </div>
+                                <div  *ngIf="showDateOptions" class="col-sm-3">
+                                    <label for="fromdate" class="custom-label" translate translate>{{'WALLET.fromDate' |  translate}}
+                                    </label>
+                                    <div role="wrapper"
+                                    class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                    <input   type="text"
+                                        class="form-control datapicker-input" id="datepicker" name="datepicker"
+                                        [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" readonly>
+                                    <span class="input-group-append" role="right-icon">
+                                        <button class="btn btn-outline-secondary border-left-0" type="button"><i
+                                                class="gj-icon" (click)="d.toggle()">{{'WALLET.event' |  translate}}</i> </button>
+                                    </span>
+                                </div>
+                                <!-- <span *ngIf="submitted && f.fromdate.errors" class="validation-message">
+                                     
+                                    <div *ngIf="f.fromdate.errors.required" translate>
+                                        {{'USER.fromdate.required'  }}</div>
+                                </span> -->
+                                 </div>
+                                <div   *ngIf="showDateOptions"  class="col-sm-3">
+                                        <label for="todate" class="custom-label" translate translate>{{'WALLET.toDate' |  translate}}
+                                        </label>
+                                        <div role="wrapper"
+                                        class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
+                                        <input type="text"
+                                            class="form-control datapicker-input " id="datepicker1" name="datepicker1"
+                                            [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" readonly>
+                                        <span class="input-group-append" role="right-icon">
+                                            <button class="btn btn-outline-secondary border-left-0" type="button"><i
+                                                    class="gj-icon" (click)="d1.toggle()">{{'WALLET.event' |  translate}}</i> </button>
+                                        </span>
+                                    </div>
+                                    <!-- <span *ngIf="submitted && f.todate.errors" class="validation-message">
+                                    
+                                        <div *ngIf="f.todate.errors.required" translate>
+                                            {{'USER.todate.required'  }}</div>
+                                    </span> -->
+                                 </div>
+    
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="form-group row">
+                                <div class="full-width steps-bottom-button-alligned text-right">
+                                    <button type="button" class="btn btn-danger px-3" (click)="onCancel()">
+                                        <i class="fas fa-arrow-circle-left"></i> {{'WALLET.back' |  translate}}</button>&nbsp;
+                                    <button *ngIf="userTypeCode && userDetailsForm && userView==='add'" type="submit"
+                                    (click)= "addUserSubmit()"  class="float-right btn btn-primary px-3">
+                                        <i class="fas fa-plus-circle"></i>&nbsp;{{'WALLET.add' |  translate}}</button>
+                                    <button *ngIf="userView==='edit'" type="submit" (click)= "addUserSubmit()"class="btn btn-primary px-3">
+                                        <i class="fas fa-refresh"></i> {{'WALLET.update' |  translate}}</button>
+                                </div>
+                            </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

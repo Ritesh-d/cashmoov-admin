@@ -1,0 +1,319 @@
+
+<div class="modal-body" id="custom-modal-1">
+<!--<div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.view.slab' | translate}}</h6>
+
+</div>
+-->
+
+
+<div class="col-xl-12 col-lg-12">
+	<div class="card shadow mb-4">
+		<div class="card-header">
+			<h6 class="m-0 font-weight-bold text-primary">{{'TEMPLATE.template.incentive.template' | translate}}</h6>
+		</div>
+		<div *ngIf="errorMessges" class="alert alert-danger">{{ errorMessges }}</div>
+		<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+					
+		<!-- Card Body -->
+		<div class="card-body padding-custom">
+			<div class="row">
+				<div class="col-lg-12">
+					<div *ngIf="display == 'none'">
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<label for="tempname" class="custom-label" translate>{{'TEMPLATE.template.service' | translate}}</label>
+								<select disabled class="custom-select form-control ">
+									<option selected value="{{templatedata.serviceCode}}">{{templatedata.serviceName}}</option>
+								</select>
+							</div>
+							<div class="col-sm-6">
+								<label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.template.service.category' | translate}}</label>
+								<select disabled class="custom-select form-control ">
+									<option value="{{templatedata.code}}">{{templatedata.name}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="display != 'none'">
+						<form [formGroup]="serviceTemplateForm">
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label for="tempname" class="custom-label" translate>{{'TEMPLATE.template.service' | translate}}</label>
+									<select disabled formControlName="serviceCode" class="custom-select form-control ">
+										<option value="{{templatedata.serviceCode}}">{{templatedata.serviceName}}</option>
+									</select>
+								</div>
+							      
+								<div class="col-sm-6">
+									<label for="templateCategoryName" class="custom-label" translate>{{'TEMPLATE.template.service.category' | translate}}</label>
+									<select disabled formControlName="serviceCategoryCode" class="custom-select form-control ">
+										<option value="{{templatedata.code}}">{{templatedata.name}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<label for="serviceProviderCode" class="custom-label" translate>{{'TEMPLATE.template.service.provider' | translate}} <span class="required-field">*</span>
+									</label>
+									<select disabled formControlName="serviceProviderCode" class="custom-select form-control">
+										<option value='' selected>{{'TEMPLATE.select' | translate}}</option>
+										<option *ngFor="let serviceProvider of serviceProviderList " value="{{serviceProvider.code}}">{{serviceProvider.name}}</option>
+									</select> <span *ngIf="submitted && f.serviceProviderCode.errors" class="validation-message">
+                                    <div *ngIf="f.serviceProviderCode.errors.required" translate>
+                                        {{'TEMPLATE.template.select.service.provider' | translate}}
+                                    </div>
+                                </span>
+								</div>
+								
+								 <div class="col-sm-6">
+                                   <label for="channelTypeCode" class="custom-label" translate>Channel Type
+                                   </label>
+									<select disabled formControlName="channelTypeCode" class="custom-select form-control">
+										<option *ngFor="let channelType of channelTypeList " value="{{channelType.code}}"
+											selected>
+											{{channelType.type}}</option>
+								
+									</select>
+						       </div> 
+						  </div>
+							<div class="form-group row">
+
+								<!--<div class="col-sm-6">
+									<label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.wallet.owner.category' | translate}} <span class="required-field">*</span>
+									</label>
+									<select formControlName="walletOwnerCategoryCode" class="custom-select form-control">
+										<option value='' selected>{{'TEMPLATE.select' | translate}}</option>
+										<option *ngFor="let walletOwner of walletOwnerList " value="{{walletOwner.code}}">{{walletOwner.name}}</option>
+									</select> <span *ngIf="submitted && f.walletOwnerCategoryCode.errors" class="validation-message">
+                                    <div *ngIf="f.walletOwnerCategoryCode.errors.required" translate>{{'TEMPLATE.template.select.wallet.owner.category' | translate}}
+                                    </div>
+                                </span>
+								</div>
+							-->
+								
+								<div class="col-sm-6">
+									<label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.tax.type' | translate}} <span class="required-field">*</span>
+									</label>
+									<!-- <select formControlName="taxTypeCode" class="custom-select form-control">
+                                    <option value='' selected>
+                                        Select </option>
+                                    <option *ngFor="let type of taxTypeList " value="{{type.code}}">
+                                        {{type.typeEn}}</option>
+                             
+                                </select> -->
+									<ng-multiselect-dropdown #multiSelect [placeholder]="'Select tax Type'" [data]="taxTypeList" [formControl]="f1.taxTypeCode" [settings]="settings" [disabled]="false"></ng-multiselect-dropdown>
+									<!-- <span *ngIf="submitted && f1.taxTypeCode.errors" class="validation-message">
+                                    <div *ngIf="f1.taxTypeCode.errors.required" translate>please select tax type
+                                    </div>
+                                </span> -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="taxTypeCode" class="custom-label" translate>{{'TEMPLATE.template.tax.settlement.account' | translate}}
+                                    </label>
+                                    <select formControlName="taxAccount" class="custom-select form-control">
+                                        <option value='' selected>
+                                            {{'TEMPLATE.template.select' | translate}} </option>
+                                        <option *ngFor="let taxAccount of taxAccountlist " value="{{taxAccount.code}}">
+                                            {{taxAccount.ownerName}}</option>
+
+                                    </select>
+                                </div>
+							
+                               <!-- <div class="col-sm-6">
+									<label for="taxAccount" class="custom-label" translate>{{'TEMPLATE.template.tax.settlement.account' | translate}}</label>
+									<select formControlName="taxAccount" class="custom-select form-control">
+										<option value='' selected>{{'TEMPLATE.template.select' | translate}}</option>
+										<option *ngFor="let taxAccount of walletOwnerCategoryList " value="{{taxAccount.code}}">{{taxAccount.ownerName}}</option>
+									</select>
+								</div>
+								-->
+                            
+                                
+                            </div>
+
+							 <div class="form-group row"> 
+								<!-- <div class="col-sm-3">
+                                <label for="percentComiValue" class="custom-label" translate>{{'TEMPLATE.template.distribution.percent' | translate}}</label>
+									<input placeholder="%" formControlName="percentComiValue" type="number" class="form-control"> <span *ngIf="submitted && f.percentComiValue.errors" class="validation-message">
+                                    <div *ngIf="f.percentComiValue.errors?.pattern" translate>{{'TEMPLATE.pleaseenternumberbetween1and100' | translate}}
+                                    </div>
+                                </span>
+                            </div> 
+							-->
+							 </div> 
+						</form>
+						<!-- add Button -->
+						<div class="form-group row">
+								<div class="col-sm-6 text-left">
+									<button *ngIf="serviceTemplateList " (click)="SaveAll()" class="btn btn-primary px-3"> <i class="fas fas-save"></i> {{'TEMPLATE.template.save' | translate}}</button> 
+							</div>  
+							<div class="col-sm-6 text-right">
+							<!--	<button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i class="fas fa-arrow-circle-left"></i>
+									{{'TEMPLATE.template.back' | translate}}</button>&nbsp; -->
+								<button (click)="createTemplate()" type="button" class="btn btn-primary px-3"> <i class="fas fa-plus-circle"></i> {{'TEMPLATE.template.add.more' | translate}}</button>&nbsp;
+								<!-- <button  *ngIf="serviceTemplateList " (click)="SaveTemplate()" class="btn btn-primary px-3">
+                                <i class="fas fas-save"></i> {{'TEMPLATE.template.save' | translate}}</button>  -->
+							</div>
+						</div>
+						<div *ngIf="!displaytable" class="spinner-aligning">
+							<div class="spinner-border" role="status"> <span class="sr-only">{{'MASTER.loading' | translate}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="display == 'none'" class="col-sm-12 text-right">
+					<button type="button" (click)="navigateBack()" class="btn btn-danger px-3"><i class="fas fa-arrow-circle-left"></i>
+						{{'TEMPLATE.template.back' | translate}}</button>
+				</div>
+				<br>
+				<div class="table-responsive">
+					<table *ngIf="displaytable" datatable class="table table-bordered table-striped" [dtOptions]="dtOption" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<!-- <th> Code </th> -->
+								<!-- <th> Template Name </th> -->
+								<th>{{'TEMPLATE.template.service.category' | translate}}</th>
+								<th>{{'TEMPLATE.template.service.provider' | translate}}</th>
+								<th>{{'TEMPLATE.template.wallet.owner.category' | translate}}</th>
+								<!-- <th> Channel Type</th> -->
+								<!-- <th> Service Name </th> -->
+								<!-- <th> Service Category</th> -->
+								<!-- <th> Commision [Fixed]  </th> -->
+								<th>{{'TEMPLATE.template.distribution.percent' | translate}}</th>
+								<th>{{'TEMPLATE.template.status' | translate}}</th>
+								<th>{{'TEMPLATE.template.state' | translate}}</th>
+								<th>{{'TEMPLATE.template.action' | translate}}</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let serviceTemplate of serviceTemplateList">
+								<!-- <td>{{serviceTemplate.code}}</td> -->
+								<!-- <td>{{serviceTemplate.templateName}}</td> -->
+								<td>{{serviceTemplate.serviceCategoryName}}</td>
+								<td>{{serviceTemplate.serviceProviderName}}</td>
+								<td>{{serviceTemplate.walletOwnerCategoryName}}</td>
+								<!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+								<!-- <td>{{serviceTemplate.serviceName}} </td> -->
+								<!-- <td>{{serviceTemplate.fixedComiValue}} </td> -->
+								<td>{{serviceTemplate.percentComiValue}}</td>
+								<td>{{serviceTemplate.status}}</td>
+								<td>{{serviceTemplate.state}}</td>
+								
+								<td> 
+									<a style="cursor:pointer" placement="bottom" (click)="viewForm(serviceTemplate)" ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp; 
+									<a *ngIf="display != 'none' " (click)="editFormchild(serviceTemplate)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.edit' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+								</td>
+								
+								<!--  -->
+							</tr>
+							<tr *ngFor="let serviceTemplate of serviceEditList;index as i;">
+								<!-- <td>{{serviceTemplate.code}}</td> -->
+								<!-- <td>{{serviceTemplate.templateName}}</td> -->
+								<td>{{templatedata.name}}</td>
+								<td> <div *ngFor="let serviceProvider of serviceProviderList ">
+									<option  *ngIf="serviceProviderCode==serviceProvider.code"value="{{serviceProvider.code}}">{{serviceProvider.name}}</option>
+								</div></td>
+								<td>
+									<div *ngFor="let walletOwner of walletOwnerList">
+									<option   *ngIf="walletOwner.code=='100000'" value="{{walletOwner.code}}">{{walletOwner.name}}</option>
+									</div>
+								</td>
+								<!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+								<!-- <td>{{serviceTemplate.serviceName}} </td> -->
+								<!-- <td>{{serviceTemplate.fixedComiValue}} </td> -->
+								<td>
+									<input placeholder="%" [(ngModel)]="distrIns"  type="number" class="form-control">
+									<span  class="validation-message">
+										<div *ngIf="distrIns >100" translate>{{'TEMPLATE.pleaseenternumberbetween1and100' | translate}}
+									  </div>
+									</span> 
+								</td>
+								<td>InActive</td>
+								<td>Created</td>
+								
+								<td> 
+									<a style="cursor:pointer" placement="bottom" (click)="viewForm(serviceTemplate)" ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp; 
+									<a *ngIf="display != 'none' " (click)="editFormchild(serviceTemplate)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.edit' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+								</td>
+								
+								<!--  -->
+							</tr>
+							<tr *ngFor="let serviceTemplate of serviceEditList;index as i;">
+								<!-- <td>{{serviceTemplate.code}}</td> -->
+								<!-- <td>{{serviceTemplate.templateName}}</td> -->
+								<td>{{templatedata.name}}</td>
+								<td> <div *ngFor="let serviceProvider of serviceProviderList ">
+									<option  *ngIf="serviceProviderCode==serviceProvider.code"value="{{serviceProvider.code}}">{{serviceProvider.name}}</option>
+								</div></td>
+								<td>
+									<div *ngFor="let walletOwner of walletOwnerList">
+									<option   *ngIf="walletOwner.code=='100002'" value="{{walletOwner.code}}">{{walletOwner.name}}</option>
+								</div>
+								</td>
+								<!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+								<!-- <td>{{serviceTemplate.serviceName}} </td> -->
+								<!-- <td>{{serviceTemplate.fixedComiValue}} </td> -->
+								<td>
+									<input placeholder="%" [(ngModel)]="distrAgent"  type="number" class="form-control">
+									<span  class="validation-message">
+										<div *ngIf="distrAgent >100" translate>{{'TEMPLATE.pleaseenternumberbetween1and100' | translate}}
+									  </div>
+									  </span>
+								</td>
+								<td>InActive</td>
+								<td>Created</td>
+								
+								<td> 
+									<a style="cursor:pointer" placement="bottom" (click)="viewForm(serviceTemplate)" ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp; 
+									<a *ngIf="display != 'none' " (click)="editFormchild(serviceTemplate)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.edit' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+								</td>
+								
+								<!--  -->
+							</tr>
+							<tr *ngFor="let serviceTemplate of serviceEditList;index as i;">
+								<!-- <td>{{serviceTemplate.code}}</td> -->
+								<!-- <td>{{serviceTemplate.templateName}}</td> -->
+								<td>{{templatedata.name}}</td>
+								<td> <div *ngFor="let serviceProvider of serviceProviderList ">
+									<option  *ngIf="serviceProviderCode==serviceProvider.code"value="{{serviceProvider.code}}">{{serviceProvider.name}}</option>
+								</div></td>
+								<td>
+									<div *ngFor="let walletOwner of walletOwnerList">
+									<option   *ngIf="walletOwner.code=='100001'" value="{{walletOwner.code}}">{{walletOwner.name}}</option>
+								   </div>
+								</td>
+								<!-- <td>{{serviceTemplate.channelTypeName}} </td> -->
+								<!-- <td>{{serviceTemplate.serviceName}} </td> -->
+								<!-- <td>{{serviceTemplate.fixedComiValue}} </td> -->
+								<td>
+									<input placeholder="%" [(ngModel)]="distrbranch"  type="number" class="form-control">
+									<span  class="validation-message">
+										<div *ngIf="distrbranch >100" translate>{{'TEMPLATE.pleaseenternumberbetween1and100' | translate}}
+									  </div>
+									</span> 
+								</td>
+								<td>InActive</td>
+								<td>Created</td>
+								
+								<td> 
+									<a style="cursor:pointer" placement="bottom" (click)="viewForm(serviceTemplate)" ngbTooltip="{{'MASTER.view' | translate}}"><i class="fas fa-eye text-primary"></i></a>&nbsp; 
+									<a *ngIf="display != 'none' " (click)="editFormchild(serviceTemplate)" style="cursor:pointer" placement="bottom" ngbTooltip="{{'MASTER.edit' | translate}}"><i class="fas fa-edit text-secondary"></i></a>
+								</td>
+								
+								<!--  -->
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.close('Close click')" class="btn btn-danger px-3"><i
+            class="fas fa fa-times"></i> {{'TEMPLATE.template.close' | translate}}</button>
+ </div>

@@ -1,0 +1,134 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800"> {{'USER.headername' | translate }} 
+    </h1>
+    <a *ngIf="setPermission.create"  [routerLink]="['add']" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-plus-circle"></i> {{'USER.button.create' | translate}}</a>
+</div>
+
+<!-- <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">User</li>
+      </ol>
+  </nav> -->
+
+
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header d-sm-flex align-items-center justify-content-between mb-0">
+                <h6 class="m-0 font-weight-bold text-primary">{{'USER.modulename' | translate}}</h6>
+                <span><i (click)="advanceSearchOption($event)" placement="bottom" ngbTooltip="{{'USER.option.advancesearch' | translate}}"
+                        class="fa fa-plus-circle toggle-i" aria-hidden="true"></i>
+                    {{'USER.option.advancesearch' | translate}}</span>
+            </div>
+            <div class="card-body">
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <form id="advSearchOpt" style="display:none" [formGroup]="searchUserForm">
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <input formControlName="code" type="text" autocomplete="off" class="form-control" id="code"
+                                placeholder="{{'USER.code' | translate |titlecase }}">
+                        </div>
+                        <div class="col-lg-3">
+                            <input formControlName="userName" type="text" autocomplete="off" class="form-control"
+                                id="userName" placeholder="{{'USER.userName' | translate |titlecase }}">
+                        </div>
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <select formControlName="roleName" class="form-control custom-select" id="roleName">
+                                    <option value="-1" translate>--{{'USER.roleName' |translate | titlecase }}--
+                                    </option>
+                                    <option *ngFor="let role of roles" value="{{role.code}}">{{role.name}}
+                                    </option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <input formControlName="idProofNumber" type="text" autocomplete="off"
+                                    class="form-control" id="idProofNumber"
+                                    placeholder="{{'USER.idProofNumber' | translate |titlecase }}">
+                            </div>
+                        </div> -->
+                        <div class="col-lg-3">
+                            <div role="wrapper" class=" input-group">
+                                <input formControlName="employeeId" type="text" autocomplete="off"
+                                    class="form-control" id="employeeId"
+                                    placeholder="{{'USER.employeeId' | translate |titlecase }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row mb-4">
+                            <div class="col-lg-3">
+                                <input formControlName="mobileNumber" type="text" autocomplete="off"
+                                    class="form-control" id="mobileNumber"
+                                    placeholder="{{'USER.mobileNumber' | translate | titlecase}} " aria-label="Search"
+                                    aria-describedby="basic-addon1" />
+                                <!-- <div class="input-group mb-3"> 
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span> 
+                                     </div>   
+                                  <input formControlName="mobileNumber"  type="text"  autocomplete="off" 
+                               
+                                  class="form-control" class="form-control" id="tableSearch"  placeholder="Mobile number"   list="dynmicUserIds"  
+                                 aria-label="Search" aria-describedby="basic-addon1" />
+                                 <datalist id="dynmicUserIds">
+                                   <option *ngFor="let filterOption of filterOptions | slice:0:5" class="form-control"    [value]="filterOption.mobileNumber">   {{filterOption.mobileNumber}}</option>
+                                 </datalist> 
+                                 </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                <input formControlName="email" type="text" autocomplete="off" class="form-control"
+                                    class="form-control" id="email"
+                                    placeholder="{{'USER.email' | translate |titlecase}}" aria-label="Search"
+                                    aria-describedby="basic-addon1" />
+                            </div>
+                            <div class="col-lg-3">
+                                <select formControlName="status" class="custom-select" id="searchBy">
+                                    <option value="-1">--{{'USER.status' | translate | titlecase}}-- </option>
+                                    <option value="Y">{{'USER.active' | translate }}</option>
+                                    <option value="N">{{'USER.inactive' | translate }}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <select formControlName="stage" class="custom-select" id="exact">
+                                    <option value="-1" translate>--{{'USER.state' | translate | titlecase}}--</option>
+                                    <option value="EN">{{'USER.enrolled' | translate }}</option>
+                                    <option value="U">{{'USER.created' | translate }}</option>
+                                    <option value="UP">{{'USER.updated' | translate }}</option>
+                                    <option value="A">{{'USER.approved' | translate }}</option>
+                                    <option value="I">{{'USER.inProgress' | translate }}</option>
+                                    <option value="R">{{'USER.reject' | translate }}</option>
+                                    <option value="NE">{{'USER.new' | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <button type="button" (click)="searchData()"
+                                class="btn btn-primary">{{ 'USER.button.search' | translate}}</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="fetchingData" class="spinner-aligning">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">{{ 'USER.loading' | translate}}</span>
+                    </div>
+                </div>
+                <app-userlist *ngIf="displaytable" [displaytable]="displaytable" [users]="users"> </app-userlist>
+                <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <span></span>
+                    <button type="button" (click)="hasPrevious()" class="btn btn-primary">Previous</button>
+                   &nbsp;&nbsp; <button type="button" (click)="hasNext()" class="btn btn-primary">Next</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>

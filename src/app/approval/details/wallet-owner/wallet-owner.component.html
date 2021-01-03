@@ -1,0 +1,220 @@
+<!-- Card Body -->
+<div class="card-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- steps/navigation -->
+            <ul class="nav mb-3" id="pills-tab" role="tablist">
+                <!-- step-1 -->
+                <li [ngClass]="{'not-clickable': clickable('BasicInfo') }" class="nav-item" role="presentation">
+                    <a class="btn btn-outline-primary active mr-3" id="step-1-tab" data-toggle="pill" href="#step-1"
+                        role="tab" aria-controls="step-1" aria-selected="true">
+                        <i class="fas fa-user"></i> {{'WALLET.basic.information' | translate }}</a>
+                </li>
+                <!-- step-2 -->
+                <li [ngClass]="{'not-clickable': clickable('Address') }" class="nav-item" role="presentation">
+                    <a class="btn btn-outline-primary mr-3" id="step-2-tab" data-toggle="pill" href="#step-2" role="tab"
+                        aria-controls="step-2" aria-selected="false" (click)="onAddressTabClicked()"><i
+                            class="fas fa-address-card"></i> {{'WALLET.address' | translate }}</a>
+                </li>
+                <!-- step-3 -->
+                <li *ngIf="displaybank" [ngClass]="{'not-clickable': clickable('Bank') }" class="nav-item" role="presentation">
+                    <a class="btn btn-outline-primary  mr-3" id="step-3-tab" data-toggle="pill" href="#step-3"
+                        role="tab" aria-controls="step-3" aria-selected="false" (click)="onBankDetailsTabClicked()"><i
+                            class="fas fa-bank"></i>
+                            {{'WALLET.bank.details' | translate }}</a>
+                </li>
+                <!-- step-4 -->
+                <li *ngIf="displaydocument"[ngClass]="{'not-clickable': clickable('Documents') }" class="nav-item" role="presentation">
+                    <a class="btn btn-outline-primary mr-3" id="step-4-tab" data-toggle="pill" href="#step-4" role="tab"
+                        aria-controls="step-4" aria-selected="false" (click)="onDocumentsTabClicked()">
+                        <i class="fas fa-files-o"></i> {{'WALLET.documents' | translate }}</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+
+                <!-- STEP-1 Content : Basic Information -->
+                <div class="tab-pane fade show active" id="step-1" role="tabpanel" aria-labelledby="step-1-tab">
+                    <div *ngIf="!basicInfoForm" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate }}</span>
+                        </div>
+                    </div>
+                    <form *ngIf="basicInfoForm" [formGroup]="basicInfoForm">
+                        <!-- parallel data -->
+                        <div class="form-group row">
+                            <div *ngFor="let formElem of basicInfoFormFields; let i = index;"
+                                class="col-sm-6 parallel-col-margin">
+                                
+                                <div *ngIf="formElem.fieldType == 'CheckBox'" class="custom-control pl-1"> 
+                                    <br>
+ 
+                                    <input [attr.disabled]="true"  [checked]="formElem.existance" [value]="formElem.existance"    type="checkbox"   id="{{ formElem.kycMetaDataFieldName }}"> &nbsp;
+                               <label for="{{ formElem.kycMetaDataFieldName }}">{{ formElem.kycMetaDataFieldName }}</label>
+                                                 </div>
+
+                                <div *ngIf="formElem.fieldType != 'CheckBox'">
+                                <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                                    <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                </label>
+                                <!-- for created -->
+                                <div *ngIf="!updatedBasicInfo">
+                                    <input type="text" class="form-control unchanged-data"
+                                        [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                </div>
+                                <!-- for updated -->
+                                <div *ngIf="updatedBasicInfo">
+                                    <div *ngFor="let changed of updatedBasicInfo; let j = index;">
+                                        <div *ngIf="formElem.kycMetaDataField === changed.key; else unchangedField">
+                                            <a [ngbTooltip]="'earlier it was: '+changed.previousValue">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- TODO : show below if not updated -->
+                                    <div *ngIf="showOrNot('1', formElem.kycMetaDataField)">
+                                        <input type="text" class="form-control unchanged-data"
+                                            [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                            formControlName="{{ formElem.kycMetaDataField }}">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STEP-2 Content : Address-->
+                <div class="tab-pane fade" id="step-2" role="tabpanel" aria-labelledby="step-2-tab">
+                    <div *ngIf="!allAddresses" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate }}</span>
+                        </div>
+                    </div>
+                    <form *ngIf="allAddresses" [formGroup]="allAddresses">
+                        <div formArrayName="addresses">
+                            <div *ngFor="let addressControl of getAddressesControl; let i = index" [formGroupName]="i">
+
+                                <div class="form-group row">
+                                    <div *ngFor="let formElem of addressFormFields; let j = index;"
+                                        class="col-sm-6 parallel-col-margin">
+                                        <label class="custom-label">{{ formElem.kycMetaDataFieldName }}
+                                            <span *ngIf="formElem.mandatory" class="required-field">*</span>
+                                        </label>
+                                        <!-- for created -->
+                                        <div *ngIf="!updatedAddress">
+                                            <input type="text" class="form-control unchanged-data"
+                                                [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                                formControlName="{{ formElem.kycMetaDataField }}">
+                                        </div>
+                                        <!-- for updated -->
+                                        <div *ngIf="updatedAddress">
+                                            <div *ngFor="let changed of updatedAddress[i]; let j = index;">
+                                                <div
+                                                    *ngIf="formElem.kycMetaDataField == changed.key; else unchangedField">
+                                                    <a [ngbTooltip]="'earlier it was: '+changed.previousValue">
+                                                        <input type="text" class="form-control"
+                                                            [id]="formElem.kycMetaDataField"
+                                                            [name]="formElem.kycMetaDataField"
+                                                            formControlName="{{ formElem.kycMetaDataField }}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="showOrNot('2', formElem.kycMetaDataField, i)">
+                                                <input type="text" class="form-control unchanged-data"
+                                                    [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STEP-3 Content: Bank Details -->
+                <div class="tab-pane fade" id="step-3" role="tabpanel" aria-labelledby="step-3-tab">
+                    <div *ngIf="!bankDetailsForm" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate }}</span>
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="bankErrorMessage" class="alert alert-danger">
+                        {{ bankErrorMessage }}</div>
+                    <div *ngIf="bankSuccessMessage" class="alert alert-success">
+                        {{ bankSuccessMessage }}</div> -->
+                    <form *ngIf="bankDetailsForm" [formGroup]="bankDetailsForm">
+                        <div *ngFor="let formElem of bankDetailsFormFields; let i = index;">
+                            <div class="form-group row">
+                                <label for="{{ formElem.kycMetaDataField }}" class="col-sm-4 col-form-label">
+                                    {{ formElem.kycMetaDataFieldName }}<span *ngIf="formElem.mandatory"
+                                        class="required-field">*</span></label>
+                                <!-- for created -->
+                                <div class="col-sm-6" *ngIf="!updatedBank">
+                                    <input type="text" class="form-control unchanged-data"
+                                        formControlName="{{ formElem.kycMetaDataField }}">
+                                </div>
+                                <!-- for updated -->
+                                <div class="col-sm-6" *ngIf="updatedBank">
+                                    <div *ngFor="let changed of updatedBank; let j = index;">
+                                        <div *ngIf="formElem.kycMetaDataField === changed.key; else unchangedField">
+                                            <a [ngbTooltip]="'earlier it was: '+changed.previousValue">
+                                                <input type="text" class="form-control" [id]="formElem.kycMetaDataField"
+                                                    [name]="formElem.kycMetaDataField"
+                                                    formControlName="{{ formElem.kycMetaDataField }}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showOrNot('3', formElem.kycMetaDataField)">
+                                        <input type="text" class="form-control unchanged-data"
+                                            [id]="formElem.kycMetaDataField" [name]="formElem.kycMetaDataField"
+                                            formControlName="{{ formElem.kycMetaDataField }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STEP-4 Content: Documents -->
+                <div class="tab-pane fade" id="step-4" role="tabpanel" aria-labelledby="step-4-tab">
+                    <div *ngIf="!documentsForm && !documentErrorMessage" class="spinner-aligning">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">{{'MASTER.loading' | translate }}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="documentErrorMessage && !documentsForm" class="alert alert-danger">{{ documentErrorMessage }}</div>
+                    <form *ngIf="documentsForm" [formGroup]="documentsForm">
+                        <div formArrayName="documents" class="form-group row">
+                            <div *ngFor="let docControl of getDocControl; let i = index" [formGroupName]="i"
+                                class="col-lg-12 col-xl-12 d-sm-flex upload-margin">
+                                <div class="float-left col-sm-3">
+                                    <input type="text" class="form-control" formControlName="documentTypeCode">
+                                </div>
+                                <div class="custom-file float-left file-width">
+                                    <input type="text" class="form-control" formControlName="fileName">
+                                </div>
+                                <div class="doc-icons-block">
+                                    <a class="custom-hyperlink placement" ngbTooltip="{{'MASTER.download' | translate }}" target="_blank"
+                                        [href]="onDownload(documents[i].fileName)">
+                                        <i class="fas fa-download text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

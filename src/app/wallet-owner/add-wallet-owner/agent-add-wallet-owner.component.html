@@ -1,0 +1,191 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{'WALLET.add.agent' | translate}}</h1>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{'WALLET.add.agent.detail' | translate}}</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- steps/navigation -->
+                        <ul class="nav mb-3" id="pills-tab" role="tablist">
+                            <!-- step-1 -->
+                            <li class="nav-item" role="presentation">
+                                <a class="btn btn-outline-primary active mr-3" id="step-1-tab" data-toggle="pill"
+                                    href="#step-1" role="tab" aria-controls="step-1" aria-selected="true">
+                                    <i class="fas fa-user"></i> {{'WALLET.basic.information' | translate}}</a>
+                            </li>
+                            <!-- step-2 -->
+                            <li class="nav-item" [ngClass]="{'not-clickable': sequenceNumber < 2 }" role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-2-tab" data-toggle="pill"
+                                    href="#step-2" role="tab" aria-controls="step-2" aria-selected="false"
+                                    (click)="addressLoaded()">
+                                    <i class="fas fa-address-card"></i> {{'WALLET.address' | translate}}</a>
+                            </li>
+                            <!-- step-3 -->
+                            <li class="nav-item not-clickable" [ngClass]="{'not-clickable': sequenceNumber < 3 }"
+                                role="presentation">
+                                <a class="btn btn-outline-primary  mr-3" id="step-3-tab" data-toggle="pill"
+                                    href="#step-3" role="tab" aria-controls="step-3" aria-selected="false"><i
+                                        class="fas fa-bank"></i>
+                                    {{'WALLET.bank.details' | translate}}</a>
+                            </li>
+                            <!-- step-4 -->
+                            <li class="nav-item not-clickable" [ngClass]="{'not-clickable': sequenceNumber < 4 }"
+                                role="presentation">
+                                <a class="btn btn-outline-primary mr-3" id="step-4-tab" data-toggle="pill"
+                                    href="#step-4" role="tab" aria-controls="step-4" aria-selected="false">
+                                    <i class="fas fa-files-o"></i> {{'WALLET.documents' | translate}}</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <!-- STEP-1 Content : Basic Information -->
+                            <div class="tab-pane fade show active" id="step-1" role="tabpanel"
+                                aria-labelledby="step-1-tab">
+                                <!-- category -->
+                                <!-- <div *ngIf="!fetchingCategory" class="form-group row mt-5">
+                                    <label for="category" class="col-sm-4 col-form-label text-right">Category
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select class="custom-select" [(ngModel)]="category" (change)="fetchFields()">
+                                            <option *ngFor="let category of categories" [ngValue]="category.code">
+                                                {{ category.name }}</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <div *ngIf="!formFieldsLoaded" class="spinner-aligning">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">{{'WALLET.loading' | translate}}</span>
+                                    </div>
+                                </div>
+                                <!-- <hr> -->
+                                <div *ngIf="formFieldsLoaded">
+                                    <!-- <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="category" class="custom-label">category</label>
+                                            <select class="custom-select" [(ngModel)]="category">
+                                                <option *ngFor="let category of categories" [ngValue]="category.code">
+                                                    {{ category.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <!-- <app-basic-info></app-basic-info> -->
+                                    <app-agent-basic-info></app-agent-basic-info>
+                                </div>
+
+                            </div>
+
+                            <!-- STEP-2 Content : Address-->
+                            <div class="tab-pane fade" id="step-2" role="tabpanel" aria-labelledby="step-2-tab">
+                                <div *ngIf="formFieldsLoaded">
+                                    <div id="addresserror">
+                                        <div *ngIf="addressErrorMessage" class="alert alert-danger">
+                                            {{ addressErrorMessage }}
+                                        </div>
+                                        <div *ngIf="addressSuccessMessage" class="alert alert-success">
+                                            {{ addressSuccessMessage }}
+                                        </div>
+                                    </div> 
+                                    <form [formGroup]="allAddress" (ngSubmit)="allAddressSubmit()">
+                                        <!-- Addresses -->
+                                        <div formArrayName="adresses">
+                                            <div *ngFor="let addressControl of getAddressesControl; let i = index"
+                                                [formGroupName]="i">
+                                                <!-- Address Form -->
+                                                <app-address (saveAddressEvent)="recieveSaveAddressEvent($event)"
+                                                    [formIndex]="i"></app-address>
+                                            </div>
+                                        </div>
+                                        <!-- Add Address -->
+                                        <div class="form-group row text-right">
+                                            <div class="text-right full-width steps-bottom-button-alligned color-white">
+                                                <a (click)="onAddAddressForm()"
+                                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                    <i class="fas fa-plus-circle"></i> {{'WALLET.add.address' | translate}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="error-conatiner-address-message">
+                                            <span class="validation-message" *ngIf="!savedAllAddress"> {{'WALLET.please.save.all.the.address' | translate}}</span>
+                                        </div>
+                                        <!-- Next Previous -->
+                                        <div class="form-group row text-right">
+                                            <div class="text-right full-width steps-bottom-button-alligned">
+                                                <button type="button" class="float-left btn btn-primary px-3"
+                                                    (click)="navigateToStep1()">
+                                                    <i class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' | translate}}</button>
+                                                <!-- this coulld be the submit -->
+                                                <!-- [disabled]="addressSubmitDisabled" -->
+                                                <button type="submit" class="float-right btn btn-primary px-3"
+                                                  >{{'WALLET.next' | translate}}&nbsp;<i
+                                                        class="fa fa-arrow-circle-right fa-lg"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- STEP-3 Content: Bank Details -->
+                            <div class="tab-pane fade" id="step-3" role="tabpanel" aria-labelledby="step-3-tab">
+                                <div *ngIf="formFieldsLoaded">
+                                <div id="bankerror">
+                                    <div *ngIf="bankErrorMessage" class="alert alert-danger">{{ bankErrorMessage }}
+                                    </div>
+                                    <div *ngIf="bankSuccessMessage" class="alert alert-success">{{ bankSuccessMessage }}
+                                    </div>
+                                </div>
+                                    <div *ngIf="loadBank">
+                                        <app-bank-details [bankFormSubmitted] = "bankFormSubmitted"></app-bank-details>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right">
+                                            <button type="button" class="float-left btn btn-primary px-3"
+                                                (click)="navigateToStep2()">
+                                                <i class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' | translate}}</button>
+                                                <!-- [disabled]="!bankformSubmitEnabled"  -->
+                                                <button type="button" class="float-right btn btn-primary px-3"
+                                               (click)="submitBankDetailsForm()">
+                                                {{'WALLET.next' | translate}}&nbsp;<i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- STEP-4 Content: Documents -->
+                            <div class="tab-pane fade" id="step-4" role="tabpanel" aria-labelledby="step-4-tab">
+                                <div *ngIf="formFieldsLoaded">
+                                    <app-documents-upload></app-documents-upload>
+                                    <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right"> 
+                                             <button type="button" class="float-left btn btn-primary px-3"
+                                            (click)="navigateToStep3()"><i
+                                          class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' | translate}}</button>
+                                     </div>
+                                  </div>
+                                   <!-- <div class="form-group row">
+                                        <div class="full-width steps-bottom-button-alligned text-right">
+                                            <button type="button" class="float-left btn btn-primary px-3"
+                                                (click)="navigateToStep3()"><i
+                                                    class="fa fa-arrow-circle-left fa-lg"></i>&nbsp;{{'WALLET.previous' | translate}}</button>
+                                            <button *ngIf="displayDone" type="button"
+                                                class="float-right btn btn-primary px-3" (click)="finalSubmit()"><i
+                                                    class="fa fa-check-circle fa-lg"></i>&nbsp;{{'WALLET.done' | translate}}</button>
+                                        </div>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
